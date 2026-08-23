@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Friends With Bears Records</title>
+    <meta name="description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok. Explore our latest releases: CT-24, verdant, In elsewhere, and more.">
+    <meta name="keywords" content="Friends With Bears Records, creaturethief, April Fridae, eliesriot, Zayok, CT-24, verdant, In elsewhere, indie music, electronic, hyperpop, record label">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://friendswithbears.com">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Friends With Bears Records">
+    <meta property="og:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok. Explore our latest releases.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://friendswithbears.com">
+    <meta property="og:image" content="https://friendswithbears.com/assets/fridae-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Friends With Bears Records">
+    <meta name="twitter:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok.">
+    <meta name="twitter:image" content="https://friendswithbears.com/assets/fridae-cover.jpg">
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "MusicGroup",
+            "name": "Friends With Bears Records",
+            "description": "Independent record label featuring creaturethief, April Fridae, eliesriot, and Zayok.",
+            "url": "https://friendswithbears.com",
+            "genre": ["Electronic", "Indie", "Hyperpop", "Alternative"],
+            "foundingDate": "2021",
+            "member": [
+                { "@type": "MusicGroup", "name": "creaturethief" },
+                { "@type": "MusicGroup", "name": "April Fridae" },
+                { "@type": "MusicGroup", "name": "eliesriot" },
+                { "@type": "MusicGroup", "name": "Zayok" }
+            ]
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            overflow: hidden;
+        }
+        .wheel-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+        }
+        .scroll-wrapper {
+            width: 94%;
+            max-width: 1800px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            overscroll-behavior: none;
+            touch-action: pan-x;
+            padding: 0.5rem 0;
+        }
+        .scroll-wrapper::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+        .wheel-track {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 0;
+            padding: 0;
+            width: fit-content;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .album-square {
+            flex: 0 0 auto;
+            background: #e8e8e8;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .album-square:not(:last-child) {
+            margin-right: 32px;
+        }
+        @media (max-width: 900px) {
+            .album-square:not(:last-child) {
+                margin-right: 26px;
+            }
+        }
+        @media (max-width: 700px) {
+            .album-square:not(:last-child) {
+                margin-right: 22px;
+            }
+        }
+        @media (max-width: 480px) {
+            .album-square:not(:last-child) {
+                margin-right: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="wheel-container">
+        <div class="scroll-wrapper" id="scrollWheel">
+            <div class="wheel-track" id="wheelTrack"></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ----- RELEASES (artist – title) -----
+            const RELEASES = [
+                { src: 'assets/fridae-cover.jpg', artist: 'April Fridae', title: 'right now', url: 'http://now.aprilfridae.com'},
+                { src: 'assets/eliesriot_dying_to_live.jpg', artist: 'eliesriot', title: 'Dying to Live', url: 'https://songport.link/t/eliesriot-dying-to-live-bm32qdtx' },
+                { src: 'assets/creaturethief_ct-24.jpg', artist: 'creaturethief', title: 'CT-24', url: 'https://songport.link/t/creaturethief-ct-24-ep-d3egznh0' },
+                { src: 'assets/zayok_in_elsewhere.jpg', artist: 'Zayok', title: 'In elsewhere', url: 'https://songport.link/t/zayok-in-elsewhere-00w4ekwj' },
+                { src: 'assets/creaturethief_verdant.webp', artist: 'creaturethief', title: 'verdant', url: 'https://songport.link/t/creaturethief-verdant-weathered-ep-wrme545o' }
+            ];
+
+            const FALLBACKS = ['#b5838d', '#6d597a', '#2a9d8f', '#e76f51', '#264653'];
+            const COPIES = 5;
+
+            const wrapper = document.getElementById('scrollWheel');
+            const track = document.getElementById('wheelTrack');
+            if (!wrapper || !track) return;
+
+            // ----- SIZING -----
+            function getSize() {
+                const vw = window.innerWidth;
+                const vh = window.innerHeight;
+                let s;
+                if (vw < 480) s = Math.min(vw * 0.40, vh * 0.50);
+                else if (vw < 768) s = Math.min(vw * 0.32, vh * 0.50);
+                else s = Math.min(vw * 0.22, vh * 0.45);
+                return Math.max(Math.min(s, 350), 100);
+            }
+
+            function getSpacing() {
+                const w = window.innerWidth;
+                if (w <= 480) return 18;
+                if (w <= 700) return 22;
+                if (w <= 900) return 26;
+                return 32;
+            }
+
+            let size = getSize();
+            let gap = getSpacing();
+            let itemWidth = size + gap;
+            const RELEASE_COUNT = RELEASES.length;
+            let oneSetWidth = RELEASE_COUNT * itemWidth;
+
+            // ----- BUILD TRACK (with artist/title data attributes) -----
+            track.innerHTML = '';
+            const total = RELEASE_COUNT * COPIES;
+
+            for (let i = 0; i < total; i++) {
+                const idx = i % RELEASE_COUNT;
+                const release = RELEASES[idx];
+                const el = document.createElement('div');
+                el.className = 'album-square';
+                el.style.width = size + 'px';
+                el.style.height = size + 'px';
+                el.style.backgroundImage = `url('${release.src}')`;
+                el.style.backgroundColor = FALLBACKS[idx];
+                el.dataset.artist = release.artist;
+                el.dataset.title = release.title;
+                el.dataset.url = release.url;
+
+                // Click → open release page (or artist info)
+                el.addEventListener('click', function() {
+                    window.location.href = this.dataset.url;
+                });
+
+                // Image fallback
+                const img = new Image();
+                img.onerror = () => { el.style.backgroundImage = 'none'; };
+                img.src = release.src;
+
+                track.appendChild(el);
+            }
+
+            const squares = track.querySelectorAll('.album-square');
+            squares.forEach((el, i) => {
+                if (i < squares.length - 1) el.style.marginRight = gap + 'px';
+            });
+
+            // ----- INITIAL POSITION (first release: April Fridae) -----
+            const midCopy = Math.floor(COPIES / 2);
+            wrapper.scrollLeft = midCopy * RELEASE_COUNT * itemWidth;
+
+            // ----- INFINITE LOOP (only when scrolling stops) -----
+            let loopScheduled = false;
+
+            function performLoopJump() {
+                if (loopScheduled) return;
+                loopScheduled = true;
+                requestAnimationFrame(() => {
+                    loopScheduled = false;
+                    const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+                    const current = wrapper.scrollLeft;
+                    const threshold = itemWidth * 0.3;
+                    if (current > maxScroll - threshold) {
+                        wrapper.scrollLeft = current - oneSetWidth;
+                        return;
+                    }
+                    if (current < threshold) {
+                        wrapper.scrollLeft = current + oneSetWidth;
+                        return;
+                    }
+                });
+            }
+
+            let scrollStopTimer = null;
+
+            function onScrollStart() {
+                if (scrollStopTimer) {
+                    clearTimeout(scrollStopTimer);
+                    scrollStopTimer = null;
+                }
+            }
+
+            function onScrollEnd() {
+                performLoopJump();
+            }
+
+            if ('onscrollend' in window) {
+                wrapper.addEventListener('scrollend', onScrollEnd, { passive: true });
+                wrapper.addEventListener('scroll', onScrollStart, { passive: true });
+            } else {
+                wrapper.addEventListener('scroll', () => {
+                    if (scrollStopTimer) clearTimeout(scrollStopTimer);
+                    scrollStopTimer = setTimeout(() => {
+                        scrollStopTimer = null;
+                        onScrollEnd();
+                    }, 150);
+                }, { passive: true });
+            }
+
+            // ----- WHEEL (reduced sensitivity) -----
+            const SENSITIVITY = 0.5;
+            wrapper.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const dx = e.deltaX || 0;
+                const dy = e.deltaY || 0;
+                const raw = Math.abs(dx) > Math.abs(dy) ? dx : dy;
+                wrapper.scrollLeft += raw * SENSITIVITY;
+            }, { passive: false });
+
+            // ----- TOUCH -----
+            let touchStartX = 0,
+                touchStartY = 0,
+                touchStartScroll = 0,
+                touching = false;
+
+            wrapper.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    touchStartX = e.touches[0].clientX;
+                    touchStartY = e.touches[0].clientY;
+                    touchStartScroll = wrapper.scrollLeft;
+                    touching = true;
+                }
+            }, { passive: true });
+
+            wrapper.addEventListener('touchmove', (e) => {
+                if (!touching || e.touches.length !== 1) return;
+                e.preventDefault();
+                const tx = e.touches[0].clientX;
+                const ty = e.touches[0].clientY;
+                const dx = touchStartX - tx;
+                const dy = touchStartY - ty;
+                const raw = Math.abs(dx) > Math.abs(dy) * 0.5 ? dx : dy;
+                wrapper.scrollLeft = touchStartScroll + raw * SENSITIVITY;
+            }, { passive: false });
+
+            wrapper.addEventListener('touchend', () => {
+                touching = false;
+                setTimeout(onScrollEnd, 100);
+            }, { passive: true });
+
+            wrapper.addEventListener('touchcancel', () => {
+                touching = false;
+                setTimeout(onScrollEnd, 100);
+            }, { passive: true });
+
+            // ----- ARROW KEYS -----
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    const step = size * 0.6;
+                    wrapper.scrollLeft += e.key === 'ArrowLeft' ? -step : step;
+                    setTimeout(onScrollEnd, 50);
+                }
+            });
+
+            // ----- RESIZE -----
+            let resizeTimer = null;
+
+            function onResize() {
+                if (resizeTimer) {
+                    cancelAnimationFrame(resizeTimer);
+                    resizeTimer = null;
+                }
+                resizeTimer = requestAnimationFrame(() => {
+                    resizeTimer = null;
+                    const newSize = getSize();
+                    const newGap = getSpacing();
+                    if (newSize === size && newGap === gap) return;
+                    const oldSize = size;
+                    size = newSize;
+                    gap = newGap;
+                    itemWidth = size + gap;
+                    oneSetWidth = RELEASE_COUNT * itemWidth;
+                    squares.forEach((el, i) => {
+                        el.style.width = size + 'px';
+                        el.style.height = size + 'px';
+                        if (i < squares.length - 1) {
+                            el.style.marginRight = gap + 'px';
+                        }
+                    });
+                    const ratio = wrapper.scrollLeft / (oldSize + 32);
+                    wrapper.scrollLeft = ratio * (size + gap);
+                    setTimeout(onScrollEnd, 100);
+                });
+            }
+
+            window.addEventListener('resize', onResize);
+
+            // ----- INIT -----
+            setTimeout(onScrollEnd, 200);
+        })();
+    </script>
+
+</body>
+</html>
