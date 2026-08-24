@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Friends With Bears Records</title>
+    <title>Friends With Bears Records (UPDATED)</title>
     <meta name="description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok. Explore our latest releases.">
     <meta name="keywords" content="Friends With Bears Records, creaturethief, April Fridae, eliesriot, Zayok, indie music, electronic, hyperpop, record label">
     <meta name="robots" content="index, follow">
@@ -48,7 +48,6 @@
         /* --- CONTAINER --- */
         .wheel-container {
             width: 100vw;
-            /* FIX: Use 100dvh on modern mobile, fallback to 100vh */
             height: 100vh;
             height: 100dvh;
             display: flex;
@@ -58,11 +57,10 @@
             background: #fff;
             overflow: hidden;
             padding: 20px 0;
-            /* FIX: Add safe-area padding for mobile notches/toolbars */
             padding-bottom: max(20px, env(safe-area-inset-bottom, 20px));
         }
 
-        /* --- HEADER (top) --- */
+        /* --- HEADER --- */
         .header-section {
             flex: 0 0 auto;
             display: flex;
@@ -87,7 +85,7 @@
         .arrow-image:hover { opacity: 0.6; }
         .arrow-image:active { opacity: 0.8; }
 
-        /* --- WHEEL (pushed to bottom) --- */
+        /* --- WHEEL --- */
         .scroll-wrapper {
             flex: 0 0 auto;
             width: 94%;
@@ -103,6 +101,8 @@
             padding: 0.5rem 0.2rem;
             display: flex;
             align-items: center;
+            /* Prevent touch events from being intercepted by window handler */
+            touch-action: pan-x;
         }
         .scroll-wrapper::-webkit-scrollbar { display: none; }
 
@@ -138,7 +138,7 @@
             margin-right: 32px;
         }
 
-        /* Breathing animations */
+        /* Breathing */
         @keyframes breathe-container {
             0% { transform: translateZ(0) scale(1); }
             30% { transform: translateZ(0) scale(1.015); }
@@ -196,7 +196,7 @@
             transition: none;
         }
 
-        /* --- responsive spacing tweaks (desktop) --- */
+        /* --- Responsive --- */
         @media (max-width: 900px) {
             .album-square:not(:last-child) { margin-right: 26px; }
         }
@@ -204,15 +204,16 @@
             .album-square:not(:last-child) { margin-right: 22px; }
         }
 
-        /* --- MOBILE FIX: no layout changes, just ensure wheel isn't cut off --- */
         @media (max-width: 640px) {
             .wheel-container {
-                /* The 100dvh + safe-area padding already fixes the cutoff */
                 padding: 12px 0;
                 padding-bottom: max(12px, env(safe-area-inset-bottom, 16px));
             }
             .scroll-wrapper {
                 padding: 0.25rem 0.1rem;
+                /* Ensure native scrolling works on mobile */
+                -webkit-overflow-scrolling: touch;
+                touch-action: pan-x;
             }
             .album-square:not(:last-child) {
                 margin-right: 14px;
@@ -297,7 +298,7 @@
             const arrowImage = document.getElementById('arrowImage');
             if (!wrapper || !track || !titleImage || !arrowImage) return;
 
-            // ----- Sizing: cover size based on viewport height -----
+            // ----- Sizing -----
             function getSize() {
                 const vh = window.innerHeight;
                 let s = Math.min(vh * 0.45, 500);
@@ -509,25 +510,35 @@
                     }, { passive: true });
                 }
 
-                const SENSITIVITY = 0.5;
+                const isMobile = window.innerWidth < 640;
 
+                // ----- DESKTOP: mouse wheel scroll anywhere -----
                 window.addEventListener('wheel', (e) => {
+                    // Only intercept if not on mobile (or always, but sensitivity differs)
                     e.preventDefault();
                     const dx = e.deltaX || 0;
                     const dy = e.deltaY || 0;
                     const raw = Math.abs(dx) > Math.abs(dy) ? dx : dy;
-                    wrapper.scrollLeft += raw * SENSITIVITY;
+                    const sensitivity = isMobile ? 3.0 : 0.5;
+                    wrapper.scrollLeft += raw * sensitivity;
                 }, { passive: false });
 
+                // ----- MOBILE: smart touch handling -----
                 let touchStartX = 0,
                     touchStartY = 0,
                     touchStartScroll = 0,
                     touching = false;
+                let touchTargetIsWrapper = false;
 
                 window.addEventListener('touchstart', (e) => {
                     if (e.touches.length === 1) {
-                        touchStartX = e.touches[0].clientX;
-                        touchStartY = e.touches[0].clientY;
+                        const touch = e.touches[0];
+                        const target = document.elementFromPoint(touch.clientX, touch.clientY);
+                        // Check if the touch started inside the scroll wrapper
+                        touchTargetIsWrapper = wrapper.contains(target);
+
+                        touchStartX = touch.clientX;
+                        touchStartY = touch.clientY;
                         touchStartScroll = wrapper.scrollLeft;
                         touching = true;
                     }
@@ -535,28 +546,39 @@
 
                 window.addEventListener('touchmove', (e) => {
                     if (!touching || e.touches.length !== 1) return;
+
+                    // If touch started on the wrapper, let native scroll handle it
+                    if (touchTargetIsWrapper) {
+                        return; // native scroll takes over
+                    }
+
+                    // Otherwise, we handle it globally (scrolling anywhere on page)
                     e.preventDefault();
-                    const tx = e.touches[0].clientX;
-                    const ty = e.touches[0].clientY;
-                    const dx = touchStartX - tx;
-                    const dy = touchStartY - ty;
+                    const touch = e.touches[0];
+                    const dx = touchStartX - touch.clientX;
+                    const dy = touchStartY - touch.clientY;
+                    // Use whichever axis has more movement
                     let raw = dx;
                     if (Math.abs(dy) > Math.abs(dx) * 0.5) {
                         raw = dy;
                     }
-                    wrapper.scrollLeft = touchStartScroll + raw * SENSITIVITY;
+                    const sensitivity = isMobile ? 3.0 : 0.5;
+                    wrapper.scrollLeft = touchStartScroll + raw * sensitivity;
                 }, { passive: false });
 
                 window.addEventListener('touchend', () => {
                     touching = false;
+                    touchTargetIsWrapper = false;
                     setTimeout(onScrollEnd, 100);
                 }, { passive: true });
 
                 window.addEventListener('touchcancel', () => {
                     touching = false;
+                    touchTargetIsWrapper = false;
                     setTimeout(onScrollEnd, 100);
                 }, { passive: true });
 
+                // ----- Keyboard -----
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
                         e.preventDefault();
@@ -566,6 +588,7 @@
                     }
                 });
 
+                // ----- Resize -----
                 let resizeTimer = null;
 
                 function onResize() {
