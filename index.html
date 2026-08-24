@@ -37,8 +37,13 @@
 
     <style>
         /* --- RESET --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html,
+        body {
             width: 100%;
             height: 100%;
             background: #fff;
@@ -53,43 +58,111 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             background: #fff;
             overflow: hidden;
             padding: 20px 0;
             padding-bottom: max(20px, env(safe-area-inset-bottom, 20px));
         }
 
-        /* --- HEADER --- */
-        .header-section {
-            flex: 0 0 auto;
+        /* --- ACCORDION GROUP (full page width) --- */
+        .accordion-group {
+            width: 94%;
+            max-width: 1800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        /* --- HEADER ITEMS (title left, arrow right) --- */
+        .header-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 94%;
-            max-width: 1800px;
-            padding: 0 0.2rem;
+            width: 100%;
+            padding: 0.5rem 0.2rem;
+            flex-shrink: 0;
+            z-index: 10;
         }
+
         .title-image {
             display: block;
-            width: auto;
-            height: auto;
+            object-fit: contain;
+            flex-shrink: 0;
+            transition: opacity 0.3s ease;
+            width: 240px;
+            height: 80px;
         }
+
         .arrow-image {
             display: block;
-            width: auto;
+            object-fit: contain;
+            flex-shrink: 0;
             cursor: pointer;
-            transition: opacity 0.2s ease;
+            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1), opacity 0.2s ease;
             opacity: 1;
+            transform: rotate(0deg);
+            width: 48px;
+            height: 48px;
         }
-        .arrow-image:hover { opacity: 0.6; }
-        .arrow-image:active { opacity: 0.8; }
+        .arrow-image:active {
+            opacity: 0.8;
+        }
+        .arrow-image.rotated {
+            transform: rotate(90deg);
+        }
 
-        /* --- WHEEL --- */
+        /* --- WHEEL WRAPPER (Releases accordion panel) --- */
+        .wheel-wrapper {
+            width: 100%;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.6s cubic-bezier(0.2, 0.9, 0.4, 1),
+                opacity 0.5s ease,
+                margin 0.3s ease;
+            margin: 0;
+            flex-shrink: 0;
+        }
+        .wheel-wrapper.expanded {
+            max-height: 1000px;
+            opacity: 1;
+            margin: 0.25rem 0;
+        }
+
+        /* --- CONTACT WRAPPER (Contact accordion panel) --- */
+        .contact-wrapper {
+            width: 100%;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.6s cubic-bezier(0.2, 0.9, 0.4, 1),
+                opacity 0.5s ease,
+                margin 0.3s ease;
+            margin: 0;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0 0.2rem;
+        }
+        .contact-wrapper.expanded {
+            max-height: 1000px;
+            opacity: 1;
+            margin: 0.25rem 0;
+        }
+        .contact-wrapper img {
+            display: block;
+            object-fit: contain;
+            flex-shrink: 0;
+            height: auto;
+            width: auto;
+        }
+
+        /* --- WHEEL (scrollable container) --- */
         .scroll-wrapper {
-            flex: 0 0 auto;
-            width: 94%;
-            max-width: 1800px;
+            width: 100%;
             overflow-x: auto;
             overflow-y: hidden;
             scroll-behavior: auto;
@@ -98,12 +171,13 @@
             -ms-overflow-style: none;
             overscroll-behavior: none;
             touch-action: pan-x;
-            padding: 0.5rem 0.2rem;
+            padding: 1rem 0.2rem; /* Increased top & bottom padding */
             display: flex;
             align-items: center;
-            touch-action: pan-x;
         }
-        .scroll-wrapper::-webkit-scrollbar { display: none; }
+        .scroll-wrapper::-webkit-scrollbar {
+            display: none;
+        }
 
         .wheel-track {
             display: flex;
@@ -139,18 +213,36 @@
 
         /* Breathing */
         @keyframes breathe-container {
-            0% { transform: translateZ(0) scale(1); }
-            30% { transform: translateZ(0) scale(1.015); }
-            70% { transform: translateZ(0) scale(1.008); }
-            100% { transform: translateZ(0) scale(1); }
+            0% {
+                transform: translateZ(0) scale(1);
+            }
+            30% {
+                transform: translateZ(0) scale(1.015);
+            }
+            70% {
+                transform: translateZ(0) scale(1.008);
+            }
+            100% {
+                transform: translateZ(0) scale(1);
+            }
         }
         @keyframes breathe-image {
-            0% { transform: translateY(0px) scale(1); }
-            30% { transform: translateY(-4px) scale(1.015); }
-            70% { transform: translateY(-2px) scale(1.008); }
-            100% { transform: translateY(0px) scale(1); }
+            0% {
+                transform: translateY(0px) scale(1);
+            }
+            30% {
+                transform: translateY(-4px) scale(1.015);
+            }
+            70% {
+                transform: translateY(-2px) scale(1.008);
+            }
+            100% {
+                transform: translateY(0px) scale(1);
+            }
         }
-        .album-square:hover { animation: breathe-container 6s ease-in-out infinite; }
+        .album-square:hover {
+            animation: breathe-container 6s ease-in-out infinite;
+        }
 
         .album-square .cover-layer {
             position: absolute;
@@ -166,14 +258,21 @@
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
         }
-        .album-square:hover .cover-pixelated { animation: breathe-image 6s ease-in-out infinite; }
-        .album-square:hover .cover-sharp { animation: breathe-image 6s ease-in-out infinite; }
+        .album-square:hover .cover-pixelated {
+            animation: breathe-image 6s ease-in-out infinite;
+        }
+        .album-square:hover .cover-sharp {
+            animation: breathe-image 6s ease-in-out infinite;
+        }
         .album-square:not(:hover) .cover-pixelated,
         .album-square:not(:hover) .cover-sharp {
             animation: none;
             transform: translateY(0px) scale(1);
         }
-        .album-square:not(:hover) { animation: none; transform: translateZ(0) scale(1); }
+        .album-square:not(:hover) {
+            animation: none;
+            transform: translateZ(0) scale(1);
+        }
 
         .album-square .cover-pixelated {
             z-index: 2;
@@ -186,10 +285,18 @@
             z-index: 1;
             opacity: 0;
         }
-        .album-square:not(.animating) .cover-sharp { opacity: 0; }
-        .album-square:not(.animating):hover .cover-pixelated { opacity: 0; }
-        .album-square:not(.animating):hover .cover-sharp { opacity: 1; }
-        .album-square.animated-cover .cover-sharp { display: none; }
+        .album-square:not(.animating) .cover-sharp {
+            opacity: 0;
+        }
+        .album-square:not(.animating):hover .cover-pixelated {
+            opacity: 0;
+        }
+        .album-square:not(.animating):hover .cover-sharp {
+            opacity: 1;
+        }
+        .album-square.animated-cover .cover-sharp {
+            display: none;
+        }
         .album-square.animated-cover .cover-pixelated {
             opacity: 1 !important;
             transition: none;
@@ -221,31 +328,42 @@
             .album-square.animated-cover .cover-sharp {
                 display: none !important;
             }
+
+            .header-item {
+                padding: 0.3rem 0.1rem;
+            }
+            .wheel-wrapper.expanded,
+            .contact-wrapper.expanded {
+                margin: 0.1rem 0;
+            }
+            .scroll-wrapper {
+                padding: 0.5rem 0.1rem; /* Increased mobile padding */
+            }
         }
 
-        /* --- Responsive --- */
+        /* --- Responsive spacing --- */
         @media (max-width: 900px) {
-            .album-square:not(:last-child) { margin-right: 26px; }
+            .album-square:not(:last-child) {
+                margin-right: 26px;
+            }
         }
         @media (max-width: 700px) {
-            .album-square:not(:last-child) { margin-right: 22px; }
+            .album-square:not(:last-child) {
+                margin-right: 22px;
+            }
         }
-
         @media (max-width: 640px) {
             .wheel-container {
                 padding: 12px 0;
                 padding-bottom: max(12px, env(safe-area-inset-bottom, 16px));
             }
             .scroll-wrapper {
-                padding: 0.25rem 0.1rem;
-                -webkit-overflow-scrolling: touch;
-                touch-action: pan-x;
+                padding: 0.5rem 0.1rem; /* Increased mobile padding */
             }
             .album-square:not(:last-child) {
                 margin-right: 14px;
             }
         }
-
         @media (max-width: 480px) {
             .album-square:not(:last-child) {
                 margin-right: 10px;
@@ -255,13 +373,32 @@
 </head>
 <body>
 
-    <div class="wheel-container">
-        <div class="header-section">
-            <img src="assets/releases.png" alt="Friends With Bears Records - Releases" class="title-image" id="titleImage">
-            <img src="assets/arrow.png" alt="Navigate releases" class="arrow-image" id="arrowImage">
-        </div>
-        <div class="scroll-wrapper" id="scrollWheel">
-            <div class="wheel-track" id="wheelTrack"></div>
+    <div class="wheel-container" id="container">
+        <div class="accordion-group">
+            <!-- RELEASES ITEM -->
+            <div class="header-item" id="releasesHeader">
+                <img src="assets/releases.png" alt="Releases" class="title-image" id="releasesTitle">
+                <img src="assets/arrow.png" alt="Toggle releases" class="arrow-image" id="releasesArrow">
+            </div>
+
+            <!-- WHEEL WRAPPER (collapsible) -->
+            <div class="wheel-wrapper" id="wheelWrapper">
+                <div class="scroll-wrapper" id="scrollWheel">
+                    <div class="wheel-track" id="wheelTrack"></div>
+                </div>
+            </div>
+
+            <!-- CONTACT ITEM -->
+            <div class="header-item" id="contactHeader">
+                <img src="assets/contact.png" alt="Contact" class="title-image" id="contactTitle">
+                <img src="assets/arrow.png" alt="Toggle contact" class="arrow-image" id="contactArrow">
+            </div>
+
+            <!-- CONTACT WRAPPER (collapsible) -->
+            <div class="contact-wrapper" id="contactWrapper">
+        
+                <img src="assets/email.png" alt="Contact Email" id="emailImage">
+            </div>
         </div>
     </div>
 
@@ -320,11 +457,47 @@
 
             const wrapper = document.getElementById('scrollWheel');
             const track = document.getElementById('wheelTrack');
-            const titleImage = document.getElementById('titleImage');
-            const arrowImage = document.getElementById('arrowImage');
-            if (!wrapper || !track || !titleImage || !arrowImage) return;
+            const releasesTitle = document.getElementById('releasesTitle');
+            const releasesArrow = document.getElementById('releasesArrow');
+            const contactTitle = document.getElementById('contactTitle');
+            const contactArrow = document.getElementById('contactArrow');
+            const wheelWrapper = document.getElementById('wheelWrapper');
+            const contactWrapper = document.getElementById('contactWrapper');
+            const emailImage = document.getElementById('emailImage');
+            const container = document.getElementById('container');
 
-            // ----- Sizing: covers at 45% of viewport height (original, stable size) -----
+            if (!wrapper || !track || !releasesTitle || !releasesArrow || !contactTitle || !contactArrow || !wheelWrapper ||
+                !contactWrapper || !emailImage || !container) return;
+
+            // ----- ACCORDION TOGGLE (Releases) -----
+            let isExpanded = false;
+
+            releasesArrow.addEventListener('click', function() {
+                isExpanded = !isExpanded;
+                if (isExpanded) {
+                    wheelWrapper.classList.add('expanded');
+                    releasesArrow.classList.add('rotated');
+                } else {
+                    wheelWrapper.classList.remove('expanded');
+                    releasesArrow.classList.remove('rotated');
+                }
+            });
+
+            // ----- ACCORDION TOGGLE (Contact) -----
+            let isContactExpanded = false;
+
+            contactArrow.addEventListener('click', function() {
+                isContactExpanded = !isContactExpanded;
+                if (isContactExpanded) {
+                    contactWrapper.classList.add('expanded');
+                    contactArrow.classList.add('rotated');
+                } else {
+                    contactWrapper.classList.remove('expanded');
+                    contactArrow.classList.remove('rotated');
+                }
+            });
+
+            // ----- Sizing: covers at 45% of viewport height -----
             function getSize() {
                 const vh = window.innerHeight;
                 let s = Math.min(vh * 0.45, 500);
@@ -342,11 +515,24 @@
 
             function updateTitleSize(currentSize) {
                 const titleHeight = Math.min(currentSize * 0.2, 80);
-                titleImage.style.height = titleHeight + 'px';
-                titleImage.style.width = 'auto';
-                const arrowHeight = titleHeight * 0.7;
-                arrowImage.style.height = arrowHeight + 'px';
-                arrowImage.style.width = 'auto';
+                const titleWidth = titleHeight * 3;
+
+                releasesTitle.style.height = titleHeight + 'px';
+                releasesTitle.style.width = titleWidth + 'px';
+                contactTitle.style.height = titleHeight + 'px';
+                contactTitle.style.width = titleWidth + 'px';
+
+                // Arrows: half the height of the titles (0.5 instead of 0.7)
+                const arrowSize = titleHeight * 0.5;
+                releasesArrow.style.height = arrowSize + 'px';
+                releasesArrow.style.width = arrowSize + 'px';
+                contactArrow.style.height = arrowSize + 'px';
+                contactArrow.style.width = arrowSize + 'px';
+
+                // Email image: 2x the height of the titles
+                const emailHeight = titleHeight * 2;
+                emailImage.style.height = emailHeight + 'px';
+                emailImage.style.width = 'auto';
             }
 
             let currentSize = getSize();
@@ -358,7 +544,6 @@
                 track.innerHTML = '';
                 const total = RELEASES.length * COPIES;
 
-                // Determine if we're on mobile (<= 640px)
                 const isMobile = window.innerWidth <= 640;
 
                 for (let i = 0; i < total; i++) {
@@ -402,7 +587,6 @@
                         container._animInterval = null;
                         container._pixelatedLayer = pixelated;
 
-                        // --- ONLY ATTACH HOVER EFFECTS ON DESKTOP ---
                         if (!isMobile) {
                             container.addEventListener('mouseenter', function(e) {
                                 if (this._animInterval) {
@@ -417,7 +601,8 @@
                                     const nextIndex = this._currentFrameIndex + 1;
                                     if (nextIndex < frames.length) {
                                         this._currentFrameIndex = nextIndex;
-                                        this._pixelatedLayer.style.backgroundImage = `url('${frames[nextIndex]}')`;
+                                        this._pixelatedLayer.style.backgroundImage =
+                                            `url('${frames[nextIndex]}')`;
                                     } else {
                                         clearInterval(this._animInterval);
                                         this._animInterval = null;
@@ -440,7 +625,8 @@
                                     const nextIndex = this._currentFrameIndex - 1;
                                     if (nextIndex >= 0) {
                                         this._currentFrameIndex = nextIndex;
-                                        this._pixelatedLayer.style.backgroundImage = `url('${frames[nextIndex]}')`;
+                                        this._pixelatedLayer.style.backgroundImage =
+                                            `url('${frames[nextIndex]}')`;
                                     } else {
                                         clearInterval(this._animInterval);
                                         this._animInterval = null;
@@ -449,7 +635,6 @@
                                 }, data.frameDelay);
                             });
                         }
-                        // --- END DESKTOP-ONLY HOVER EFFECTS ---
 
                     } else {
                         const pixelatedSrc = release.src.replace(/\.(jpe?g|png|webp)$/i, '-pixelated.$1');
