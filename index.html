@@ -10,7 +10,7 @@
     <link rel="canonical" href="https://friendswithbears.com">
 
     <meta property="og:title" content="Friends With Bears Records">
-    <meta property="og:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok. Explore our latest releases.">
+    <meta property="og:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://friendswithbears.com">
     <meta property="og:image" content="https://friendswithbears.com/assets/fridae-cover.jpg">
@@ -57,10 +57,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
             background: #fff;
             padding: 20px 0;
+            justify-content: space-between; /* keeps wheel at bottom on all sizes */
+            overflow: hidden;
         }
+
         .header-section {
             flex: 0 0 auto;
             display: flex;
@@ -70,11 +72,13 @@
             max-width: 1800px;
             padding: 0 0.2rem;
         }
+
         .title-image {
             display: block;
             margin: 0;
             width: auto;
         }
+
         .arrow-image {
             display: block;
             margin: 0;
@@ -89,6 +93,7 @@
         .arrow-image:active {
             opacity: 0.8;
         }
+
         .scroll-wrapper {
             flex: 0 0 auto;
             width: 94%;
@@ -109,6 +114,7 @@
             width: 0;
             height: 0;
         }
+
         .wheel-track {
             display: flex;
             flex-wrap: nowrap;
@@ -139,7 +145,7 @@
             margin-right: 32px;
         }
 
-        /* ---- Breathing animations (subtle, slow) ---- */
+        /* ---- Breathing animations ---- */
         @keyframes breathe-container {
             0% { transform: translateZ(0) scale(1); }
             30% { transform: translateZ(0) scale(1.015); }
@@ -222,22 +228,42 @@
             transition: none;
         }
 
-        @media (max-width: 900px) {
+        /* ---- Mobile: header full width, arrow drops down ---- */
+        @media (max-width: 640px) {
+            .wheel-container {
+                padding: 10px 0 5px 0;
+            }
+
+            .header-section {
+                width: 92%;
+                padding: 0 0.1rem;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 2px;
+            }
+            .title-image {
+                width: 100%;
+                text-align: left;
+            }
+            .arrow-image {
+                margin-left: auto;
+                margin-top: 0;
+            }
+
+            /* Reduce cover size and spacing to prevent overflow */
+            .album-square:not(:last-child) {
+                margin-right: 18px;
+            }
+        }
+
+        @media (max-width: 900px) and (min-width: 641px) {
             .album-square:not(:last-child) {
                 margin-right: 26px;
             }
         }
-        @media (max-width: 700px) {
+        @media (max-width: 700px) and (min-width: 641px) {
             .album-square:not(:last-child) {
                 margin-right: 22px;
-            }
-        }
-        @media (max-width: 480px) {
-            .album-square:not(:last-child) {
-                margin-right: 18px;
-            }
-            .wheel-container {
-                padding: 15px 0;
             }
         }
     </style>
@@ -270,42 +296,42 @@
             const FALLBACKS = ['#b5838d', '#6d597a', '#2a9d8f', '#e76f51', '#264653'];
             const COPIES = 5;
 
-            // ----- ANIMATION DEFINITIONS (slower frame delay so you can see both frames) -----
+            // ----- ANIMATIONS -----
             const ANIMATIONS = {
                 'assets/fridae-cover.jpg': {
                     frames: [
                         'assets/animation/fridae-cover-1.jpg',
                         'assets/animation/fridae-cover-2.jpg'
                     ],
-                    frameDelay: 150
+                    frameDelay: 20
                 },
                 'assets/eliesriot_dying_to_live.jpg': {
                     frames: [
                         'assets/animation/eliesriot_dying_to_live-1.jpg',
                         'assets/animation/eliesriot_dying_to_live-2.jpg'
                     ],
-                    frameDelay: 150
+                    frameDelay: 20
                 },
                 'assets/creaturethief_ct-24.jpg': {
                     frames: [
                         'assets/animation/creaturethief_ct-24-1.jpg',
                         'assets/animation/creaturethief_ct-24-2.jpg'
                     ],
-                    frameDelay: 150
+                    frameDelay: 20
                 },
                 'assets/zayok_in_elsewhere.jpg': {
                     frames: [
                         'assets/animation/zayok_in_elsewhere-1.jpg',
                         'assets/animation/zayok_in_elsewhere-2.jpg'
                     ],
-                    frameDelay: 150
+                    frameDelay: 20
                 },
                 'assets/creaturethief_verdant.jpg': {
                     frames: [
                         'assets/animation/creaturethief_verdant-1.jpg',
                         'assets/animation/creaturethief_verdant-2.jpg'
                     ],
-                    frameDelay: 150
+                    frameDelay: 20
                 }
             };
 
@@ -315,18 +341,28 @@
             const arrowImage = document.getElementById('arrowImage');
             if (!wrapper || !track || !titleImage || !arrowImage) return;
 
-            // ----- Sizing: 50% of viewport height -----
+            // ----- Sizing: adjust for mobile to prevent cutoff -----
             function getSize() {
+                const vw = window.innerWidth;
                 const vh = window.innerHeight;
                 let s = vh * 0.5;
-                s = Math.max(Math.min(s, 500), 100);
+                // On small screens, reduce size so the wheel fits at the bottom
+                if (vw < 480) {
+                    s = Math.min(s, vh * 0.38);
+                } else if (vw < 640) {
+                    s = Math.min(s, vh * 0.42);
+                }
+                s = Math.max(Math.min(s, 500), 80);
                 return s;
             }
 
             function getSpacing() {
+                const vw = window.innerWidth;
                 const vh = window.innerHeight;
-                let s = vh * 0.04;
-                return Math.max(Math.min(s, 40), 15);
+                let s = vh * 0.035;
+                if (vw < 480) s = vh * 0.022;
+                else if (vw < 640) s = vh * 0.028;
+                return Math.max(Math.min(s, 40), 10);
             }
 
             function updateTitleSize(currentSize) {
@@ -338,7 +374,7 @@
                 arrowImage.style.width = 'auto';
             }
 
-            // ----- Build the track -----
+            // ----- Build track -----
             let currentSize = getSize();
 
             function buildTrack() {
@@ -362,13 +398,11 @@
                     container.dataset.title = release.title;
                     container.dataset.url = release.url;
 
-                    // Sharp layer
                     const sharp = document.createElement('div');
                     sharp.className = 'cover-layer cover-sharp';
                     sharp.style.backgroundImage = `url('${release.src}')`;
                     sharp.style.backgroundColor = FALLBACKS[idx];
 
-                    // Pixelated / animated layer
                     const pixelated = document.createElement('div');
                     pixelated.className = 'cover-layer cover-pixelated';
                     pixelated.style.backgroundColor = FALLBACKS[idx];
@@ -381,7 +415,6 @@
                         const animData = ANIMATIONS[release.src];
                         pixelated.style.backgroundImage = `url('${release.src}')`;
 
-                        // Preload frames
                         animData.frames.forEach(frame => {
                             const img = new Image();
                             img.src = frame;
@@ -399,7 +432,6 @@
                             }
                             const data = this._animData;
                             const frames = data.frames;
-                            // Start from frame 1
                             this._currentFrameIndex = 0;
                             this._pixelatedLayer.style.backgroundImage = `url('${frames[0]}')`;
                             this._animInterval = setInterval(() => {
@@ -408,7 +440,6 @@
                                     this._currentFrameIndex = nextIndex;
                                     this._pixelatedLayer.style.backgroundImage = `url('${frames[nextIndex]}')`;
                                 } else {
-                                    // Reached frame 2, keep it there (don't loop)
                                     clearInterval(this._animInterval);
                                     this._animInterval = null;
                                 }
@@ -420,16 +451,12 @@
                                 clearInterval(this._animInterval);
                                 this._animInterval = null;
                             }
-                            // Reverse: frame 2 → frame 1 → original cover
-                            const data = this._animData;
-                            const frames = data.frames;
-
-                            // If we're already at frame 1 or the original, just reset
                             if (this._currentFrameIndex <= 0) {
                                 this._pixelatedLayer.style.backgroundImage = `url('${this.dataset.src}')`;
                                 return;
                             }
-
+                            const data = this._animData;
+                            const frames = data.frames;
                             this._animInterval = setInterval(() => {
                                 const nextIndex = this._currentFrameIndex - 1;
                                 if (nextIndex >= 0) {
@@ -478,7 +505,7 @@
                 return { size, gap, itemWidth };
             }
 
-            // ----- Init with loop and controls -----
+            // ----- Init -----
             let itemWidth = 0;
             let oneSetWidth = 0;
 
@@ -536,7 +563,8 @@
                     }, { passive: true });
                 }
 
-                const SENSITIVITY = 0.5;
+                const isMobile = window.innerWidth < 640;
+                const SENSITIVITY = isMobile ? 1.8 : 0.5;
 
                 window.addEventListener('wheel', (e) => {
                     e.preventDefault();
@@ -567,7 +595,10 @@
                     const ty = e.touches[0].clientY;
                     const dx = touchStartX - tx;
                     const dy = touchStartY - ty;
-                    const raw = Math.abs(dx) > Math.abs(dy) * 0.5 ? dx : dy;
+                    let raw = dx;
+                    if (Math.abs(dy) > Math.abs(dx) * 0.5) {
+                        raw = dy;
+                    }
                     wrapper.scrollLeft = touchStartScroll + raw * SENSITIVITY;
                 }, { passive: false });
 
