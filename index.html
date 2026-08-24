@@ -8,18 +8,15 @@
     <meta name="keywords" content="Friends With Bears Records, creaturethief, April Fridae, eliesriot, Zayok, indie music, electronic, hyperpop, record label">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://friendswithbears.com">
-
     <meta property="og:title" content="Friends With Bears Records">
     <meta property="og:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://friendswithbears.com">
     <meta property="og:image" content="https://friendswithbears.com/assets/fridae-cover.jpg">
-
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Friends With Bears Records">
     <meta name="twitter:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok.">
     <meta name="twitter:image" content="https://friendswithbears.com/assets/fridae-cover.jpg">
-
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -39,30 +36,33 @@
     </script>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html,
-        body {
+        /* --- RESET --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
             width: 100%;
             height: 100%;
             background: #fff;
             overflow: hidden;
         }
+
+        /* --- CONTAINER --- */
         .wheel-container {
             width: 100vw;
+            /* FIX: Use 100dvh on modern mobile, fallback to 100vh */
             height: 100vh;
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: space-between;
             background: #fff;
-            padding: 20px 0;
-            justify-content: space-between; /* keeps wheel at bottom on all sizes */
             overflow: hidden;
+            padding: 20px 0;
+            /* FIX: Add safe-area padding for mobile notches/toolbars */
+            padding-bottom: max(20px, env(safe-area-inset-bottom, 20px));
         }
 
+        /* --- HEADER (top) --- */
         .header-section {
             flex: 0 0 auto;
             display: flex;
@@ -72,28 +72,22 @@
             max-width: 1800px;
             padding: 0 0.2rem;
         }
-
         .title-image {
             display: block;
-            margin: 0;
             width: auto;
+            height: auto;
         }
-
         .arrow-image {
             display: block;
-            margin: 0;
             width: auto;
             cursor: pointer;
             transition: opacity 0.2s ease;
             opacity: 1;
         }
-        .arrow-image:hover {
-            opacity: 0.6;
-        }
-        .arrow-image:active {
-            opacity: 0.8;
-        }
+        .arrow-image:hover { opacity: 0.6; }
+        .arrow-image:active { opacity: 0.8; }
 
+        /* --- WHEEL (pushed to bottom) --- */
         .scroll-wrapper {
             flex: 0 0 auto;
             width: 94%;
@@ -107,13 +101,10 @@
             overscroll-behavior: none;
             touch-action: pan-x;
             padding: 0.5rem 0.2rem;
-            margin-bottom: 0;
+            display: flex;
+            align-items: center;
         }
-        .scroll-wrapper::-webkit-scrollbar {
-            display: none;
-            width: 0;
-            height: 0;
-        }
+        .scroll-wrapper::-webkit-scrollbar { display: none; }
 
         .wheel-track {
             display: flex;
@@ -121,13 +112,15 @@
             gap: 0;
             padding: 0;
             width: fit-content;
+            height: 100%;
+            align-items: center;
             will-change: transform;
             transform: translateZ(0);
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
         }
 
-        /* ---- Album cover container ---- */
+        /* --- COVERS --- */
         .album-square {
             flex: 0 0 auto;
             position: relative;
@@ -145,24 +138,20 @@
             margin-right: 32px;
         }
 
-        /* ---- Breathing animations ---- */
+        /* Breathing animations */
         @keyframes breathe-container {
             0% { transform: translateZ(0) scale(1); }
             30% { transform: translateZ(0) scale(1.015); }
             70% { transform: translateZ(0) scale(1.008); }
             100% { transform: translateZ(0) scale(1); }
         }
-
         @keyframes breathe-image {
             0% { transform: translateY(0px) scale(1); }
             30% { transform: translateY(-4px) scale(1.015); }
             70% { transform: translateY(-2px) scale(1.008); }
             100% { transform: translateY(0px) scale(1); }
         }
-
-        .album-square:hover {
-            animation: breathe-container 6s ease-in-out infinite;
-        }
+        .album-square:hover { animation: breathe-container 6s ease-in-out infinite; }
 
         .album-square .cover-layer {
             position: absolute;
@@ -178,24 +167,14 @@
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
         }
-
-        .album-square:hover .cover-pixelated {
-            animation: breathe-image 6s ease-in-out infinite;
-        }
-        .album-square:hover .cover-sharp {
-            animation: breathe-image 6s ease-in-out infinite;
-        }
-
+        .album-square:hover .cover-pixelated { animation: breathe-image 6s ease-in-out infinite; }
+        .album-square:hover .cover-sharp { animation: breathe-image 6s ease-in-out infinite; }
         .album-square:not(:hover) .cover-pixelated,
         .album-square:not(:hover) .cover-sharp {
             animation: none;
             transform: translateY(0px) scale(1);
         }
-
-        .album-square:not(:hover) {
-            animation: none;
-            transform: translateZ(0) scale(1);
-        }
+        .album-square:not(:hover) { animation: none; transform: translateZ(0) scale(1); }
 
         .album-square .cover-pixelated {
             z-index: 2;
@@ -204,66 +183,45 @@
             image-rendering: crisp-edges;
             opacity: 1;
         }
-
         .album-square .cover-sharp {
             z-index: 1;
             opacity: 0;
         }
-
-        .album-square:not(.animating) .cover-sharp {
-            opacity: 0;
-        }
-        .album-square:not(.animating):hover .cover-pixelated {
-            opacity: 0;
-        }
-        .album-square:not(.animating):hover .cover-sharp {
-            opacity: 1;
-        }
-
-        .album-square.animated-cover .cover-sharp {
-            display: none;
-        }
+        .album-square:not(.animating) .cover-sharp { opacity: 0; }
+        .album-square:not(.animating):hover .cover-pixelated { opacity: 0; }
+        .album-square:not(.animating):hover .cover-sharp { opacity: 1; }
+        .album-square.animated-cover .cover-sharp { display: none; }
         .album-square.animated-cover .cover-pixelated {
             opacity: 1 !important;
             transition: none;
         }
 
-        /* ---- Mobile: header full width, arrow drops down ---- */
+        /* --- responsive spacing tweaks (desktop) --- */
+        @media (max-width: 900px) {
+            .album-square:not(:last-child) { margin-right: 26px; }
+        }
+        @media (max-width: 700px) {
+            .album-square:not(:last-child) { margin-right: 22px; }
+        }
+
+        /* --- MOBILE FIX: no layout changes, just ensure wheel isn't cut off --- */
         @media (max-width: 640px) {
             .wheel-container {
-                padding: 10px 0 5px 0;
+                /* The 100dvh + safe-area padding already fixes the cutoff */
+                padding: 12px 0;
+                padding-bottom: max(12px, env(safe-area-inset-bottom, 16px));
             }
-
-            .header-section {
-                width: 92%;
-                padding: 0 0.1rem;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                gap: 2px;
+            .scroll-wrapper {
+                padding: 0.25rem 0.1rem;
             }
-            .title-image {
-                width: 100%;
-                text-align: left;
-            }
-            .arrow-image {
-                margin-left: auto;
-                margin-top: 0;
-            }
-
-            /* Reduce cover size and spacing to prevent overflow */
             .album-square:not(:last-child) {
-                margin-right: 18px;
+                margin-right: 14px;
             }
         }
 
-        @media (max-width: 900px) and (min-width: 641px) {
+        @media (max-width: 480px) {
             .album-square:not(:last-child) {
-                margin-right: 26px;
-            }
-        }
-        @media (max-width: 700px) and (min-width: 641px) {
-            .album-square:not(:last-child) {
-                margin-right: 22px;
+                margin-right: 10px;
             }
         }
     </style>
@@ -284,7 +242,6 @@
         (function() {
             'use strict';
 
-            // ----- RELEASES -----
             const RELEASES = [
                 { src: 'assets/fridae-cover.jpg', artist: 'April Fridae', title: 'Fridae', url: 'https://friendswithbears.com/releases/fridae' },
                 { src: 'assets/eliesriot_dying_to_live.jpg', artist: 'eliesriot', title: 'Dying to Live', url: 'https://friendswithbears.com/releases/dying-to-live' },
@@ -296,7 +253,6 @@
             const FALLBACKS = ['#b5838d', '#6d597a', '#2a9d8f', '#e76f51', '#264653'];
             const COPIES = 5;
 
-            // ----- ANIMATIONS -----
             const ANIMATIONS = {
                 'assets/fridae-cover.jpg': {
                     frames: [
@@ -341,32 +297,24 @@
             const arrowImage = document.getElementById('arrowImage');
             if (!wrapper || !track || !titleImage || !arrowImage) return;
 
-            // ----- Sizing: adjust for mobile to prevent cutoff -----
+            // ----- Sizing: cover size based on viewport height -----
             function getSize() {
-                const vw = window.innerWidth;
                 const vh = window.innerHeight;
-                let s = vh * 0.5;
-                // On small screens, reduce size so the wheel fits at the bottom
-                if (vw < 480) {
-                    s = Math.min(s, vh * 0.38);
-                } else if (vw < 640) {
-                    s = Math.min(s, vh * 0.42);
-                }
-                s = Math.max(Math.min(s, 500), 80);
+                let s = Math.min(vh * 0.45, 500);
+                s = Math.max(s, 100);
                 return s;
             }
 
             function getSpacing() {
-                const vw = window.innerWidth;
-                const vh = window.innerHeight;
-                let s = vh * 0.035;
-                if (vw < 480) s = vh * 0.022;
-                else if (vw < 640) s = vh * 0.028;
-                return Math.max(Math.min(s, 40), 10);
+                const w = window.innerWidth;
+                if (w < 480) return 14;
+                if (w < 700) return 20;
+                if (w < 900) return 26;
+                return 32;
             }
 
             function updateTitleSize(currentSize) {
-                const titleHeight = currentSize * 0.2;
+                const titleHeight = Math.min(currentSize * 0.2, 80);
                 titleImage.style.height = titleHeight + 'px';
                 titleImage.style.width = 'auto';
                 const arrowHeight = titleHeight * 0.7;
@@ -374,7 +322,6 @@
                 arrowImage.style.width = 'auto';
             }
 
-            // ----- Build track -----
             let currentSize = getSize();
 
             function buildTrack() {
@@ -505,7 +452,6 @@
                 return { size, gap, itemWidth };
             }
 
-            // ----- Init -----
             let itemWidth = 0;
             let oneSetWidth = 0;
 
@@ -563,8 +509,7 @@
                     }, { passive: true });
                 }
 
-                const isMobile = window.innerWidth < 640;
-                const SENSITIVITY = isMobile ? 1.8 : 0.5;
+                const SENSITIVITY = 0.5;
 
                 window.addEventListener('wheel', (e) => {
                     e.preventDefault();
