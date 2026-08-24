@@ -324,10 +324,10 @@
             const arrowImage = document.getElementById('arrowImage');
             if (!wrapper || !track || !titleImage || !arrowImage) return;
 
-            // ----- Sizing: COVERS AT 60% OF VIEWPORT HEIGHT -----
+            // ----- Sizing: covers at 45% of viewport height (original, stable size) -----
             function getSize() {
                 const vh = window.innerHeight;
-                let s = Math.min(vh * 0.60, 700);
+                let s = Math.min(vh * 0.45, 500);
                 s = Math.max(s, 100);
                 return s;
             }
@@ -357,6 +357,9 @@
 
                 track.innerHTML = '';
                 const total = RELEASES.length * COPIES;
+
+                // Determine if we're on mobile (<= 640px)
+                const isMobile = window.innerWidth <= 640;
 
                 for (let i = 0; i < total; i++) {
                     const idx = i % RELEASES.length;
@@ -399,52 +402,54 @@
                         container._animInterval = null;
                         container._pixelatedLayer = pixelated;
 
-                        // ---- ALWAYS ATTACH HOVER LISTENERS ----
-                        container.addEventListener('mouseenter', function(e) {
-                            if (this._animInterval) {
-                                clearInterval(this._animInterval);
-                                this._animInterval = null;
-                            }
-                            const data = this._animData;
-                            const frames = data.frames;
-                            this._currentFrameIndex = 0;
-                            this._pixelatedLayer.style.backgroundImage = `url('${frames[0]}')`;
-                            this._animInterval = setInterval(() => {
-                                const nextIndex = this._currentFrameIndex + 1;
-                                if (nextIndex < frames.length) {
-                                    this._currentFrameIndex = nextIndex;
-                                    this._pixelatedLayer.style.backgroundImage = `url('${frames[nextIndex]}')`;
-                                } else {
+                        // --- ONLY ATTACH HOVER EFFECTS ON DESKTOP ---
+                        if (!isMobile) {
+                            container.addEventListener('mouseenter', function(e) {
+                                if (this._animInterval) {
                                     clearInterval(this._animInterval);
                                     this._animInterval = null;
                                 }
-                            }, data.frameDelay);
-                        });
+                                const data = this._animData;
+                                const frames = data.frames;
+                                this._currentFrameIndex = 0;
+                                this._pixelatedLayer.style.backgroundImage = `url('${frames[0]}')`;
+                                this._animInterval = setInterval(() => {
+                                    const nextIndex = this._currentFrameIndex + 1;
+                                    if (nextIndex < frames.length) {
+                                        this._currentFrameIndex = nextIndex;
+                                        this._pixelatedLayer.style.backgroundImage = `url('${frames[nextIndex]}')`;
+                                    } else {
+                                        clearInterval(this._animInterval);
+                                        this._animInterval = null;
+                                    }
+                                }, data.frameDelay);
+                            });
 
-                        container.addEventListener('mouseleave', function(e) {
-                            if (this._animInterval) {
-                                clearInterval(this._animInterval);
-                                this._animInterval = null;
-                            }
-                            if (this._currentFrameIndex <= 0) {
-                                this._pixelatedLayer.style.backgroundImage = `url('${this.dataset.src}')`;
-                                return;
-                            }
-                            const data = this._animData;
-                            const frames = data.frames;
-                            this._animInterval = setInterval(() => {
-                                const nextIndex = this._currentFrameIndex - 1;
-                                if (nextIndex >= 0) {
-                                    this._currentFrameIndex = nextIndex;
-                                    this._pixelatedLayer.style.backgroundImage = `url('${frames[nextIndex]}')`;
-                                } else {
+                            container.addEventListener('mouseleave', function(e) {
+                                if (this._animInterval) {
                                     clearInterval(this._animInterval);
                                     this._animInterval = null;
-                                    this._pixelatedLayer.style.backgroundImage = `url('${this.dataset.src}')`;
                                 }
-                            }, data.frameDelay);
-                        });
-                        // ---- END LISTENERS ----
+                                if (this._currentFrameIndex <= 0) {
+                                    this._pixelatedLayer.style.backgroundImage = `url('${this.dataset.src}')`;
+                                    return;
+                                }
+                                const data = this._animData;
+                                const frames = data.frames;
+                                this._animInterval = setInterval(() => {
+                                    const nextIndex = this._currentFrameIndex - 1;
+                                    if (nextIndex >= 0) {
+                                        this._currentFrameIndex = nextIndex;
+                                        this._pixelatedLayer.style.backgroundImage = `url('${frames[nextIndex]}')`;
+                                    } else {
+                                        clearInterval(this._animInterval);
+                                        this._animInterval = null;
+                                        this._pixelatedLayer.style.backgroundImage = `url('${this.dataset.src}')`;
+                                    }
+                                }, data.frameDelay);
+                            });
+                        }
+                        // --- END DESKTOP-ONLY HOVER EFFECTS ---
 
                     } else {
                         const pixelatedSrc = release.src.replace(/\.(jpe?g|png|webp)$/i, '-pixelated.$1');
