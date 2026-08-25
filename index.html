@@ -46,7 +46,6 @@
             height: 100%;
             background: #fff;
             overflow: hidden;
-            touch-action: none;
         }
         .wheel-container {
             width: 100vw;
@@ -113,19 +112,20 @@
         .releases-content {
             font-family: system-ui, -apple-system, sans-serif;
             font-size: 1rem;
-            color: #1a1a1a;
+            color: #222222;
             padding: 0.75rem 0.2rem;
             width: 100%;
             text-align: left;
         }
         .releases-content a {
-            color: #1a1a1a;
-            text-decoration: none;
-            border-bottom: 1px solid #ddd;
-            transition: border-color 0.2s ease;
+            color: #222222;
+            text-decoration: underline;
+            text-underline-offset: 0.2em;
+            text-decoration-thickness: 1px;
+            transition: text-decoration-color 0.2s ease;
         }
         .releases-content a:hover {
-            border-bottom-color: #000;
+            text-decoration-color: #000;
         }
         .wheel-wrapper {
             width: 100%;
@@ -161,25 +161,25 @@
         .mailing-wrapper.expanded {
             max-height: 2000px;
             opacity: 1;
-            /* No bottom margin – reduced space under mailing list */
             margin: 0.25rem 0 0 0;
         }
         .mailing-content {
             font-family: system-ui, -apple-system, sans-serif;
             font-size: 1rem;
-            color: #1a1a1a;
+            color: #222222;
             padding: 0.75rem 0.2rem 0 0.2rem;
             width: 100%;
             text-align: left;
         }
         .mailing-content a {
-            color: #1a1a1a;
-            text-decoration: none;
-            border-bottom: 1px solid #ddd;
-            transition: border-color 0.2s ease;
+            color: #222222;
+            text-decoration: underline;
+            text-underline-offset: 0.2em;
+            text-decoration-thickness: 1px;
+            transition: text-decoration-color 0.2s ease;
         }
         .mailing-content a:hover {
-            border-bottom-color: #000;
+            text-decoration-color: #000;
         }
         .mailing-image-container {
             width: 100%;
@@ -231,19 +231,20 @@
         .contact-text {
             font-family: system-ui, -apple-system, sans-serif;
             font-size: 1rem;
-            color: #1a1a1a;
+            color: #222222;
             padding: 0.75rem 0.2rem;
             width: 100%;
             line-height: 1.5;
         }
         .contact-text a {
-            color: #1a1a1a;
-            text-decoration: none;
-            border-bottom: 1px solid #ddd;
-            transition: border-color 0.2s ease;
+            color: #222222;
+            text-decoration: underline;
+            text-underline-offset: 0.2em;
+            text-decoration-thickness: 1px;
+            transition: text-decoration-color 0.2s ease;
         }
         .contact-text a:hover {
-            border-bottom-color: #000;
+            text-decoration-color: #000;
         }
         .scroll-wrapper {
             width: 100%;
@@ -381,7 +382,7 @@
             font-family: system-ui, -apple-system, sans-serif;
             font-size: 0.8rem;
             color: #999;
-            text-align: center;
+            text-align: left;
             padding: 0.5rem 0 0.25rem 0;
             width: 94%;
             max-width: 1800px;
@@ -437,6 +438,12 @@
             .footer {
                 font-size: 0.7rem;
                 padding: 0.25rem 0 0.1rem 0;
+                width: 92%;
+            }
+            .releases-content a,
+            .mailing-content a,
+            .contact-text a {
+                text-underline-offset: 0.15em;
             }
         }
         @media (max-width: 900px) {
@@ -546,6 +553,7 @@
             };
             const wrapper = document.getElementById('scrollWheel');
             const track = document.getElementById('wheelTrack');
+            const mailingContainer = document.getElementById('mailingImageContainer');
             const releasesTitle = document.getElementById('releasesTitle');
             const releasesArrow = document.getElementById('releasesArrow');
             const mailingTitle = document.getElementById('mailingTitle');
@@ -561,6 +569,7 @@
                 !mailingImageContainer || !contactTitle || !contactArrow || !wheelWrapper || !contactWrapper || !container)
                 return;
 
+            // ----- ACCORDION: FAST SEQUENTIAL CLOSE/OPEN -----
             let currentlyOpen = null;
             let openTimer = null;
 
@@ -604,6 +613,7 @@
                 toggleSection(contactWrapper, contactArrow, 'contact');
             });
 
+            // ----- SIZING -----
             function getSize() {
                 const vw = window.innerWidth;
                 const vh = window.innerHeight;
@@ -646,6 +656,7 @@
             }
             let currentSize = getSize();
 
+            // ----- BUILD RELEASES WHEEL -----
             function buildTrack() {
                 const size = getSize();
                 const gap = getSpacing();
@@ -761,6 +772,7 @@
                 return { size, gap, itemWidth };
             }
 
+            // ----- BUILD MAILING GRID -----
             function buildMailingGrid() {
                 const size = getSize();
                 mailingImageContainer.innerHTML = '';
@@ -784,6 +796,7 @@
             let itemWidth = 0;
             let oneSetWidth = 0;
 
+            // ----- INFINITE LOOP (Releases wheel only) -----
             let loopScheduled = false;
             const performLoopJump = function() {
                 if (loopScheduled) return;
@@ -804,18 +817,14 @@
                 });
             };
 
-            function init() {
-                const result = buildTrack();
-                itemWidth = result.itemWidth;
-                const size = result.size;
-                const gap = result.gap;
-                oneSetWidth = RELEASES.length * itemWidth;
-                buildMailingGrid();
+            // ----- SCROLL HANDLERS: each wheel handles its own scrolling -----
+            function setupWheelScrolling(wheelElement, loopCallback) {
+                if (!wheelElement) return;
 
                 let wheelTimeout = null;
-
-                window.addEventListener('wheel', function(e) {
+                wheelElement.addEventListener('wheel', function(e) {
                     e.preventDefault();
+                    e.stopPropagation();
                     const dx = e.deltaX || 0;
                     const dy = e.deltaY || 0;
                     let delta = dx;
@@ -824,65 +833,32 @@
                     } else if (Math.abs(dx) > 0) {
                         delta = dx;
                     }
-                    wrapper.scrollLeft += delta;
-                    clearTimeout(wheelTimeout);
-                    wheelTimeout = setTimeout(performLoopJump, 100);
+                    wheelElement.scrollLeft += delta;
+                    if (loopCallback) {
+                        clearTimeout(wheelTimeout);
+                        wheelTimeout = setTimeout(loopCallback, 100);
+                    }
                 }, { passive: false });
 
-                let touchStartX = 0;
-                let touchStartY = 0;
-                let touchStartScrollLeft = 0;
-                let isTouching = false;
-                let touchTargetIsWrapper = false;
+                if (loopCallback) {
+                    let scrollStopTimer = null;
+                    wheelElement.addEventListener('scroll', function() {
+                        clearTimeout(scrollStopTimer);
+                        scrollStopTimer = setTimeout(loopCallback, 150);
+                    });
+                }
+            }
 
-                window.addEventListener('touchstart', function(e) {
-                    if (e.touches.length === 1) {
-                        const touch = e.touches[0];
-                        const target = document.elementFromPoint(touch.clientX, touch.clientY);
-                        touchTargetIsWrapper = wrapper.contains(target);
-                        touchStartX = touch.clientX;
-                        touchStartY = touch.clientY;
-                        touchStartScrollLeft = wrapper.scrollLeft;
-                        isTouching = true;
-                    }
-                }, { passive: true });
+            function init() {
+                const result = buildTrack();
+                itemWidth = result.itemWidth;
+                const size = result.size;
+                const gap = result.gap;
+                oneSetWidth = RELEASES.length * itemWidth;
+                buildMailingGrid();
 
-                window.addEventListener('touchmove', function(e) {
-                    if (!isTouching || e.touches.length !== 1) return;
-
-                    if (touchTargetIsWrapper) {
-                        return;
-                    }
-
-                    e.preventDefault();
-                    const touch = e.touches[0];
-                    const dx = touchStartX - touch.clientX;
-                    const dy = touchStartY - touch.clientY;
-                    let delta = dx;
-                    if (Math.abs(dy) > Math.abs(dx)) {
-                        delta = dy;
-                    } else if (Math.abs(dx) > 0) {
-                        delta = dx;
-                    }
-                    wrapper.scrollLeft = touchStartScrollLeft + delta;
-                }, { passive: false });
-
-                window.addEventListener('touchend', function() {
-                    isTouching = false;
-                    touchTargetIsWrapper = false;
-                    setTimeout(performLoopJump, 100);
-                }, { passive: true });
-                window.addEventListener('touchcancel', function() {
-                    isTouching = false;
-                    touchTargetIsWrapper = false;
-                    setTimeout(performLoopJump, 100);
-                }, { passive: true });
-
-                let scrollStopTimer = null;
-                wrapper.addEventListener('scroll', function() {
-                    clearTimeout(scrollStopTimer);
-                    scrollStopTimer = setTimeout(performLoopJump, 150);
-                });
+                setupWheelScrolling(wrapper, performLoopJump);
+                setupWheelScrolling(mailingImageContainer, null);
 
                 document.addEventListener('keydown', function(e) {
                     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
