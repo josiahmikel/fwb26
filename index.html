@@ -54,18 +54,182 @@
             display: flex;
             flex-direction: column;
             background: #fff;
-            padding: 20px 0 10px 0;
-            padding-bottom: max(10px, env(safe-area-inset-bottom, 10px));
             overflow: hidden;
             position: relative;
-            justify-content: space-between;
         }
+
+        .player-header {
+            flex: 0 0 auto;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 0.75rem;
+            padding: 0.75rem 0 0.5rem 0;
+            width: 94%;
+            max-width: 1800px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            flex-shrink: 0;
+            transition: color 0.2s ease;
+            color: #999;
+        }
+        .player-header .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            flex-shrink: 0;
+        }
+        .player-header .radio-label {
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.2s ease;
+        }
+        .player-header .radio-label .dot {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background: #e74c3c;
+            border-radius: 50%;
+            animation: pulse-dot 1.5s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+        @keyframes pulse-dot {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .player-header .play-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.05rem 0.1rem;
+            font-size: 0.6rem;
+            display: flex;
+            align-items: center;
+            font-family: system-ui, -apple-system, sans-serif;
+            transition: color 0.2s ease;
+            color: inherit;
+        }
+        .player-header .play-btn .icon {
+            font-size: 0.8rem;
+            line-height: 1;
+        }
+        .player-header .line {
+            flex: 1 1 auto;
+            height: 1px;
+            min-width: 20px;
+            margin: 0 0.5rem;
+            background: #e0e0e0;
+            transition: background 0.2s ease;
+        }
+        .player-header .now-playing {
+            font-weight: 400;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex-shrink: 1;
+            min-width: 0;
+            text-align: right;
+            transition: color 0.2s ease;
+        }
+        .player-header .now-playing .song-title {
+            font-weight: 400;
+        }
+        .player-header .now-playing .artist-name {
+            font-weight: 700;
+        }
+        .player-header .now-playing .artist-link {
+            font-weight: 700;
+            color: inherit;
+            text-decoration: none;
+            transition: opacity 0.2s ease, text-decoration-color 0.2s ease;
+        }
+        .player-header .now-playing .artist-link:hover {
+            text-decoration: underline;
+            text-underline-offset: 0.2em;
+            text-decoration-thickness: 1px;
+            opacity: 0.7;
+        }
+        .player-header .now-playing .separator {
+            font-weight: 300;
+            opacity: 0.4;
+            margin: 0 0.2rem;
+        }
+        .player-header .now-playing .status-msg {
+            font-style: italic;
+            opacity: 0.6;
+        }
+        .player-header .now-playing.loading {
+            opacity: 0.6;
+        }
+        .player-header .now-playing.offline {
+            opacity: 0.4;
+            font-style: italic;
+        }
+
+        .player-header:hover,
+        .player-header:hover .radio-label,
+        .player-header:hover .play-btn,
+        .player-header:hover .now-playing,
+        .player-header:hover .now-playing .song-title,
+        .player-header:hover .now-playing .artist-name,
+        .player-header:hover .now-playing .artist-link {
+            color: #292929;
+        }
+        .player-header:hover .line {
+            background: #292929;
+        }
+
+        .player-header.playing,
+        .player-header.playing .radio-label,
+        .player-header.playing .play-btn,
+        .player-header.playing .now-playing,
+        .player-header.playing .now-playing .song-title,
+        .player-header.playing .now-playing .artist-name,
+        .player-header.playing .now-playing .artist-link {
+            color: #292929;
+        }
+        .player-header.playing .line {
+            background: #292929;
+        }
+        .player-header .radio-label .dot,
+        .player-header:hover .radio-label .dot,
+        .player-header.playing .radio-label .dot {
+            background: #e74c3c;
+        }
+
+        @media (max-width: 640px) {
+            .player-header {
+                font-size: 0.6rem;
+                padding: 0.5rem 0 0.35rem 0;
+                width: 92%;
+                gap: 0.3rem;
+            }
+            .player-header .radio-label .dot {
+                width: 5px;
+                height: 5px;
+            }
+            .player-header .play-btn {
+                font-size: 0.5rem;
+            }
+            .player-header .play-btn .icon {
+                font-size: 0.7rem;
+            }
+            .player-header .line {
+                margin: 0 0.3rem;
+            }
+        }
+
         .accordion-wrapper {
             flex: 1 0 auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0 0.5rem;
+            padding: 0.5rem 0.5rem;
             min-height: 0;
         }
         .accordion-group {
@@ -380,7 +544,7 @@
         }
         .footer {
             font-family: system-ui, -apple-system, sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #999;
             text-align: left;
             padding: 0.5rem 0 0.25rem 0;
@@ -436,7 +600,7 @@
                 padding: 0 0.1rem 0 0.1rem;
             }
             .footer {
-                font-size: 0.7rem;
+                font-size: 0.65rem;
                 padding: 0.25rem 0 0.1rem 0;
                 width: 92%;
             }
@@ -458,8 +622,7 @@
         }
         @media (max-width: 640px) {
             .wheel-container {
-                padding: 12px 0 6px 0;
-                padding-bottom: max(6px, env(safe-area-inset-bottom, 6px));
+                padding: 0;
             }
             .scroll-wrapper {
                 padding: 0.5rem 0.1rem;
@@ -480,30 +643,55 @@
 </head>
 <body>
     <div class="wheel-container" id="container">
+
+        <!-- PLAYER HEADER -->
+        <div class="player-header" id="playerHeader">
+            <div class="radio-group">
+                <span class="radio-label">
+                    <span class="dot"></span>
+                    RADIO
+                </span>
+                <button class="play-btn" id="playBtn" aria-label="Play / Pause">
+                    <span class="icon" id="playIcon">▶</span>
+                </button>
+            </div>
+            <div class="line"></div>
+            <span class="now-playing" id="nowPlaying">
+                <span class="status-msg">Loading radio...</span>
+            </span>
+        </div>
+
+        <!-- ACCORDION WRAPPER -->
         <div class="accordion-wrapper">
             <div class="accordion-group">
+
+                <!-- RELEASES ITEM -->
                 <div class="header-item" id="releasesHeader">
                     <img src="assets/releases.png" alt="Releases" class="title-image" id="releasesTitle">
                     <img src="assets/arrow.png" alt="Toggle releases" class="arrow-image" id="releasesArrow">
                 </div>
                 <div class="wheel-wrapper" id="wheelWrapper">
                     <div class="releases-content">
-                        <p>April Fridae's "right now," releases August 26th! <a href="http://friendswithbears.com/fridae/right-now" target="_blank">Pre-save &amp; get a FREE ZINE here.</a></p>
+                        <p>April Fridae's "right now," August 26th. <a href="http://friendswithbears.com/fridae/right-now" target="_blank">Pre-save &amp; get a free zine here.</a></p>
                     </div>
                     <div class="scroll-wrapper" id="scrollWheel">
                         <div class="wheel-track" id="wheelTrack"></div>
                     </div>
                 </div>
+
+                <!-- MAILING LIST ITEM -->
                 <div class="header-item" id="mailingHeader">
                     <img src="assets/mailing-list.png" alt="Mailing List" class="title-image" id="mailingTitle">
                     <img src="assets/arrow.png" alt="Toggle mailing list" class="arrow-image" id="mailingArrow">
                 </div>
                 <div class="mailing-wrapper" id="mailingWrapper">
                     <div class="mailing-content">
-                        <p>Join our mailing list for release updates, free zines, postcards, stickers, and more. <a href="https://forms.gle/hf4jCUEQcWnEb4B6A" target="_blank">Click here to sign up.</a></p>
+                        <p>Join our mailing list for new updates, free zines, postcards, stickers, and more. <a href="https://forms.gle/hf4jCUEQcWnEb4B6A" target="_blank">Click here to sign up.</a></p>
                     </div>
                     <div class="mailing-image-container" id="mailingImageContainer"></div>
                 </div>
+
+                <!-- CONTACT ITEM -->
                 <div class="header-item" id="contactHeader">
                     <img src="assets/contact.png" alt="Contact" class="title-image" id="contactTitle">
                     <img src="assets/arrow.png" alt="Toggle contact" class="arrow-image" id="contactArrow">
@@ -513,63 +701,484 @@
                         For press, marketing, creative, or general inquiries, reach us at <a href="mailto:hi@friendswithbears.com">hi@friendswithbears.com</a>.<br><br>Interested in working with us? <a href="https://forms.gle/y2yPsPzmVBv1Kojx8" target="_blank">Submit your music here</a> for consideration.
                     </div>
                 </div>
+
             </div>
         </div>
+
+        <!-- FOOTER -->
         <div class="footer">©2026 Friends With Bears Records</div>
     </div>
     <script>
         (function() {
             'use strict';
-            const RELEASES = [
-                { src: 'assets/fridae-cover.jpg', artist: 'April Fridae', title: 'Fridae', url: 'https://friendswithbears.com/releases/fridae' },
-                { src: 'assets/eliesriot_dying_to_live.jpg', artist: 'eliesriot', title: 'Dying to Live', url: 'https://friendswithbears.com/releases/dying-to-live' },
-                { src: 'assets/creaturethief_ct-24.jpg', artist: 'creaturethief', title: 'CT-24', url: 'https://friendswithbears.com/releases/ct-24' },
-                { src: 'assets/zayok_in_elsewhere.jpg', artist: 'Zayok', title: 'In elsewhere', url: 'https://friendswithbears.com/releases/in-elsewhere' },
-                { src: 'assets/creaturethief_verdant.jpg', artist: 'creaturethief', title: 'verdant', url: 'https://friendswithbears.com/releases/verdant' }
+
+            // ============================================================
+            // 1. YOUR RADIO PLAYLIST (25 tracks)
+            // ============================================================
+            const PLAYLIST = [
+                'radio/118-creaturethief.mp3',
+                'radio/1214-creaturethief.mp3',
+                'radio/148-creaturethief.mp3',
+                'radio/DAMN-april_fridae.mp3',
+                'radio/GNL-patricio_portales.mp3',
+                'radio/always-quas.mp3',
+                'radio/b_side-fridae:thief.mp3',
+                'radio/backtrack-fridae:thief.mp3',
+                'radio/bizzare-fridae:thief.mp3',
+                'radio/braziw-april_fridae.mp3',
+                'radio/clocks_cut_out_or_switch-luvly.mp3',
+                'radio/down_and_loading-luvly.mp3',
+                'radio/eurovision-creaturethief.mp3',
+                'radio/follow-creaturethief.mp3',
+                'radio/fortune_cookie-fridae:thief.mp3',
+                'radio/gfdgdfgdfgfdfgd-april_fridae.mp3',
+                'radio/good4-luvly.mp3',
+                'radio/inagaki-milk.mp3',
+                'radio/lingering_w:_sana-luvly.mp3',
+                'radio/memory-creaturethief.mp3',
+                'radio/redi-creaturethief.mp3',
+                'radio/reef-milk.mp3',
+                'radio/sep4-creaturethief.mp3',
+                'radio/tube-creaturethief.mp3',
+                'radio/walle-fridae:thief.mp3'
             ];
-            const FALLBACKS = ['#b5838d', '#6d597a', '#2a9d8f', '#e76f51', '#264653'];
-            const COPIES = 5;
-            const ANIMATIONS = {
-                'assets/fridae-cover.jpg': {
-                    frames: ['assets/animation/fridae-cover-1.jpg', 'assets/animation/fridae-cover-2.jpg'],
-                    frameDelay: 20
-                },
-                'assets/eliesriot_dying_to_live.jpg': {
-                    frames: ['assets/animation/eliesriot_dying_to_live-1.jpg', 'assets/animation/eliesriot_dying_to_live-2.jpg'],
-                    frameDelay: 20
-                },
-                'assets/creaturethief_ct-24.jpg': {
-                    frames: ['assets/animation/creaturethief_ct-24-1.jpg', 'assets/animation/creaturethief_ct-24-2.jpg'],
-                    frameDelay: 20
-                },
-                'assets/zayok_in_elsewhere.jpg': {
-                    frames: ['assets/animation/zayok_in_elsewhere-1.jpg', 'assets/animation/zayok_in_elsewhere-2.jpg'],
-                    frameDelay: 20
-                },
-                'assets/creaturethief_verdant.jpg': {
-                    frames: ['assets/animation/creaturethief_verdant-1.jpg', 'assets/animation/creaturethief_verdant-2.jpg'],
-                    frameDelay: 20
-                }
+
+            // 2. EXACT TRACK DURATIONS (in seconds)
+            const TRACK_DURATIONS = {
+                '118-creaturethief.mp3': 65.149400,
+                '1214-creaturethief.mp3': 42.666667,
+                '148-creaturethief.mp3': 81.136300,
+                'DAMN-april_fridae.mp3': 119.142857,
+                'GNL-patricio_portales.mp3': 46.672109,
+                'always-quas.mp3': 109.766525,
+                'b_side-fridae:thief.mp3': 50.535011,
+                'backtrack-fridae:thief.mp3': 115.282404,
+                'bizzare-fridae:thief.mp3': 17.777800,
+                'braziw-april_fridae.mp3': 154.221156,
+                'clocks_cut_out_or_switch-luvly.mp3': 163.176000,
+                'down_and_loading-luvly.mp3': 63.048000,
+                'eurovision-creaturethief.mp3': 169.613050,
+                'follow-creaturethief.mp3': 30.511000,
+                'fortune_cookie-fridae:thief.mp3': 147.296871,
+                'gfdgdfgdfgfdfgd-april_fridae.mp3': 29.769229,
+                'good4-luvly.mp3': 61.080000,
+                'inagaki-milk.mp3': 69.224458,
+                'lingering_w:_sana-luvly.mp3': 76.617125,
+                'memory-creaturethief.mp3': 151.764172,
+                'redi-creaturethief.mp3': 75.702850,
+                'reef-milk.mp3': 46.497950,
+                'sep4-creaturethief.mp3': 59.402425,
+                'tube-creaturethief.mp3': 47.264218,
+                'walle-fridae:thief.mp3': 84.857143
             };
-            const wrapper = document.getElementById('scrollWheel');
-            const track = document.getElementById('wheelTrack');
-            const mailingContainer = document.getElementById('mailingImageContainer');
-            const releasesTitle = document.getElementById('releasesTitle');
+
+            // Artist Instagram mapping
+            const ARTIST_INSTAGRAM = {
+                'april_fridae': 'https://instagram.com/aprilfridae',
+                'april fridae': 'https://instagram.com/aprilfridae',
+                'creaturethief': 'https://instagram.com/creaturethief',
+                'luvly': 'https://instagram.com/luvly.ghost',
+                'patricio_portales': 'https://instagram.com/pato6p',
+                'patricio portales': 'https://instagram.com/pato6p',
+                'milk': 'https://instagram.com/milkcores',
+                'fridae:thief': 'https://instagram.com/creaturethief',
+                'fridae / thief': 'https://instagram.com/creaturethief',
+                'quas': 'https://instagram.com/playquas'
+            };
+
+            // ============================================================
+            // 3. DAILY SHUFFLED PLAYLIST
+            // ============================================================
+            function getDailyShuffledIndices() {
+                const now = new Date();
+                const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+                const indices = [...Array(PLAYLIST.length).keys()];
+                function mulberry32(a) {
+                    return function() {
+                        a |= 0; a = a + 0x6D2B79F5 | 0;
+                        let t = Math.imul(a ^ a >>> 15, 1 | a);
+                        t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+                        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+                    }
+                }
+                const rng = mulberry32(seed);
+                for (let i = indices.length - 1; i > 0; i--) {
+                    const j = Math.floor(rng() * (i + 1));
+                    [indices[i], indices[j]] = [indices[j], indices[i]];
+                }
+                return indices;
+            }
+
+            let shuffledIndices = getDailyShuffledIndices();
+            let shuffledPlaylist = shuffledIndices.map(i => PLAYLIST[i]);
+            let shuffledDurations = shuffledIndices.map(i => TRACK_DURATIONS[PLAYLIST[i].split('/').pop()] || 180);
+            let totalDuration = shuffledDurations.reduce((a, b) => a + b, 0);
+
+            // ============================================================
+            // 4. WEB AUDIO SETUP
+            // ============================================================
+            const playBtn = document.getElementById('playBtn');
+            const playIcon = document.getElementById('playIcon');
+            const nowPlayingEl = document.getElementById('nowPlaying');
+            const playerHeader = document.getElementById('playerHeader');
+
+            if (!playBtn || !playIcon || !nowPlayingEl || !playerHeader) return;
+
+            let isPlaying = false;
+            let isInitialized = false;
+            let radioStarted = false;
+
+            let audioContext = null;
+            let compressorNode = null;
+            let masterGainNode = null;
+            let audioProcessingSetup = false;
+
+            const players = [new Audio(), new Audio()];
+            let sources = [];
+            let gains = [];
+
+            let activePlayerIndex = 0;
+            let currentTrackIndex = -1;
+            let nextTrackIndex = -1;
+            let isCrossfading = false;
+            let crossfadeTimeout = null;
+            let crossfadePrepared = false;
+
+            // ============================================================
+            // 5. PARSER
+            // ============================================================
+            function parseTrackInfo(filename) {
+                const name = filename.replace(/\.[^.]+$/, '');
+                const parts = name.split('-');
+                let song = name;
+                let artist = '';
+                if (parts.length >= 2) {
+                    song = parts.slice(0, parts.length - 1).join('-');
+                    artist = parts[parts.length - 1];
+                }
+                song = song.replace(/_/g, ' ');
+                artist = artist.replace(/_/g, ' ');
+                
+                // Get Instagram URL for this artist
+                let instagramUrl = null;
+                const artistKey = artist.toLowerCase();
+                if (ARTIST_INSTAGRAM.hasOwnProperty(artistKey)) {
+                    instagramUrl = ARTIST_INSTAGRAM[artistKey];
+                }
+                
+                return { 
+                    song: song.trim(), 
+                    artist: artist.trim(),
+                    instagramUrl: instagramUrl
+                };
+            }
+
+            function getDisplayName(trackIndex) {
+                if (trackIndex < 0 || trackIndex >= shuffledPlaylist.length) return null;
+                const filename = shuffledPlaylist[trackIndex].split('/').pop();
+                return parseTrackInfo(filename);
+            }
+
+            function updateNowPlaying(trackIndex) {
+                if (!isInitialized) {
+                    nowPlayingEl.innerHTML = `<span class="status-msg">Loading radio...</span>`;
+                    return;
+                }
+                if (shuffledPlaylist.length === 0) {
+                    nowPlayingEl.innerHTML = `<span class="status-msg">No tracks found</span>`;
+                    return;
+                }
+                const info = getDisplayName(trackIndex);
+                if (!info) {
+                    nowPlayingEl.innerHTML = `<span class="status-msg">Track unavailable</span>`;
+                    return;
+                }
+                
+                if (info.artist) {
+                    // Make artist clickable if we have Instagram URL
+                    if (info.instagramUrl) {
+                        nowPlayingEl.innerHTML = 
+                            `<span class="song-title">${info.song}</span><span class="separator">·</span><a href="${info.instagramUrl}" target="_blank" class="artist-link">${info.artist}</a>`;
+                    } else {
+                        nowPlayingEl.innerHTML = 
+                            `<span class="song-title">${info.song}</span><span class="separator">·</span><span class="artist-name">${info.artist}</span>`;
+                    }
+                } else {
+                    nowPlayingEl.innerHTML = `<span class="song-title">${info.song}</span>`;
+                }
+                nowPlayingEl.classList.remove('loading');
+            }
+
+            function showStatus(msg, isError) {
+                nowPlayingEl.innerHTML = `<span class="status-msg" style="${isError ? 'color:#cc3333;' : ''}">${msg}</span>`;
+                nowPlayingEl.classList.add('loading');
+            }
+
+            // ---------- Setup Audio Context ----------
+            function setupAudio() {
+                if (audioProcessingSetup) return;
+                try {
+                    audioContext = new(window.AudioContext || window.webkitAudioContext)();
+
+                    compressorNode = audioContext.createDynamicsCompressor();
+                    compressorNode.threshold.value = -6;
+                    compressorNode.knee.value = 0;
+                    compressorNode.ratio.value = 20;
+                    compressorNode.attack.value = 0.001;
+                    compressorNode.release.value = 0.05;
+
+                    masterGainNode = audioContext.createGain();
+                    masterGainNode.gain.value = 0;
+
+                    sources[0] = audioContext.createMediaElementSource(players[0]);
+                    sources[1] = audioContext.createMediaElementSource(players[1]);
+
+                    gains[0] = audioContext.createGain();
+                    gains[1] = audioContext.createGain();
+
+                    gains[0].gain.value = 1.0;
+                    gains[1].gain.value = 0.0;
+
+                    sources[0].connect(gains[0]);
+                    gains[0].connect(compressorNode);
+                    sources[1].connect(gains[1]);
+                    gains[1].connect(compressorNode);
+                    compressorNode.connect(masterGainNode);
+                    masterGainNode.connect(audioContext.destination);
+
+                    audioProcessingSetup = true;
+                    console.log('🔊 Audio setup complete');
+                } catch (e) {
+                    console.warn('Audio setup failed:', e);
+                    audioProcessingSetup = true;
+                }
+            }
+
+            async function resumeAudioContext() {
+                if (audioContext && audioContext.state === 'suspended') {
+                    try {
+                        await audioContext.resume();
+                    } catch (e) {
+                        console.warn('Could not resume AudioContext', e);
+                    }
+                }
+            }
+
+            // ---------- Crossfade ----------
+            function executeCrossfade() {
+                const nextPlayerIndex = 1 - activePlayerIndex;
+                const nextTrackIdx = (currentTrackIndex + 1) % shuffledPlaylist.length;
+
+                const startTime = audioContext.currentTime;
+                const fadeDuration = 3.0;
+
+                gains[activePlayerIndex].gain.setValueAtTime(gains[activePlayerIndex].gain.value, startTime);
+                gains[activePlayerIndex].gain.linearRampToValueAtTime(0, startTime + fadeDuration);
+                gains[nextPlayerIndex].gain.setValueAtTime(0, startTime);
+                gains[nextPlayerIndex].gain.linearRampToValueAtTime(1, startTime + fadeDuration);
+
+                if (crossfadeTimeout) {
+                    clearTimeout(crossfadeTimeout);
+                    crossfadeTimeout = null;
+                }
+
+                crossfadeTimeout = setTimeout(() => {
+                    players[activePlayerIndex].pause();
+                    activePlayerIndex = nextPlayerIndex;
+                    currentTrackIndex = nextTrackIdx;
+                    nextTrackIndex = (nextTrackIdx + 1) % shuffledPlaylist.length;
+                    updateNowPlaying(currentTrackIndex);
+                    isCrossfading = false;
+                    crossfadePrepared = false;
+                    crossfadeTimeout = null;
+
+                    const inactiveIdx = 1 - activePlayerIndex;
+                    const followingTrackIdx = (currentTrackIndex + 1) % shuffledPlaylist.length;
+                    const followingSrc = shuffledPlaylist[followingTrackIdx];
+                    players[inactiveIdx].src = followingSrc;
+                    players[inactiveIdx].load();
+                    players[inactiveIdx].play().catch(() => {
+                        console.warn('Inactive player play() rejected, will retry later');
+                    });
+                }, fadeDuration * 1000 + 50);
+            }
+
+            function prepareCrossfade() {
+                if (isCrossfading || crossfadePrepared) return;
+                crossfadePrepared = true;
+                isCrossfading = true;
+                executeCrossfade();
+            }
+
+            // ---------- Start time-synced playback ----------
+            function startSyncedPlayback() {
+                if (isInitialized) return;
+                isInitialized = true;
+
+                const newIndices = getDailyShuffledIndices();
+                if (newIndices.join(',') !== shuffledIndices.join(',')) {
+                    shuffledIndices = newIndices;
+                    shuffledPlaylist = shuffledIndices.map(i => PLAYLIST[i]);
+                    shuffledDurations = shuffledIndices.map(i => TRACK_DURATIONS[PLAYLIST[i].split('/').pop()] || 180);
+                    totalDuration = shuffledDurations.reduce((a, b) => a + b, 0);
+                }
+
+                const now = new Date();
+                const secondsSinceMidnight = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+
+                let remaining = secondsSinceMidnight % totalDuration;
+                let trackIndex = 0;
+                let offset = 0;
+                for (let i = 0; i < shuffledDurations.length; i++) {
+                    const dur = shuffledDurations[i] || 180;
+                    if (remaining < dur) {
+                        trackIndex = i;
+                        offset = remaining;
+                        break;
+                    }
+                    remaining -= dur;
+                    trackIndex = i + 1;
+                }
+                if (trackIndex >= shuffledPlaylist.length) {
+                    trackIndex = shuffledPlaylist.length - 1;
+                    offset = shuffledDurations[trackIndex] || 180;
+                }
+
+                const currentSrc = shuffledPlaylist[trackIndex];
+                const nextSrc = shuffledPlaylist[(trackIndex + 1) % shuffledPlaylist.length];
+
+                players[0].src = currentSrc;
+                players[0].currentTime = offset;
+                players[1].src = nextSrc;
+                players[1].currentTime = 0;
+
+                gains[0].gain.value = 1.0;
+                gains[1].gain.value = 0.0;
+
+                activePlayerIndex = 0;
+                currentTrackIndex = trackIndex;
+                nextTrackIndex = (trackIndex + 1) % shuffledPlaylist.length;
+
+                players[0].load();
+                players[1].load();
+
+                const info = getDisplayName(trackIndex);
+                console.log(`⏱️ Time-synced track (shuffled): #${trackIndex+1} - ${info ? info.song + ' · ' + info.artist : 'unknown'}`);
+
+                updateNowPlaying(trackIndex);
+
+                setInterval(() => {
+                    if (!radioStarted) return;
+
+                    const activePlayer = players[activePlayerIndex];
+                    if (activePlayer.paused && !isCrossfading) {
+                        activePlayer.play().catch(() => {});
+                        return;
+                    }
+
+                    const currentTime = activePlayer.currentTime || 0;
+                    const duration = shuffledDurations[currentTrackIndex] || 180;
+
+                    if (currentTime >= duration - 5 && !crossfadePrepared) {
+                        prepareCrossfade();
+                    }
+
+                    if (currentTime >= duration && !crossfadePrepared) {
+                        prepareCrossfade();
+                    }
+
+                }, 250);
+
+                players[0].addEventListener('error', function() {
+                    if (!isInitialized) return;
+                    if (!crossfadePrepared && radioStarted) prepareCrossfade();
+                });
+                players[1].addEventListener('error', function() {
+                    if (!isInitialized) return;
+                    if (!crossfadePrepared && radioStarted) prepareCrossfade();
+                });
+
+                isPlaying = false;
+                playIcon.textContent = '▶';
+                playerHeader.classList.remove('playing');
+                nowPlayingEl.classList.remove('loading');
+            }
+
+            // ---------- Toggle Mute/Unmute ----------
+            async function togglePlay() {
+                if (!isInitialized) {
+                    if (PLAYLIST.length === 0) {
+                        showStatus('No tracks – add files to the PLAYLIST array', true);
+                        return;
+                    }
+                    setupAudio();
+                    await resumeAudioContext();
+                    startSyncedPlayback();
+                }
+
+                if (!audioProcessingSetup) setupAudio();
+                await resumeAudioContext();
+
+                if (isPlaying) {
+                    if (masterGainNode) masterGainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                    isPlaying = false;
+                    playIcon.textContent = '▶';
+                    playerHeader.classList.remove('playing');
+                } else {
+                    if (!radioStarted) {
+                        try {
+                            await players[0].play();
+                            await players[1].play();
+                            radioStarted = true;
+                        } catch (err) {
+                            console.error('Playback failed:', err);
+                            showStatus('Playback error – check console', true);
+                            return;
+                        }
+                    }
+                    if (masterGainNode) masterGainNode.gain.setValueAtTime(1, audioContext.currentTime);
+                    isPlaying = true;
+                    playIcon.textContent = '⏸';
+                    playerHeader.classList.add('playing');
+                    updateNowPlaying(currentTrackIndex);
+                }
+            }
+
+            playBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                togglePlay();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                const target = e.target;
+                if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
+                if (e.key === ' ' || e.key === 'Space') {
+                    e.preventDefault();
+                    togglePlay();
+                }
+            });
+
+            // ---------- Start ----------
+            if (PLAYLIST.length === 0) {
+                showStatus('No tracks – add files to the PLAYLIST array', true);
+            } else {
+                setupAudio();
+                startSyncedPlayback();
+            }
+
+            // ============================================================
+            // 6. ACCORDION
+            // ============================================================
+            const releasesHeader = document.getElementById('releasesHeader');
             const releasesArrow = document.getElementById('releasesArrow');
-            const mailingTitle = document.getElementById('mailingTitle');
+            const wheelWrapper = document.getElementById('wheelWrapper');
+            const mailingHeader = document.getElementById('mailingHeader');
             const mailingArrow = document.getElementById('mailingArrow');
             const mailingWrapper = document.getElementById('mailingWrapper');
-            const mailingImageContainer = document.getElementById('mailingImageContainer');
-            const contactTitle = document.getElementById('contactTitle');
+            const contactHeader = document.getElementById('contactHeader');
             const contactArrow = document.getElementById('contactArrow');
-            const wheelWrapper = document.getElementById('wheelWrapper');
             const contactWrapper = document.getElementById('contactWrapper');
-            const container = document.getElementById('container');
-            if (!wrapper || !track || !releasesTitle || !releasesArrow || !mailingTitle || !mailingArrow || !mailingWrapper ||
-                !mailingImageContainer || !contactTitle || !contactArrow || !wheelWrapper || !contactWrapper || !container)
-                return;
 
-            // ----- ACCORDION: FAST SEQUENTIAL CLOSE/OPEN -----
             let currentlyOpen = null;
             let openTimer = null;
 
@@ -603,296 +1212,341 @@
                     openTimer = null;
                 }, 30);
             }
-            document.getElementById('releasesHeader').addEventListener('click', function(e) {
+
+            if (releasesHeader) releasesHeader.addEventListener('click', function(e) {
                 toggleSection(wheelWrapper, releasesArrow, 'releases');
             });
-            document.getElementById('mailingHeader').addEventListener('click', function(e) {
+            if (mailingHeader) mailingHeader.addEventListener('click', function(e) {
                 toggleSection(mailingWrapper, mailingArrow, 'mailing');
             });
-            document.getElementById('contactHeader').addEventListener('click', function(e) {
+            if (contactHeader) contactHeader.addEventListener('click', function(e) {
                 toggleSection(contactWrapper, contactArrow, 'contact');
             });
 
-            // ----- SIZING -----
-            function getSize() {
-                const vw = window.innerWidth;
-                const vh = window.innerHeight;
-                let s;
-                if (vw < 640) {
-                    s = Math.min(vh * 0.28, 220);
-                } else {
-                    s = Math.min(vh * 0.40, 450);
-                }
-                s = Math.max(s, 80);
-                return s;
-            }
+            // ============================================================
+            // 7. RELEASES WHEEL
+            // ============================================================
+            const wrapper = document.getElementById('scrollWheel');
+            const track = document.getElementById('wheelTrack');
+            const mailingImageContainer = document.getElementById('mailingImageContainer');
 
-            function getSpacing() {
-                const w = window.innerWidth;
-                if (w < 480) return 12;
-                if (w < 700) return 18;
-                if (w < 900) return 24;
-                return 32;
-            }
+            if (wrapper && track) {
+                const RELEASES_DATA = [
+                    { src: 'assets/fridae-cover.jpg', artist: 'April Fridae', title: 'Fridae', url: 'https://friendswithbears.com/releases/fridae' },
+                    { src: 'assets/eliesriot_dying_to_live.jpg', artist: 'eliesriot', title: 'Dying to Live', url: 'https://friendswithbears.com/releases/dying-to-live' },
+                    { src: 'assets/creaturethief_ct-24.jpg', artist: 'creaturethief', title: 'CT-24', url: 'https://friendswithbears.com/releases/ct-24' },
+                    { src: 'assets/zayok_in_elsewhere.jpg', artist: 'Zayok', title: 'In elsewhere', url: 'https://friendswithbears.com/releases/in-elsewhere' },
+                    { src: 'assets/creaturethief_verdant.jpg', artist: 'creaturethief', title: 'verdant', url: 'https://friendswithbears.com/releases/verdant' }
+                ];
+                const FALLBACKS = ['#b5838d', '#6d597a', '#2a9d8f', '#e76f51', '#264653'];
+                const COPIES = 5;
+                const ANIMATIONS_DATA = {
+                    'assets/fridae-cover.jpg': {
+                        frames: ['assets/animation/fridae-cover-1.jpg', 'assets/animation/fridae-cover-2.jpg'],
+                        frameDelay: 20
+                    },
+                    'assets/eliesriot_dying_to_live.jpg': {
+                        frames: ['assets/animation/eliesriot_dying_to_live-1.jpg', 'assets/animation/eliesriot_dying_to_live-2.jpg'],
+                        frameDelay: 20
+                    },
+                    'assets/creaturethief_ct-24.jpg': {
+                        frames: ['assets/animation/creaturethief_ct-24-1.jpg', 'assets/animation/creaturethief_ct-24-2.jpg'],
+                        frameDelay: 20
+                    },
+                    'assets/zayok_in_elsewhere.jpg': {
+                        frames: ['assets/animation/zayok_in_elsewhere-1.jpg', 'assets/animation/zayok_in_elsewhere-2.jpg'],
+                        frameDelay: 20
+                    },
+                    'assets/creaturethief_verdant.jpg': {
+                        frames: ['assets/animation/creaturethief_verdant-1.jpg', 'assets/animation/creaturethief_verdant-2.jpg'],
+                        frameDelay: 20
+                    }
+                };
 
-            function updateTitleSize(currentSize) {
-                const titleHeight = Math.min(currentSize * 0.2, 80);
-                const titleWidth = titleHeight * 3;
-                releasesTitle.style.height = titleHeight + 'px';
-                releasesTitle.style.width = titleWidth + 'px';
-                contactTitle.style.height = titleHeight + 'px';
-                contactTitle.style.width = titleWidth + 'px';
-                const mailingHeight = titleHeight * 0.7;
-                mailingTitle.style.height = mailingHeight + 'px';
-                mailingTitle.style.width = 'auto';
-                mailingTitle.style.objectFit = 'contain';
-                const arrowSize = titleHeight * 0.5;
-                releasesArrow.style.height = arrowSize + 'px';
-                releasesArrow.style.width = arrowSize + 'px';
-                contactArrow.style.height = arrowSize + 'px';
-                contactArrow.style.width = arrowSize + 'px';
-                mailingArrow.style.height = arrowSize + 'px';
-                mailingArrow.style.width = arrowSize + 'px';
-            }
-            let currentSize = getSize();
-
-            // ----- BUILD RELEASES WHEEL -----
-            function buildTrack() {
-                const size = getSize();
-                const gap = getSpacing();
-                track.innerHTML = '';
-                const total = RELEASES.length * COPIES;
-                const isMobile = window.innerWidth <= 640;
-                for (let i = 0; i < total; i++) {
-                    const idx = i % RELEASES.length;
-                    const release = RELEASES[idx];
-                    const isAnimated = ANIMATIONS.hasOwnProperty(release.src);
-                    const container = document.createElement('div');
-                    container.className = 'album-square';
-                    container.style.width = size + 'px';
-                    container.style.height = size + 'px';
-                    container.dataset.src = release.src;
-                    container.dataset.artist = release.artist;
-                    container.dataset.title = release.title;
-                    container.dataset.url = release.url;
-                    const sharp = document.createElement('div');
-                    sharp.className = 'cover-layer cover-sharp';
-                    sharp.style.backgroundImage = `url('${release.src}')`;
-                    sharp.style.backgroundColor = FALLBACKS[idx];
-                    const pixelated = document.createElement('div');
-                    pixelated.className = 'cover-layer cover-pixelated';
-                    pixelated.style.backgroundColor = FALLBACKS[idx];
-                    pixelated.style.imageRendering = 'pixelated';
-                    pixelated.style.imageRendering = '-moz-crisp-edges';
-                    pixelated.style.imageRendering = 'crisp-edges';
-                    if (isAnimated) {
-                        container.classList.add('animated-cover');
-                        const animData = ANIMATIONS[release.src];
-                        pixelated.style.backgroundImage = `url('${release.src}')`;
-                        animData.frames.forEach(frame => {
-                            const img = new Image();
-                            img.src = frame;
-                        });
-                        container._animData = animData;
-                        container._currentFrameIndex = 0;
-                        container._animInterval = null;
-                        container._pixelatedLayer = pixelated;
-                        if (!isMobile) {
-                            container.addEventListener('mouseenter', function(e) {
-                                if (this._animInterval) {
-                                    clearInterval(this._animInterval);
-                                    this._animInterval = null;
-                                }
-                                const data = this._animData;
-                                const frames = data.frames;
-                                this._currentFrameIndex = 0;
-                                this._pixelatedLayer.style.backgroundImage = `url('${frames[0]}')`;
-                                this._animInterval = setInterval(() => {
-                                    const nextIndex = this._currentFrameIndex + 1;
-                                    if (nextIndex < frames.length) {
-                                        this._currentFrameIndex = nextIndex;
-                                        this._pixelatedLayer.style.backgroundImage =
-                                            `url('${frames[nextIndex]}')`;
-                                    } else {
-                                        clearInterval(this._animInterval);
-                                        this._animInterval = null;
-                                    }
-                                }, data.frameDelay);
-                            });
-                            container.addEventListener('mouseleave', function(e) {
-                                if (this._animInterval) {
-                                    clearInterval(this._animInterval);
-                                    this._animInterval = null;
-                                }
-                                if (this._currentFrameIndex <= 0) {
-                                    this._pixelatedLayer.style.backgroundImage = `url('${this.dataset.src}')`;
-                                    return;
-                                }
-                                const data = this._animData;
-                                const frames = data.frames;
-                                this._animInterval = setInterval(() => {
-                                    const nextIndex = this._currentFrameIndex - 1;
-                                    if (nextIndex >= 0) {
-                                        this._currentFrameIndex = nextIndex;
-                                        this._pixelatedLayer.style.backgroundImage =
-                                            `url('${frames[nextIndex]}')`;
-                                    } else {
-                                        clearInterval(this._animInterval);
-                                        this._animInterval = null;
-                                        this._pixelatedLayer.style.backgroundImage = `url('${this.dataset.src}')`;
-                                    }
-                                }, data.frameDelay);
-                            });
-                        }
+                function getSize() {
+                    const vw = window.innerWidth;
+                    const vh = window.innerHeight;
+                    let s;
+                    if (vw < 640) {
+                        s = Math.min(vh * 0.28, 220);
                     } else {
-                        const pixelatedSrc = release.src.replace(/\.(jpe?g|png|webp)$/i, '-pixelated.$1');
-                        pixelated.style.backgroundImage = `url('${pixelatedSrc}')`;
-                        const imgTest = new Image();
-                        imgTest.onerror = function() {
+                        s = Math.min(vh * 0.40, 450);
+                    }
+                    s = Math.max(s, 80);
+                    return s;
+                }
+
+                function getSpacing() {
+                    const w = window.innerWidth;
+                    if (w < 480) return 12;
+                    if (w < 700) return 18;
+                    if (w < 900) return 24;
+                    return 32;
+                }
+
+                function updateTitleSize(currentSize) {
+                    const titleHeight = Math.min(currentSize * 0.2, 80);
+                    const titleWidth = titleHeight * 3;
+                    const releasesTitle = document.getElementById('releasesTitle');
+                    const contactTitle = document.getElementById('contactTitle');
+                    const mailingTitle = document.getElementById('mailingTitle');
+                    if (releasesTitle) { releasesTitle.style.height = titleHeight + 'px';
+                        releasesTitle.style.width = titleWidth + 'px'; }
+                    if (contactTitle) { contactTitle.style.height = titleHeight + 'px';
+                        contactTitle.style.width = titleWidth + 'px'; }
+                    const mailingHeight = titleHeight * 0.7;
+                    if (mailingTitle) { mailingTitle.style.height = mailingHeight + 'px';
+                        mailingTitle.style.width = 'auto';
+                        mailingTitle.style.objectFit = 'contain'; }
+                    const arrowSize = titleHeight * 0.5;
+                    const rA = document.getElementById('releasesArrow');
+                    const cA = document.getElementById('contactArrow');
+                    const mA = document.getElementById('mailingArrow');
+                    if (rA) { rA.style.height = arrowSize + 'px';
+                        rA.style.width = arrowSize + 'px'; }
+                    if (cA) { cA.style.height = arrowSize + 'px';
+                        cA.style.width = arrowSize + 'px'; }
+                    if (mA) { mA.style.height = arrowSize + 'px';
+                        mA.style.width = arrowSize + 'px'; }
+                }
+                let currentSize = getSize();
+
+                function buildTrack() {
+                    const size = getSize();
+                    const gap = getSpacing();
+                    track.innerHTML = '';
+                    const total = RELEASES_DATA.length * COPIES;
+                    const isMobile = window.innerWidth <= 640;
+                    for (let i = 0; i < total; i++) {
+                        const idx = i % RELEASES_DATA.length;
+                        const release = RELEASES_DATA[idx];
+                        const isAnimated = ANIMATIONS_DATA.hasOwnProperty(release.src);
+                        const container = document.createElement('div');
+                        container.className = 'album-square';
+                        container.style.width = size + 'px';
+                        container.style.height = size + 'px';
+                        container.dataset.src = release.src;
+                        container.dataset.artist = release.artist;
+                        container.dataset.title = release.title;
+                        container.dataset.url = release.url;
+                        const sharp = document.createElement('div');
+                        sharp.className = 'cover-layer cover-sharp';
+                        sharp.style.backgroundImage = `url('${release.src}')`;
+                        sharp.style.backgroundColor = FALLBACKS[idx];
+                        const pixelated = document.createElement('div');
+                        pixelated.className = 'cover-layer cover-pixelated';
+                        pixelated.style.backgroundColor = FALLBACKS[idx];
+                        pixelated.style.imageRendering = 'pixelated';
+                        pixelated.style.imageRendering = '-moz-crisp-edges';
+                        pixelated.style.imageRendering = 'crisp-edges';
+                        if (isAnimated) {
+                            container.classList.add('animated-cover');
+                            const animData = ANIMATIONS_DATA[release.src];
                             pixelated.style.backgroundImage = `url('${release.src}')`;
-                        };
-                        imgTest.src = pixelatedSrc;
-                    }
-                    container.appendChild(sharp);
-                    container.appendChild(pixelated);
-                    container.addEventListener('click', function() {
-                        window.location.href = this.dataset.url;
-                    });
-                    track.appendChild(container);
-                }
-                const squares = track.querySelectorAll('.album-square');
-                squares.forEach((el, i) => {
-                    if (i < squares.length - 1) el.style.marginRight = gap + 'px';
-                });
-                updateTitleSize(size);
-                currentSize = size;
-                const itemWidth = size + gap;
-                const midCopy = Math.floor(COPIES / 2);
-                wrapper.scrollLeft = midCopy * RELEASES.length * itemWidth;
-                return { size, gap, itemWidth };
-            }
-
-            // ----- BUILD MAILING GRID -----
-            function buildMailingGrid() {
-                const size = getSize();
-                mailingImageContainer.innerHTML = '';
-                const images = ['assets/covers.jpg', 'assets/ct-zine.jpg', 'assets/stickers.jpeg'];
-                images.forEach(src => {
-                    const cover = document.createElement('div');
-                    cover.className = 'mailing-cover';
-                    const w = size;
-                    const h = size * 0.9;
-                    cover.style.width = w + 'px';
-                    cover.style.height = h + 'px';
-                    cover.style.backgroundImage = `url('${src}')`;
-                    cover.style.backgroundColor = '#fff';
-                    cover.addEventListener('click', function() {
-                        console.log('Mailing cover clicked:', src);
-                    });
-                    mailingImageContainer.appendChild(cover);
-                });
-            }
-
-            let itemWidth = 0;
-            let oneSetWidth = 0;
-
-            // ----- INFINITE LOOP (Releases wheel only) -----
-            let loopScheduled = false;
-            const performLoopJump = function() {
-                if (loopScheduled) return;
-                loopScheduled = true;
-                requestAnimationFrame(() => {
-                    loopScheduled = false;
-                    const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
-                    const current = wrapper.scrollLeft;
-                    const threshold = itemWidth * 0.3;
-                    if (current > maxScroll - threshold) {
-                        wrapper.scrollLeft = current - oneSetWidth;
-                        return;
-                    }
-                    if (current < threshold) {
-                        wrapper.scrollLeft = current + oneSetWidth;
-                        return;
-                    }
-                });
-            };
-
-            // ----- SCROLL HANDLERS: each wheel handles its own scrolling -----
-            function setupWheelScrolling(wheelElement, loopCallback) {
-                if (!wheelElement) return;
-
-                let wheelTimeout = null;
-                wheelElement.addEventListener('wheel', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const dx = e.deltaX || 0;
-                    const dy = e.deltaY || 0;
-                    let delta = dx;
-                    if (Math.abs(dy) > Math.abs(dx)) {
-                        delta = dy;
-                    } else if (Math.abs(dx) > 0) {
-                        delta = dx;
-                    }
-                    wheelElement.scrollLeft += delta;
-                    if (loopCallback) {
-                        clearTimeout(wheelTimeout);
-                        wheelTimeout = setTimeout(loopCallback, 100);
-                    }
-                }, { passive: false });
-
-                if (loopCallback) {
-                    let scrollStopTimer = null;
-                    wheelElement.addEventListener('scroll', function() {
-                        clearTimeout(scrollStopTimer);
-                        scrollStopTimer = setTimeout(loopCallback, 150);
-                    });
-                }
-            }
-
-            function init() {
-                const result = buildTrack();
-                itemWidth = result.itemWidth;
-                const size = result.size;
-                const gap = result.gap;
-                oneSetWidth = RELEASES.length * itemWidth;
-                buildMailingGrid();
-
-                setupWheelScrolling(wrapper, performLoopJump);
-                setupWheelScrolling(mailingImageContainer, null);
-
-                document.addEventListener('keydown', function(e) {
-                    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-                        if (wheelWrapper.classList.contains('expanded')) {
-                            e.preventDefault();
-                            const step = size * 0.6;
-                            wrapper.scrollLeft += e.key === 'ArrowLeft' ? -step : step;
-                            setTimeout(performLoopJump, 50);
+                            animData.frames.forEach(frame => {
+                                const img = new Image();
+                                img.src = frame;
+                            });
+                            container._animData = animData;
+                            container._currentFrameIndex = 0;
+                            container._animInterval = null;
+                            container._pixelatedLayer = pixelated;
+                            if (!isMobile) {
+                                container.addEventListener('mouseenter', function(e) {
+                                    if (this._animInterval) {
+                                        clearInterval(this._animInterval);
+                                        this._animInterval = null;
+                                    }
+                                    const data = this._animData;
+                                    const frames = data.frames;
+                                    this._currentFrameIndex = 0;
+                                    this._pixelatedLayer.style.backgroundImage = `url('${frames[0]}')`;
+                                    this._animInterval = setInterval(() => {
+                                        const nextIndex = this._currentFrameIndex + 1;
+                                        if (nextIndex < frames.length) {
+                                            this._currentFrameIndex = nextIndex;
+                                            this._pixelatedLayer.style.backgroundImage =
+                                                `url('${frames[nextIndex]}')`;
+                                        } else {
+                                            clearInterval(this._animInterval);
+                                            this._animInterval = null;
+                                        }
+                                    }, data.frameDelay);
+                                });
+                                container.addEventListener('mouseleave', function(e) {
+                                    if (this._animInterval) {
+                                        clearInterval(this._animInterval);
+                                        this._animInterval = null;
+                                    }
+                                    if (this._currentFrameIndex <= 0) {
+                                        this._pixelatedLayer.style.backgroundImage = `url('${this.dataset.src}')`;
+                                        return;
+                                    }
+                                    const data = this._animData;
+                                    const frames = data.frames;
+                                    this._animInterval = setInterval(() => {
+                                        const nextIndex = this._currentFrameIndex - 1;
+                                        if (nextIndex >= 0) {
+                                            this._currentFrameIndex = nextIndex;
+                                            this._pixelatedLayer.style.backgroundImage =
+                                                `url('${frames[nextIndex]}')`;
+                                        } else {
+                                            clearInterval(this._animInterval);
+                                            this._animInterval = null;
+                                            this._pixelatedLayer.style.backgroundImage = `url('${this.dataset.src}')`;
+                                        }
+                                    }, data.frameDelay);
+                                });
+                            }
+                        } else {
+                            const pixelatedSrc = release.src.replace(/\.(jpe?g|png|webp)$/i, '-pixelated.$1');
+                            pixelated.style.backgroundImage = `url('${pixelatedSrc}')`;
+                            const imgTest = new Image();
+                            imgTest.onerror = function() {
+                                pixelated.style.backgroundImage = `url('${release.src}')`;
+                            };
+                            imgTest.src = pixelatedSrc;
                         }
+                        container.appendChild(sharp);
+                        container.appendChild(pixelated);
+                        container.addEventListener('click', function() {
+                            window.location.href = this.dataset.url;
+                        });
+                        track.appendChild(container);
                     }
-                });
-
-                let resizeTimer = null;
-                window.addEventListener('resize', function() {
-                    if (resizeTimer) cancelAnimationFrame(resizeTimer);
-                    resizeTimer = requestAnimationFrame(() => {
-                        resizeTimer = null;
-                        const newSize = getSize();
-                        const newGap = getSpacing();
-                        if (Math.abs(newSize - currentSize) < 3 && newGap === gap) return;
-                        const result = buildTrack();
-                        itemWidth = result.itemWidth;
-                        oneSetWidth = RELEASES.length * itemWidth;
-                        const ratio = wrapper.scrollLeft / (itemWidth || 1);
-                        wrapper.scrollLeft = ratio * itemWidth;
-                        buildMailingGrid();
-                        setTimeout(performLoopJump, 100);
+                    const squares = track.querySelectorAll('.album-square');
+                    squares.forEach((el, i) => {
+                        if (i < squares.length - 1) el.style.marginRight = gap + 'px';
                     });
-                });
+                    updateTitleSize(size);
+                    currentSize = size;
+                    const itemWidth = size + gap;
+                    const midCopy = Math.floor(COPIES / 2);
+                    wrapper.scrollLeft = midCopy * RELEASES_DATA.length * itemWidth;
+                    return { size, gap, itemWidth };
+                }
 
-                setTimeout(performLoopJump, 200);
+                function buildMailingGrid() {
+                    const size = getSize();
+                    if (mailingImageContainer) {
+                        mailingImageContainer.innerHTML = '';
+                        const images = ['assets/covers.jpg', 'assets/ct-zine.jpg', 'assets/stickers.jpeg'];
+                        images.forEach(src => {
+                            const cover = document.createElement('div');
+                            cover.className = 'mailing-cover';
+                            const w = size;
+                            const h = size * 0.9;
+                            cover.style.width = w + 'px';
+                            cover.style.height = h + 'px';
+                            cover.style.backgroundImage = `url('${src}')`;
+                            cover.style.backgroundColor = '#fff';
+                            cover.addEventListener('click', function() {
+                                console.log('Mailing cover clicked:', src);
+                            });
+                            mailingImageContainer.appendChild(cover);
+                        });
+                    }
+                }
+
+                let itemWidth = 0;
+                let oneSetWidth = 0;
+                let loopScheduled = false;
+                const performLoopJump = function() {
+                    if (loopScheduled) return;
+                    loopScheduled = true;
+                    requestAnimationFrame(() => {
+                        loopScheduled = false;
+                        const maxScroll = wrapper.scrollWidth - wrapper.clientWidth;
+                        const current = wrapper.scrollLeft;
+                        const threshold = itemWidth * 0.3;
+                        if (current > maxScroll - threshold) {
+                            wrapper.scrollLeft = current - oneSetWidth;
+                            return;
+                        }
+                        if (current < threshold) {
+                            wrapper.scrollLeft = current + oneSetWidth;
+                            return;
+                        }
+                    });
+                };
+
+                function setupWheelScrolling(wheelElement, loopCallback) {
+                    if (!wheelElement) return;
+                    let wheelTimeout = null;
+                    wheelElement.addEventListener('wheel', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const dx = e.deltaX || 0;
+                        const dy = e.deltaY || 0;
+                        let delta = dx;
+                        if (Math.abs(dy) > Math.abs(dx)) {
+                            delta = dy;
+                        } else if (Math.abs(dx) > 0) {
+                            delta = dx;
+                        }
+                        wheelElement.scrollLeft += delta;
+                        if (loopCallback) {
+                            clearTimeout(wheelTimeout);
+                            wheelTimeout = setTimeout(loopCallback, 100);
+                        }
+                    }, { passive: false });
+                    if (loopCallback) {
+                        let scrollStopTimer = null;
+                        wheelElement.addEventListener('scroll', function() {
+                            clearTimeout(scrollStopTimer);
+                            scrollStopTimer = setTimeout(loopCallback, 150);
+                        });
+                    }
+                }
+
+                function initWheel() {
+                    const result = buildTrack();
+                    itemWidth = result.itemWidth;
+                    const size = result.size;
+                    const gap = result.gap;
+                    oneSetWidth = RELEASES_DATA.length * itemWidth;
+                    buildMailingGrid();
+
+                    setupWheelScrolling(wrapper, performLoopJump);
+                    if (mailingImageContainer) {
+                        setupWheelScrolling(mailingImageContainer, null);
+                    }
+
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+                            if (wheelWrapper && wheelWrapper.classList.contains('expanded')) {
+                                e.preventDefault();
+                                const step = size * 0.6;
+                                wrapper.scrollLeft += e.key === 'ArrowLeft' ? -step : step;
+                                setTimeout(performLoopJump, 50);
+                            }
+                        }
+                    });
+
+                    let resizeTimer = null;
+                    window.addEventListener('resize', function() {
+                        if (resizeTimer) cancelAnimationFrame(resizeTimer);
+                        resizeTimer = requestAnimationFrame(() => {
+                            resizeTimer = null;
+                            const newSize = getSize();
+                            const newGap = getSpacing();
+                            if (Math.abs(newSize - currentSize) < 3 && newGap === gap) return;
+                            const result = buildTrack();
+                            itemWidth = result.itemWidth;
+                            oneSetWidth = RELEASES_DATA.length * itemWidth;
+                            const ratio = wrapper.scrollLeft / (itemWidth || 1);
+                            wrapper.scrollLeft = ratio * itemWidth;
+                            buildMailingGrid();
+                            setTimeout(performLoopJump, 100);
+                        });
+                    });
+
+                    setTimeout(performLoopJump, 200);
+                }
+
+                initWheel();
             }
 
-            init();
         })();
     </script>
 </body>
