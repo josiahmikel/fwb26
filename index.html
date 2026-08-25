@@ -17,6 +17,11 @@
     <meta name="twitter:title" content="Friends With Bears Records">
     <meta name="twitter:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok.">
     <meta name="twitter:image" content="https://friendswithbears.com/assets/fridae-cover.jpg">
+    <!-- PWA / iOS background audio support -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="FWB Radio">
+    <link rel="apple-touch-icon" href="assets/cover.jpg">
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -239,14 +244,12 @@
                 width: 1rem;
                 height: 1rem;
             }
-            /* Mobile play icon - even smaller */
             .player-header .play-btn .icon.play {
                 border-top: 0.22rem solid transparent;
                 border-bottom: 0.22rem solid transparent;
                 border-left: 0.34rem solid currentColor;
                 margin-left: 0.08rem;
             }
-            /* Mobile pause icon - even smaller */
             .player-header .play-btn .icon.pause {
                 width: 0.35rem;
                 height: 0.4rem;
@@ -490,32 +493,16 @@
             margin-right: 32px;
         }
         @keyframes breathe-container {
-            0% {
-                transform: translateZ(0) scale(1);
-            }
-            30% {
-                transform: translateZ(0) scale(1.015);
-            }
-            70% {
-                transform: translateZ(0) scale(1.008);
-            }
-            100% {
-                transform: translateZ(0) scale(1);
-            }
+            0% { transform: translateZ(0) scale(1); }
+            30% { transform: translateZ(0) scale(1.015); }
+            70% { transform: translateZ(0) scale(1.008); }
+            100% { transform: translateZ(0) scale(1); }
         }
         @keyframes breathe-image {
-            0% {
-                transform: translateY(0px) scale(1);
-            }
-            30% {
-                transform: translateY(-4px) scale(1.015);
-            }
-            70% {
-                transform: translateY(-2px) scale(1.008);
-            }
-            100% {
-                transform: translateY(0px) scale(1);
-            }
+            0% { transform: translateY(0px) scale(1); }
+            30% { transform: translateY(-4px) scale(1.015); }
+            70% { transform: translateY(-2px) scale(1.008); }
+            100% { transform: translateY(0px) scale(1); }
         }
         .album-square:hover {
             animation: breathe-container 6s ease-in-out infinite;
@@ -747,7 +734,7 @@
             'use strict';
 
             // ============================================================
-            // 1. YOUR RADIO PLAYLIST (25 tracks)
+            // 1. YOUR RADIO PLAYLIST (21 tracks - luvly removed)
             // ============================================================
             const PLAYLIST = [
                 'radio/118-creaturethief.mp3',
@@ -760,15 +747,11 @@
                 'radio/backtrack-fridae:thief.mp3',
                 'radio/bizzare-fridae:thief.mp3',
                 'radio/braziw-april_fridae.mp3',
-                'radio/clocks_cut_out_or_switch-luvly.mp3',
-                'radio/down_and_loading-luvly.mp3',
                 'radio/eurovision-creaturethief.mp3',
                 'radio/follow-creaturethief.mp3',
                 'radio/fortune_cookie-fridae:thief.mp3',
                 'radio/gfdgdfgdfgfdfgd-april_fridae.mp3',
-                'radio/good4-luvly.mp3',
                 'radio/inagaki-milk.mp3',
-                'radio/lingering_w:_sana-luvly.mp3',
                 'radio/memory-creaturethief.mp3',
                 'radio/redi-creaturethief.mp3',
                 'radio/reef-milk.mp3',
@@ -789,15 +772,11 @@
                 'backtrack-fridae:thief.mp3': 115.282404,
                 'bizzare-fridae:thief.mp3': 17.777800,
                 'braziw-april_fridae.mp3': 154.221156,
-                'clocks_cut_out_or_switch-luvly.mp3': 163.176000,
-                'down_and_loading-luvly.mp3': 63.048000,
                 'eurovision-creaturethief.mp3': 169.613050,
                 'follow-creaturethief.mp3': 30.511000,
                 'fortune_cookie-fridae:thief.mp3': 147.296871,
                 'gfdgdfgdfgfdfgd-april_fridae.mp3': 29.769229,
-                'good4-luvly.mp3': 61.080000,
                 'inagaki-milk.mp3': 69.224458,
-                'lingering_w:_sana-luvly.mp3': 76.617125,
                 'memory-creaturethief.mp3': 151.764172,
                 'redi-creaturethief.mp3': 75.702850,
                 'reef-milk.mp3': 46.497950,
@@ -811,7 +790,6 @@
                 'april_fridae': 'https://instagram.com/aprilfridae',
                 'april fridae': 'https://instagram.com/aprilfridae',
                 'creaturethief': 'https://instagram.com/creaturethief',
-                'luvly': 'https://instagram.com/luvly.ghost',
                 'patricio_portales': 'https://instagram.com/pato6p',
                 'patricio portales': 'https://instagram.com/pato6p',
                 'milk': 'https://instagram.com/milkcores',
@@ -868,6 +846,11 @@
             let audioProcessingSetup = false;
 
             const players = [new Audio(), new Audio()];
+            // Enable background playback on iOS
+            players.forEach(p => {
+                p.setAttribute('playsinline', '');
+                p.setAttribute('webkit-playsinline', '');
+            });
             let sources = [];
             let gains = [];
 
@@ -877,7 +860,7 @@
             let transitionTimeout = null;
 
             // ============================================================
-            // 5. PARSER
+            // 5. PARSER & MEDIA SESSION
             // ============================================================
             function parseTrackInfo(filename) {
                 const name = filename.replace(/\.[^.]+$/, '');
@@ -937,6 +920,18 @@
                     nowPlayingEl.innerHTML = `<span class="song-title">${info.song}</span>`;
                 }
                 nowPlayingEl.classList.remove('loading');
+
+                // Update Media Session metadata (using cover.jpg)
+                if ('mediaSession' in navigator) {
+                    navigator.mediaSession.metadata = new MediaMetadata({
+                        title: info.song,
+                        artist: info.artist || 'Friends With Bears Records',
+                        album: 'Friends With Bears Radio',
+                        artwork: [
+                            { src: 'assets/cover.jpg', sizes: '512x512', type: 'image/jpeg' }
+                        ]
+                    });
+                }
             }
 
             function showStatus(msg, isError) {
@@ -990,7 +985,7 @@
                 }
             }
 
-            // ---------- Crossfade (rewritten) ----------
+            // ---------- Crossfade (robust, unchanged) ----------
             function performCrossfade() {
                 if (isTransitioning || !radioStarted) return;
                 isTransitioning = true;
@@ -1104,6 +1099,18 @@
                 nowPlayingEl.classList.remove('loading');
             }
 
+            // ---------- Media Session Handlers ----------
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.setActionHandler('play', () => {
+                    if (!isPlaying) togglePlay();
+                });
+                navigator.mediaSession.setActionHandler('pause', () => {
+                    if (isPlaying) togglePlay();
+                });
+                navigator.mediaSession.setActionHandler('previoustrack', null);
+                navigator.mediaSession.setActionHandler('nexttrack', null);
+            }
+
             // ---------- Toggle Mute/Unmute ----------
             async function togglePlay() {
                 if (!isInitialized) {
@@ -1124,6 +1131,7 @@
                     isPlaying = false;
                     playIcon.className = 'icon play';
                     playerHeader.classList.remove('playing');
+                    if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
                 } else {
                     if (!radioStarted) {
                         try {
@@ -1140,6 +1148,7 @@
                     isPlaying = true;
                     playIcon.className = 'icon pause';
                     playerHeader.classList.add('playing');
+                    if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
                     updateNowPlaying(currentTrackIndex);
                 }
             }
@@ -1546,7 +1555,6 @@
 
                 initWheel();
             }
-
         })();
     </script>
 </body>
