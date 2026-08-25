@@ -190,20 +190,19 @@
             gap: 20px;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
-            overscroll-behavior: none;
-            touch-action: pan-x;
         }
         .mailing-image-container::-webkit-scrollbar {
             display: none;
         }
         .mailing-cover {
             flex: 0 0 auto;
-            background-size: cover;
+            background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
             border: none;
             border-radius: 0;
             box-shadow: none;
+            background-color: #fff;
         }
         .contact-wrapper {
             width: 100%;
@@ -250,8 +249,6 @@
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
             -ms-overflow-style: none;
-            overscroll-behavior: none;
-            touch-action: pan-x;
             padding: 1rem 0.2rem;
             display: flex;
             align-items: center;
@@ -479,7 +476,7 @@
                 <div class="wheel-wrapper" id="wheelWrapper">
                     <div class="releases-content">
                         <p>April Fridae's "right now," August 26th. <a href="http://friendswithbears.com/fridae/right-now" target="_blank">Pre-save &amp; get a free zine here.</a></p>
-                    </div>
+                    </div><br>
                     <div class="scroll-wrapper" id="scrollWheel">
                         <div class="wheel-track" id="wheelTrack"></div>
                     </div>
@@ -490,7 +487,7 @@
                 </div>
                 <div class="mailing-wrapper" id="mailingWrapper">
                     <div class="mailing-content">
-                        <p>Join our mailing list for new updates, free zines, postcards, stickers, and more. <a href="https://forms.gle/hf4jCUEQcWnEb4B6A" target="_blank">Click here to sign up.</a></p>
+                       <br> <p>Join our mailing list for new updates, free zines, postcards, stickers, and more. <a href="https://forms.gle/hf4jCUEQcWnEb4B6A" target="_blank">Click here to sign up.</a></p>
                     </div>
                     <div class="mailing-image-container" id="mailingImageContainer"></div>
                 </div>
@@ -500,8 +497,8 @@
                 </div>
                 <div class="contact-wrapper" id="contactWrapper">
                     <div class="contact-text">
-                        For press, marketing, creative, or general inquiries, reach us at <a href="mailto:hi@friendswithbears.com">hi@friendswithbears.com</a>. <br><br>Interested in working with us? <a href="https://forms.gle/y2yPsPzmVBv1Kojx8" target="_blank">Submit your music here</a> for consideration.
-                    </div>
+                        For press, marketing, creative, or general inquiries, reach us at <a href="mailto:hi@friendswithbears.com">hi@friendswithbears.com</a>.<br><br>Interested in working with us? <a href="https://forms.gle/y2yPsPzmVBv1Kojx8" target="_blank">Submit your music here</a> for consideration.
+                    </div><br><br>
                 </div>
             </div>
         </div>
@@ -755,7 +752,7 @@
                     cover.style.width = size + 'px';
                     cover.style.height = size + 'px';
                     cover.style.backgroundImage = `url('${src}')`;
-                    cover.style.backgroundColor = '#e8e8e8';
+                    cover.style.backgroundColor = '#fff';
                     cover.addEventListener('click', function() {
                         console.log('Mailing cover clicked:', src);
                     });
