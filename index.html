@@ -112,7 +112,7 @@
             font-family: system-ui, -apple-system, sans-serif;
             font-size: 1rem;
             color: #1a1a1a;
-            padding: 0.5rem 0;
+            padding: 0.75rem 0.2rem;
             width: 100%;
             text-align: left;
         }
@@ -130,9 +130,9 @@
             overflow: hidden;
             max-height: 0;
             opacity: 0;
-            transition: max-height 0.6s cubic-bezier(0.2, 0.9, 0.4, 1),
-                opacity 0.5s ease,
-                margin 0.3s ease;
+            transition: max-height 0.15s cubic-bezier(0.2, 0.9, 0.4, 1),
+                opacity 0.12s ease,
+                margin 0.12s ease;
             margin: 0;
             flex-shrink: 0;
         }
@@ -146,9 +146,9 @@
             overflow: hidden;
             max-height: 0;
             opacity: 0;
-            transition: max-height 0.6s cubic-bezier(0.2, 0.9, 0.4, 1),
-                opacity 0.5s ease,
-                margin 0.3s ease;
+            transition: max-height 0.15s cubic-bezier(0.2, 0.9, 0.4, 1),
+                opacity 0.12s ease,
+                margin 0.12s ease;
             margin: 0;
             flex-shrink: 0;
             display: flex;
@@ -165,7 +165,7 @@
             font-family: system-ui, -apple-system, sans-serif;
             font-size: 1rem;
             color: #1a1a1a;
-            padding: 0.5rem 0;
+            padding: 0.75rem 0.2rem;
             width: 100%;
             text-align: left;
         }
@@ -209,9 +209,9 @@
             overflow: hidden;
             max-height: 0;
             opacity: 0;
-            transition: max-height 0.6s cubic-bezier(0.2, 0.9, 0.4, 1),
-                opacity 0.5s ease,
-                margin 0.3s ease;
+            transition: max-height 0.15s cubic-bezier(0.2, 0.9, 0.4, 1),
+                opacity 0.12s ease,
+                margin 0.12s ease;
             margin: 0;
             flex-shrink: 0;
             display: flex;
@@ -228,7 +228,7 @@
             font-family: system-ui, -apple-system, sans-serif;
             font-size: 1rem;
             color: #1a1a1a;
-            padding: 0.5rem 0;
+            padding: 0.75rem 0.2rem;
             width: 100%;
             line-height: 1.5;
         }
@@ -423,6 +423,7 @@
             .mailing-content,
             .contact-text {
                 font-size: 0.9rem;
+                padding: 0.5rem 0.1rem;
             }
             .mailing-image-container {
                 gap: 12px;
@@ -476,7 +477,7 @@
                 <div class="wheel-wrapper" id="wheelWrapper">
                     <div class="releases-content">
                         <p>April Fridae's "right now," August 26th. <a href="http://friendswithbears.com/fridae/right-now" target="_blank">Pre-save &amp; get a free zine here.</a></p>
-                    </div><br>
+                    </div>
                     <div class="scroll-wrapper" id="scrollWheel">
                         <div class="wheel-track" id="wheelTrack"></div>
                     </div>
@@ -487,7 +488,7 @@
                 </div>
                 <div class="mailing-wrapper" id="mailingWrapper">
                     <div class="mailing-content">
-                       <br> <p>Join our mailing list for new updates, free zines, postcards, stickers, and more. <a href="https://forms.gle/hf4jCUEQcWnEb4B6A" target="_blank">Click here to sign up.</a></p>
+                        <br><p>Join our mailing list for new updates, free zines, postcards, stickers, and more. <a href="https://forms.gle/hf4jCUEQcWnEb4B6A" target="_blank">Click here to sign up.</a></p>
                     </div>
                     <div class="mailing-image-container" id="mailingImageContainer"></div>
                 </div>
@@ -498,7 +499,7 @@
                 <div class="contact-wrapper" id="contactWrapper">
                     <div class="contact-text">
                         For press, marketing, creative, or general inquiries, reach us at <a href="mailto:hi@friendswithbears.com">hi@friendswithbears.com</a>.<br><br>Interested in working with us? <a href="https://forms.gle/y2yPsPzmVBv1Kojx8" target="_blank">Submit your music here</a> for consideration.
-                    </div><br><br>
+                    </div>
                 </div>
             </div>
         </div>
@@ -554,43 +555,61 @@
             if (!wrapper || !track || !releasesTitle || !releasesArrow || !mailingTitle || !mailingArrow || !mailingWrapper ||
                 !mailingImageContainer || !contactTitle || !contactArrow || !wheelWrapper || !contactWrapper || !container)
                 return;
-            let isExpanded = false;
-            const releasesHeader = document.getElementById('releasesHeader');
-            releasesHeader.addEventListener('click', function(e) {
-                isExpanded = !isExpanded;
-                if (isExpanded) {
-                    wheelWrapper.classList.add('expanded');
-                    releasesArrow.classList.add('rotated');
-                } else {
-                    wheelWrapper.classList.remove('expanded');
-                    releasesArrow.classList.remove('rotated');
+
+            // ----- ACCORDION: FAST SEQUENTIAL CLOSE/OPEN -----
+            let currentlyOpen = null;
+            let openTimer = null;
+
+            function closeSection(wrapper, arrow) {
+                if (wrapper) wrapper.classList.remove('expanded');
+                if (arrow) arrow.classList.remove('rotated');
+            }
+
+            function openSection(wrapper, arrow) {
+                if (wrapper) wrapper.classList.add('expanded');
+                if (arrow) arrow.classList.add('rotated');
+            }
+
+            function toggleSection(targetWrapper, targetArrow, targetName) {
+                clearTimeout(openTimer);
+
+                // If clicking the already open section, just close it
+                if (currentlyOpen === targetName) {
+                    closeSection(targetWrapper, targetArrow);
+                    currentlyOpen = null;
+                    return;
                 }
+
+                // Close any currently open section immediately
+                if (currentlyOpen === 'releases') {
+                    closeSection(wheelWrapper, releasesArrow);
+                } else if (currentlyOpen === 'mailing') {
+                    closeSection(mailingWrapper, mailingArrow);
+                } else if (currentlyOpen === 'contact') {
+                    closeSection(contactWrapper, contactArrow);
+                }
+
+                // Open the new section after a tiny delay (30ms) so the close starts first
+                // With 0.15s transition, this feels instant with no overlap
+                openTimer = setTimeout(() => {
+                    openSection(targetWrapper, targetArrow);
+                    currentlyOpen = targetName;
+                    openTimer = null;
+                }, 30);
+            }
+
+            // Attach toggles
+            document.getElementById('releasesHeader').addEventListener('click', function(e) {
+                toggleSection(wheelWrapper, releasesArrow, 'releases');
             });
-            let isMailingExpanded = false;
-            const mailingHeader = document.getElementById('mailingHeader');
-            mailingHeader.addEventListener('click', function(e) {
-                isMailingExpanded = !isMailingExpanded;
-                if (isMailingExpanded) {
-                    mailingWrapper.classList.add('expanded');
-                    mailingArrow.classList.add('rotated');
-                } else {
-                    mailingWrapper.classList.remove('expanded');
-                    mailingArrow.classList.remove('rotated');
-                }
+            document.getElementById('mailingHeader').addEventListener('click', function(e) {
+                toggleSection(mailingWrapper, mailingArrow, 'mailing');
             });
-            let isContactExpanded = false;
-            const contactHeader = document.getElementById('contactHeader');
-            contactHeader.addEventListener('click', function(e) {
-                isContactExpanded = !isContactExpanded;
-                if (isContactExpanded) {
-                    contactWrapper.classList.add('expanded');
-                    contactArrow.classList.add('rotated');
-                } else {
-                    contactWrapper.classList.remove('expanded');
-                    contactArrow.classList.remove('rotated');
-                }
+            document.getElementById('contactHeader').addEventListener('click', function(e) {
+                toggleSection(contactWrapper, contactArrow, 'contact');
             });
 
+            // ----- SIZING & WHEEL BUILDING (unchanged) -----
             function getSize() {
                 const vh = window.innerHeight;
                 let s = Math.min(vh * 0.40, 450);
