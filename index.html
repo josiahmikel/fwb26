@@ -110,13 +110,34 @@
             font-size: 0.6rem;
             display: flex;
             align-items: center;
+            justify-content: center;
             font-family: system-ui, -apple-system, sans-serif;
             transition: color 0.2s ease;
             color: inherit;
+            width: 1.2rem;
+            height: 1.2rem;
         }
         .player-header .play-btn .icon {
-            font-size: 0.8rem;
-            line-height: 1;
+            display: block;
+            width: 0;
+            height: 0;
+            transition: border-color 0.2s ease;
+        }
+        /* Play icon - smaller */
+        .player-header .play-btn .icon.play {
+            border-top: 0.3rem solid transparent;
+            border-bottom: 0.3rem solid transparent;
+            border-left: 0.45rem solid currentColor;
+            margin-left: 0.12rem;
+        }
+        /* Pause icon - smaller */
+        .player-header .play-btn .icon.pause {
+            width: 0.45rem;
+            height: 0.55rem;
+            border-left: 0.15rem solid currentColor;
+            border-right: 0.15rem solid currentColor;
+            border-top: none;
+            border-bottom: none;
         }
         .player-header .line {
             flex: 1 1 auto;
@@ -215,9 +236,22 @@
             }
             .player-header .play-btn {
                 font-size: 0.5rem;
+                width: 1rem;
+                height: 1rem;
             }
-            .player-header .play-btn .icon {
-                font-size: 0.7rem;
+            /* Mobile play icon - even smaller */
+            .player-header .play-btn .icon.play {
+                border-top: 0.22rem solid transparent;
+                border-bottom: 0.22rem solid transparent;
+                border-left: 0.34rem solid currentColor;
+                margin-left: 0.08rem;
+            }
+            /* Mobile pause icon - even smaller */
+            .player-header .play-btn .icon.pause {
+                width: 0.35rem;
+                height: 0.4rem;
+                border-left: 0.12rem solid currentColor;
+                border-right: 0.12rem solid currentColor;
             }
             .player-header .line {
                 margin: 0 0.3rem;
@@ -652,7 +686,7 @@
                     RADIO
                 </span>
                 <button class="play-btn" id="playBtn" aria-label="Play / Pause">
-                    <span class="icon" id="playIcon">▶</span>
+                    <span class="icon play" id="playIcon"></span>
                 </button>
             </div>
             <div class="line"></div>
@@ -839,10 +873,8 @@
 
             let activePlayerIndex = 0;
             let currentTrackIndex = -1;
-            let nextTrackIndex = -1;
-            let isCrossfading = false;
-            let crossfadeTimeout = null;
-            let crossfadePrepared = false;
+            let isTransitioning = false;
+            let transitionTimeout = null;
 
             // ============================================================
             // 5. PARSER
@@ -859,7 +891,6 @@
                 song = song.replace(/_/g, ' ');
                 artist = artist.replace(/_/g, ' ');
                 
-                // Get Instagram URL for this artist
                 let instagramUrl = null;
                 const artistKey = artist.toLowerCase();
                 if (ARTIST_INSTAGRAM.hasOwnProperty(artistKey)) {
@@ -895,7 +926,6 @@
                 }
                 
                 if (info.artist) {
-                    // Make artist clickable if we have Instagram URL
                     if (info.instagramUrl) {
                         nowPlayingEl.innerHTML = 
                             `<span class="song-title">${info.song}</span><span class="separator">·</span><a href="${info.instagramUrl}" target="_blank" class="artist-link">${info.artist}</a>`;
@@ -956,58 +986,51 @@
 
             async function resumeAudioContext() {
                 if (audioContext && audioContext.state === 'suspended') {
-                    try {
-                        await audioContext.resume();
-                    } catch (e) {
-                        console.warn('Could not resume AudioContext', e);
-                    }
+                    try { await audioContext.resume(); } catch (e) {}
                 }
             }
 
-            // ---------- Crossfade ----------
-            function executeCrossfade() {
+            // ---------- Crossfade (rewritten) ----------
+            function performCrossfade() {
+                if (isTransitioning || !radioStarted) return;
+                isTransitioning = true;
+
                 const nextPlayerIndex = 1 - activePlayerIndex;
                 const nextTrackIdx = (currentTrackIndex + 1) % shuffledPlaylist.length;
-
-                const startTime = audioContext.currentTime;
                 const fadeDuration = 3.0;
 
+                const nextSrc = shuffledPlaylist[nextTrackIdx];
+                if (players[nextPlayerIndex].src !== nextSrc) {
+                    players[nextPlayerIndex].src = nextSrc;
+                    players[nextPlayerIndex].currentTime = 0;
+                    players[nextPlayerIndex].load();
+                    players[nextPlayerIndex].play().catch(() => {});
+                }
+
+                const startTime = audioContext.currentTime;
                 gains[activePlayerIndex].gain.setValueAtTime(gains[activePlayerIndex].gain.value, startTime);
                 gains[activePlayerIndex].gain.linearRampToValueAtTime(0, startTime + fadeDuration);
                 gains[nextPlayerIndex].gain.setValueAtTime(0, startTime);
                 gains[nextPlayerIndex].gain.linearRampToValueAtTime(1, startTime + fadeDuration);
 
-                if (crossfadeTimeout) {
-                    clearTimeout(crossfadeTimeout);
-                    crossfadeTimeout = null;
-                }
+                if (transitionTimeout) clearTimeout(transitionTimeout);
 
-                crossfadeTimeout = setTimeout(() => {
+                transitionTimeout = setTimeout(() => {
                     players[activePlayerIndex].pause();
                     activePlayerIndex = nextPlayerIndex;
                     currentTrackIndex = nextTrackIdx;
-                    nextTrackIndex = (nextTrackIdx + 1) % shuffledPlaylist.length;
                     updateNowPlaying(currentTrackIndex);
-                    isCrossfading = false;
-                    crossfadePrepared = false;
-                    crossfadeTimeout = null;
 
                     const inactiveIdx = 1 - activePlayerIndex;
                     const followingTrackIdx = (currentTrackIndex + 1) % shuffledPlaylist.length;
-                    const followingSrc = shuffledPlaylist[followingTrackIdx];
-                    players[inactiveIdx].src = followingSrc;
+                    players[inactiveIdx].src = shuffledPlaylist[followingTrackIdx];
+                    players[inactiveIdx].currentTime = 0;
                     players[inactiveIdx].load();
-                    players[inactiveIdx].play().catch(() => {
-                        console.warn('Inactive player play() rejected, will retry later');
-                    });
-                }, fadeDuration * 1000 + 50);
-            }
+                    players[inactiveIdx].play().catch(() => {});
 
-            function prepareCrossfade() {
-                if (isCrossfading || crossfadePrepared) return;
-                crossfadePrepared = true;
-                isCrossfading = true;
-                executeCrossfade();
+                    isTransitioning = false;
+                    transitionTimeout = null;
+                }, fadeDuration * 1000 + 50);
             }
 
             // ---------- Start time-synced playback ----------
@@ -1037,11 +1060,6 @@
                         break;
                     }
                     remaining -= dur;
-                    trackIndex = i + 1;
-                }
-                if (trackIndex >= shuffledPlaylist.length) {
-                    trackIndex = shuffledPlaylist.length - 1;
-                    offset = shuffledDurations[trackIndex] || 180;
                 }
 
                 const currentSrc = shuffledPlaylist[trackIndex];
@@ -1057,49 +1075,31 @@
 
                 activePlayerIndex = 0;
                 currentTrackIndex = trackIndex;
-                nextTrackIndex = (trackIndex + 1) % shuffledPlaylist.length;
 
                 players[0].load();
                 players[1].load();
 
-                const info = getDisplayName(trackIndex);
-                console.log(`⏱️ Time-synced track (shuffled): #${trackIndex+1} - ${info ? info.song + ' · ' + info.artist : 'unknown'}`);
-
                 updateNowPlaying(trackIndex);
 
                 setInterval(() => {
-                    if (!radioStarted) return;
+                    if (!radioStarted || isTransitioning) return;
 
-                    const activePlayer = players[activePlayerIndex];
-                    if (activePlayer.paused && !isCrossfading) {
-                        activePlayer.play().catch(() => {});
+                    const active = players[activePlayerIndex];
+                    if (active.paused) {
+                        active.play().catch(() => {});
                         return;
                     }
 
-                    const currentTime = activePlayer.currentTime || 0;
+                    const currentTime = active.currentTime || 0;
                     const duration = shuffledDurations[currentTrackIndex] || 180;
 
-                    if (currentTime >= duration - 5 && !crossfadePrepared) {
-                        prepareCrossfade();
+                    if (currentTime >= duration - 5) {
+                        performCrossfade();
                     }
-
-                    if (currentTime >= duration && !crossfadePrepared) {
-                        prepareCrossfade();
-                    }
-
                 }, 250);
 
-                players[0].addEventListener('error', function() {
-                    if (!isInitialized) return;
-                    if (!crossfadePrepared && radioStarted) prepareCrossfade();
-                });
-                players[1].addEventListener('error', function() {
-                    if (!isInitialized) return;
-                    if (!crossfadePrepared && radioStarted) prepareCrossfade();
-                });
-
                 isPlaying = false;
-                playIcon.textContent = '▶';
+                playIcon.className = 'icon play';
                 playerHeader.classList.remove('playing');
                 nowPlayingEl.classList.remove('loading');
             }
@@ -1122,7 +1122,7 @@
                 if (isPlaying) {
                     if (masterGainNode) masterGainNode.gain.setValueAtTime(0, audioContext.currentTime);
                     isPlaying = false;
-                    playIcon.textContent = '▶';
+                    playIcon.className = 'icon play';
                     playerHeader.classList.remove('playing');
                 } else {
                     if (!radioStarted) {
@@ -1138,7 +1138,7 @@
                     }
                     if (masterGainNode) masterGainNode.gain.setValueAtTime(1, audioContext.currentTime);
                     isPlaying = true;
-                    playIcon.textContent = '⏸';
+                    playIcon.className = 'icon pause';
                     playerHeader.classList.add('playing');
                     updateNowPlaying(currentTrackIndex);
                 }
