@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Friends With Bears Records · Album Wheel</title>
-    <meta name="description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok. Explore our latest releases.">
-    <meta name="keywords" content="Friends With Bears Records, creaturethief, April Fridae, eliesriot, Zayok, indie music, electronic, hyperpop, record label">
+    <title>Friends With Bears Records</title>
+    <meta name="description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok. Explore new releases, join our mailing list for free zines and stickers, and get in touch for press, marketing, or music submissions.">
+    <meta name="keywords" content="Friends With Bears Records, creaturethief, April Fridae, eliesriot, Zayok, indie music, electronic, hyperpop, record label, music submissions, free zines, stickers, mailing list">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://friendswithbears.com">
     <meta property="og:title" content="Friends With Bears Records">
-    <meta property="og:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok.">
+    <meta property="og:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok. Explore new releases, join our mailing list, and get in touch.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://friendswithbears.com">
     <meta property="og:image" content="https://friendswithbears.com/assets/fridae-cover.jpg">
@@ -34,9 +34,7 @@
             ]
         }
     </script>
-
     <style>
-        /* --- RESET --- */
         * {
             margin: 0;
             padding: 0;
@@ -45,27 +43,30 @@
         html,
         body {
             width: 100%;
-            height: 100%;
+            min-height: 100%;
             background: #fff;
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
         }
-
-        /* --- CONTAINER --- */
         .wheel-container {
             width: 100vw;
-            height: 100vh;
-            height: 100dvh;
+            min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
+            background: #fff;
+            padding: 20px 0 10px 0;
+            padding-bottom: max(10px, env(safe-area-inset-bottom, 10px));
+            overflow-y: visible;
+            position: relative;
+        }
+        .accordion-wrapper {
+            flex: 1 0 auto;
+            display: flex;
             align-items: center;
             justify-content: center;
-            background: #fff;
-            overflow: hidden;
-            padding: 20px 0;
-            padding-bottom: max(20px, env(safe-area-inset-bottom, 20px));
+            padding: 0 0.5rem;
         }
-
-        /* --- ACCORDION GROUP (full page width) --- */
         .accordion-group {
             width: 94%;
             max-width: 1800px;
@@ -74,8 +75,6 @@
             align-items: center;
             margin: 0 auto;
         }
-
-        /* --- HEADER ITEMS (title left, arrow right) --- */
         .header-item {
             display: flex;
             align-items: center;
@@ -84,27 +83,28 @@
             padding: 0.5rem 0.2rem;
             flex-shrink: 0;
             z-index: 10;
+            cursor: pointer;
+            user-select: none;
         }
-
         .title-image {
             display: block;
             object-fit: contain;
             flex-shrink: 0;
             transition: opacity 0.3s ease;
-            width: 240px;
-            height: 80px;
+            pointer-events: none;
+            max-width: 100%;
+            max-height: 100%;
         }
-
         .arrow-image {
             display: block;
             object-fit: contain;
             flex-shrink: 0;
-            cursor: pointer;
             transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1), opacity 0.2s ease;
             opacity: 1;
             transform: rotate(0deg);
-            width: 48px;
-            height: 48px;
+            pointer-events: none;
+            max-width: 100%;
+            max-height: 100%;
         }
         .arrow-image:active {
             opacity: 0.8;
@@ -112,8 +112,23 @@
         .arrow-image.rotated {
             transform: rotate(90deg);
         }
-
-        /* --- WHEEL WRAPPER (Releases accordion panel) --- */
+        .releases-content {
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 1rem;
+            color: #1a1a1a;
+            padding: 0.5rem 0;
+            width: 100%;
+            text-align: left;
+        }
+        .releases-content a {
+            color: #1a1a1a;
+            text-decoration: none;
+            border-bottom: 1px solid #ddd;
+            transition: border-color 0.2s ease;
+        }
+        .releases-content a:hover {
+            border-bottom-color: #000;
+        }
         .wheel-wrapper {
             width: 100%;
             overflow: hidden;
@@ -126,12 +141,65 @@
             flex-shrink: 0;
         }
         .wheel-wrapper.expanded {
-            max-height: 1000px;
+            max-height: 2000px;
             opacity: 1;
             margin: 0.25rem 0;
         }
-
-        /* --- CONTACT WRAPPER (Contact accordion panel) --- */
+        .mailing-wrapper {
+            width: 100%;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.6s cubic-bezier(0.2, 0.9, 0.4, 1),
+                opacity 0.5s ease,
+                margin 0.3s ease;
+            margin: 0;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0 0.2rem;
+        }
+        .mailing-wrapper.expanded {
+            max-height: 2000px;
+            opacity: 1;
+            margin: 0.25rem 0;
+        }
+        .mailing-content {
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 1rem;
+            color: #1a1a1a;
+            padding: 0.5rem 0;
+            width: 100%;
+            text-align: left;
+        }
+        .mailing-content a {
+            color: #1a1a1a;
+            text-decoration: none;
+            border-bottom: 1px solid #ddd;
+            transition: border-color 0.2s ease;
+        }
+        .mailing-content a:hover {
+            border-bottom-color: #000;
+        }
+        .mailing-image-container {
+            width: 100%;
+            padding: 0.5rem 0.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 20px;
+        }
+        .mailing-cover {
+            flex: 0 0 auto;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
         .contact-wrapper {
             width: 100%;
             overflow: hidden;
@@ -148,19 +216,27 @@
             padding: 0 0.2rem;
         }
         .contact-wrapper.expanded {
-            max-height: 1000px;
+            max-height: 300px;
             opacity: 1;
             margin: 0.25rem 0;
         }
-        .contact-wrapper img {
-            display: block;
-            object-fit: contain;
-            flex-shrink: 0;
-            height: auto;
-            width: auto;
+        .contact-text {
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 1rem;
+            color: #1a1a1a;
+            padding: 0.5rem 0;
+            width: 100%;
+            line-height: 1.5;
         }
-
-        /* --- WHEEL (scrollable container) --- */
+        .contact-text a {
+            color: #1a1a1a;
+            text-decoration: none;
+            border-bottom: 1px solid #ddd;
+            transition: border-color 0.2s ease;
+        }
+        .contact-text a:hover {
+            border-bottom-color: #000;
+        }
         .scroll-wrapper {
             width: 100%;
             overflow-x: auto;
@@ -171,14 +247,13 @@
             -ms-overflow-style: none;
             overscroll-behavior: none;
             touch-action: pan-x;
-            padding: 1rem 0.2rem; /* Increased top & bottom padding */
+            padding: 1rem 0.2rem;
             display: flex;
             align-items: center;
         }
         .scroll-wrapper::-webkit-scrollbar {
             display: none;
         }
-
         .wheel-track {
             display: flex;
             flex-wrap: nowrap;
@@ -192,8 +267,6 @@
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
         }
-
-        /* --- COVERS --- */
         .album-square {
             flex: 0 0 auto;
             position: relative;
@@ -210,8 +283,6 @@
         .album-square:not(:last-child) {
             margin-right: 32px;
         }
-
-        /* Breathing */
         @keyframes breathe-container {
             0% {
                 transform: translateZ(0) scale(1);
@@ -243,7 +314,6 @@
         .album-square:hover {
             animation: breathe-container 6s ease-in-out infinite;
         }
-
         .album-square .cover-layer {
             position: absolute;
             top: 0;
@@ -273,7 +343,6 @@
             animation: none;
             transform: translateZ(0) scale(1);
         }
-
         .album-square .cover-pixelated {
             z-index: 2;
             image-rendering: pixelated;
@@ -301,8 +370,17 @@
             opacity: 1 !important;
             transition: none;
         }
-
-        /* --- MOBILE: DISABLE ALL HOVER EFFECTS --- */
+        .footer {
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 0.8rem;
+            color: #999;
+            text-align: center;
+            padding: 0.5rem 0 0.25rem 0;
+            width: 94%;
+            max-width: 1800px;
+            margin: 0 auto;
+            flex-shrink: 0;
+        }
         @media (max-width: 640px) {
             .album-square:hover {
                 animation: none !important;
@@ -328,20 +406,30 @@
             .album-square.animated-cover .cover-sharp {
                 display: none !important;
             }
-
             .header-item {
                 padding: 0.3rem 0.1rem;
             }
             .wheel-wrapper.expanded,
+            .mailing-wrapper.expanded,
             .contact-wrapper.expanded {
                 margin: 0.1rem 0;
             }
             .scroll-wrapper {
-                padding: 0.5rem 0.1rem; /* Increased mobile padding */
+                padding: 0.5rem 0.1rem;
+            }
+            .releases-content,
+            .mailing-content,
+            .contact-text {
+                font-size: 0.9rem;
+            }
+            .mailing-image-container {
+                gap: 12px;
+            }
+            .footer {
+                font-size: 0.7rem;
+                padding: 0.25rem 0 0.1rem 0;
             }
         }
-
-        /* --- Responsive spacing --- */
         @media (max-width: 900px) {
             .album-square:not(:last-child) {
                 margin-right: 26px;
@@ -354,11 +442,11 @@
         }
         @media (max-width: 640px) {
             .wheel-container {
-                padding: 12px 0;
-                padding-bottom: max(12px, env(safe-area-inset-bottom, 16px));
+                padding: 12px 0 6px 0;
+                padding-bottom: max(6px, env(safe-area-inset-bottom, 6px));
             }
             .scroll-wrapper {
-                padding: 0.5rem 0.1rem; /* Increased mobile padding */
+                padding: 0.5rem 0.1rem;
             }
             .album-square:not(:last-child) {
                 margin-right: 14px;
@@ -368,44 +456,54 @@
             .album-square:not(:last-child) {
                 margin-right: 10px;
             }
+            .mailing-image-container {
+                gap: 8px;
+            }
         }
     </style>
 </head>
 <body>
-
     <div class="wheel-container" id="container">
-        <div class="accordion-group">
-            <!-- RELEASES ITEM -->
-            <div class="header-item" id="releasesHeader">
-                <img src="assets/releases.png" alt="Releases" class="title-image" id="releasesTitle">
-                <img src="assets/arrow.png" alt="Toggle releases" class="arrow-image" id="releasesArrow">
-            </div>
-
-            <!-- WHEEL WRAPPER (collapsible) -->
-            <div class="wheel-wrapper" id="wheelWrapper">
-                <div class="scroll-wrapper" id="scrollWheel">
-                    <div class="wheel-track" id="wheelTrack"></div>
+        <div class="accordion-wrapper">
+            <div class="accordion-group">
+                <div class="header-item" id="releasesHeader">
+                    <img src="assets/releases.png" alt="Releases" class="title-image" id="releasesTitle">
+                    <img src="assets/arrow.png" alt="Toggle releases" class="arrow-image" id="releasesArrow">
                 </div>
-            </div>
-
-            <!-- CONTACT ITEM -->
-            <div class="header-item" id="contactHeader">
-                <img src="assets/contact.png" alt="Contact" class="title-image" id="contactTitle">
-                <img src="assets/arrow.png" alt="Toggle contact" class="arrow-image" id="contactArrow">
-            </div>
-
-            <!-- CONTACT WRAPPER (collapsible) -->
-            <div class="contact-wrapper" id="contactWrapper">
-        
-                <img src="assets/email.png" alt="Contact Email" id="emailImage">
+                <div class="wheel-wrapper" id="wheelWrapper">
+                    <div class="releases-content">
+                        <p>April Fridae's "right now," August 26th. <a href="http://friendswithbears.com/fridae/right-now" target="_blank">Pre-save &amp; get a free zine here.</a></p>
+                    </div><br>
+                    <div class="scroll-wrapper" id="scrollWheel">
+                        <div class="wheel-track" id="wheelTrack"></div>
+                    </div><br><br>
+                </div>
+                <div class="header-item" id="mailingHeader">
+                    <img src="assets/mailing-list.png" alt="Mailing List" class="title-image" id="mailingTitle">
+                    <img src="assets/arrow.png" alt="Toggle mailing list" class="arrow-image" id="mailingArrow">
+                </div>
+                <div class="mailing-wrapper" id="mailingWrapper">
+                    <div class="mailing-content"><br>
+                        <p>Join our mailing list for new updates, free zines, postcards, stickers, and more. <a href="https://forms.gle/hf4jCUEQcWnEb4B6A" target="_blank">Click here to sign up.</a></p>
+                    </div>
+                    <div class="mailing-image-container" id="mailingImageContainer"></div>
+                </div>
+                <div class="header-item" id="contactHeader">
+                    <img src="assets/contact.png" alt="Contact" class="title-image" id="contactTitle">
+                    <img src="assets/arrow.png" alt="Toggle contact" class="arrow-image" id="contactArrow">
+                </div>
+                <div class="contact-wrapper" id="contactWrapper">
+                    <div class="contact-text">
+                        For press, marketing, creative, or general inquiries, reach us at <a href="mailto:hi@friendswithbears.com">hi@friendswithbears.com</a>.<br><br> Interested in working with us? <a href="https://forms.gle/y2yPsPzmVBv1Kojx8" target="_blank">Submit your music here</a> for consideration.
+                    </div>
+                </div><br><br>
             </div>
         </div>
+        <div class="footer">©2026 Friends With Bears Records</div>
     </div>
-
     <script>
         (function() {
             'use strict';
-
             const RELEASES = [
                 { src: 'assets/fridae-cover.jpg', artist: 'April Fridae', title: 'Fridae', url: 'https://friendswithbears.com/releases/fridae' },
                 { src: 'assets/eliesriot_dying_to_live.jpg', artist: 'eliesriot', title: 'Dying to Live', url: 'https://friendswithbears.com/releases/dying-to-live' },
@@ -413,66 +511,49 @@
                 { src: 'assets/zayok_in_elsewhere.jpg', artist: 'Zayok', title: 'In elsewhere', url: 'https://friendswithbears.com/releases/in-elsewhere' },
                 { src: 'assets/creaturethief_verdant.jpg', artist: 'creaturethief', title: 'verdant', url: 'https://friendswithbears.com/releases/verdant' }
             ];
-
             const FALLBACKS = ['#b5838d', '#6d597a', '#2a9d8f', '#e76f51', '#264653'];
             const COPIES = 5;
-
             const ANIMATIONS = {
                 'assets/fridae-cover.jpg': {
-                    frames: [
-                        'assets/animation/fridae-cover-1.jpg',
-                        'assets/animation/fridae-cover-2.jpg'
-                    ],
+                    frames: ['assets/animation/fridae-cover-1.jpg', 'assets/animation/fridae-cover-2.jpg'],
                     frameDelay: 20
                 },
                 'assets/eliesriot_dying_to_live.jpg': {
-                    frames: [
-                        'assets/animation/eliesriot_dying_to_live-1.jpg',
-                        'assets/animation/eliesriot_dying_to_live-2.jpg'
-                    ],
+                    frames: ['assets/animation/eliesriot_dying_to_live-1.jpg', 'assets/animation/eliesriot_dying_to_live-2.jpg'],
                     frameDelay: 20
                 },
                 'assets/creaturethief_ct-24.jpg': {
-                    frames: [
-                        'assets/animation/creaturethief_ct-24-1.jpg',
-                        'assets/animation/creaturethief_ct-24-2.jpg'
-                    ],
+                    frames: ['assets/animation/creaturethief_ct-24-1.jpg', 'assets/animation/creaturethief_ct-24-2.jpg'],
                     frameDelay: 20
                 },
                 'assets/zayok_in_elsewhere.jpg': {
-                    frames: [
-                        'assets/animation/zayok_in_elsewhere-1.jpg',
-                        'assets/animation/zayok_in_elsewhere-2.jpg'
-                    ],
+                    frames: ['assets/animation/zayok_in_elsewhere-1.jpg', 'assets/animation/zayok_in_elsewhere-2.jpg'],
                     frameDelay: 20
                 },
                 'assets/creaturethief_verdant.jpg': {
-                    frames: [
-                        'assets/animation/creaturethief_verdant-1.jpg',
-                        'assets/animation/creaturethief_verdant-2.jpg'
-                    ],
+                    frames: ['assets/animation/creaturethief_verdant-1.jpg', 'assets/animation/creaturethief_verdant-2.jpg'],
                     frameDelay: 20
                 }
             };
-
             const wrapper = document.getElementById('scrollWheel');
             const track = document.getElementById('wheelTrack');
             const releasesTitle = document.getElementById('releasesTitle');
             const releasesArrow = document.getElementById('releasesArrow');
+            const mailingTitle = document.getElementById('mailingTitle');
+            const mailingArrow = document.getElementById('mailingArrow');
+            const mailingWrapper = document.getElementById('mailingWrapper');
+            const mailingImageContainer = document.getElementById('mailingImageContainer');
             const contactTitle = document.getElementById('contactTitle');
             const contactArrow = document.getElementById('contactArrow');
             const wheelWrapper = document.getElementById('wheelWrapper');
             const contactWrapper = document.getElementById('contactWrapper');
-            const emailImage = document.getElementById('emailImage');
             const container = document.getElementById('container');
-
-            if (!wrapper || !track || !releasesTitle || !releasesArrow || !contactTitle || !contactArrow || !wheelWrapper ||
-                !contactWrapper || !emailImage || !container) return;
-
-            // ----- ACCORDION TOGGLE (Releases) -----
+            if (!wrapper || !track || !releasesTitle || !releasesArrow || !mailingTitle || !mailingArrow || !mailingWrapper ||
+                !mailingImageContainer || !contactTitle || !contactArrow || !wheelWrapper || !contactWrapper || !container)
+                return;
             let isExpanded = false;
-
-            releasesArrow.addEventListener('click', function() {
+            const releasesHeader = document.getElementById('releasesHeader');
+            releasesHeader.addEventListener('click', function(e) {
                 isExpanded = !isExpanded;
                 if (isExpanded) {
                     wheelWrapper.classList.add('expanded');
@@ -482,11 +563,21 @@
                     releasesArrow.classList.remove('rotated');
                 }
             });
-
-            // ----- ACCORDION TOGGLE (Contact) -----
+            let isMailingExpanded = false;
+            const mailingHeader = document.getElementById('mailingHeader');
+            mailingHeader.addEventListener('click', function(e) {
+                isMailingExpanded = !isMailingExpanded;
+                if (isMailingExpanded) {
+                    mailingWrapper.classList.add('expanded');
+                    mailingArrow.classList.add('rotated');
+                } else {
+                    mailingWrapper.classList.remove('expanded');
+                    mailingArrow.classList.remove('rotated');
+                }
+            });
             let isContactExpanded = false;
-
-            contactArrow.addEventListener('click', function() {
+            const contactHeader = document.getElementById('contactHeader');
+            contactHeader.addEventListener('click', function(e) {
                 isContactExpanded = !isContactExpanded;
                 if (isContactExpanded) {
                     contactWrapper.classList.add('expanded');
@@ -497,11 +588,10 @@
                 }
             });
 
-            // ----- Sizing: covers at 45% of viewport height -----
             function getSize() {
                 const vh = window.innerHeight;
-                let s = Math.min(vh * 0.45, 500);
-                s = Math.max(s, 100);
+                let s = Math.min(vh * 0.40, 450);
+                s = Math.max(s, 80);
                 return s;
             }
 
@@ -516,41 +606,34 @@
             function updateTitleSize(currentSize) {
                 const titleHeight = Math.min(currentSize * 0.2, 80);
                 const titleWidth = titleHeight * 3;
-
                 releasesTitle.style.height = titleHeight + 'px';
                 releasesTitle.style.width = titleWidth + 'px';
                 contactTitle.style.height = titleHeight + 'px';
                 contactTitle.style.width = titleWidth + 'px';
-
-                // Arrows: half the height of the titles (0.5 instead of 0.7)
+                const mailingHeight = titleHeight * 0.7;
+                mailingTitle.style.height = mailingHeight + 'px';
+                mailingTitle.style.width = 'auto';
+                mailingTitle.style.objectFit = 'contain';
                 const arrowSize = titleHeight * 0.5;
                 releasesArrow.style.height = arrowSize + 'px';
                 releasesArrow.style.width = arrowSize + 'px';
                 contactArrow.style.height = arrowSize + 'px';
                 contactArrow.style.width = arrowSize + 'px';
-
-                // Email image: 2x the height of the titles
-                const emailHeight = titleHeight * 2;
-                emailImage.style.height = emailHeight + 'px';
-                emailImage.style.width = 'auto';
+                mailingArrow.style.height = arrowSize + 'px';
+                mailingArrow.style.width = arrowSize + 'px';
             }
-
             let currentSize = getSize();
 
             function buildTrack() {
                 const size = getSize();
                 const gap = getSpacing();
-
                 track.innerHTML = '';
                 const total = RELEASES.length * COPIES;
-
                 const isMobile = window.innerWidth <= 640;
-
                 for (let i = 0; i < total; i++) {
                     const idx = i % RELEASES.length;
                     const release = RELEASES[idx];
                     const isAnimated = ANIMATIONS.hasOwnProperty(release.src);
-
                     const container = document.createElement('div');
                     container.className = 'album-square';
                     container.style.width = size + 'px';
@@ -559,34 +642,28 @@
                     container.dataset.artist = release.artist;
                     container.dataset.title = release.title;
                     container.dataset.url = release.url;
-
                     const sharp = document.createElement('div');
                     sharp.className = 'cover-layer cover-sharp';
                     sharp.style.backgroundImage = `url('${release.src}')`;
                     sharp.style.backgroundColor = FALLBACKS[idx];
-
                     const pixelated = document.createElement('div');
                     pixelated.className = 'cover-layer cover-pixelated';
                     pixelated.style.backgroundColor = FALLBACKS[idx];
                     pixelated.style.imageRendering = 'pixelated';
                     pixelated.style.imageRendering = '-moz-crisp-edges';
                     pixelated.style.imageRendering = 'crisp-edges';
-
                     if (isAnimated) {
                         container.classList.add('animated-cover');
                         const animData = ANIMATIONS[release.src];
                         pixelated.style.backgroundImage = `url('${release.src}')`;
-
                         animData.frames.forEach(frame => {
                             const img = new Image();
                             img.src = frame;
                         });
-
                         container._animData = animData;
                         container._currentFrameIndex = 0;
                         container._animInterval = null;
                         container._pixelatedLayer = pixelated;
-
                         if (!isMobile) {
                             container.addEventListener('mouseenter', function(e) {
                                 if (this._animInterval) {
@@ -609,7 +686,6 @@
                                     }
                                 }, data.frameDelay);
                             });
-
                             container.addEventListener('mouseleave', function(e) {
                                 if (this._animInterval) {
                                     clearInterval(this._animInterval);
@@ -635,7 +711,6 @@
                                 }, data.frameDelay);
                             });
                         }
-
                     } else {
                         const pixelatedSrc = release.src.replace(/\.(jpe?g|png|webp)$/i, '-pixelated.$1');
                         pixelated.style.backgroundImage = `url('${pixelatedSrc}')`;
@@ -645,32 +720,42 @@
                         };
                         imgTest.src = pixelatedSrc;
                     }
-
                     container.appendChild(sharp);
                     container.appendChild(pixelated);
-
                     container.addEventListener('click', function() {
                         window.location.href = this.dataset.url;
                     });
-
                     track.appendChild(container);
                 }
-
                 const squares = track.querySelectorAll('.album-square');
                 squares.forEach((el, i) => {
                     if (i < squares.length - 1) el.style.marginRight = gap + 'px';
                 });
-
                 updateTitleSize(size);
                 currentSize = size;
-
                 const itemWidth = size + gap;
                 const midCopy = Math.floor(COPIES / 2);
                 wrapper.scrollLeft = midCopy * RELEASES.length * itemWidth;
-
                 return { size, gap, itemWidth };
             }
 
+            function buildMailingGrid() {
+                const size = getSize();
+                mailingImageContainer.innerHTML = '';
+                const images = ['assets/covers.jpg', 'assets/ct-zine.jpg', 'assets/stickers.jpeg'];
+                images.forEach(src => {
+                    const cover = document.createElement('div');
+                    cover.className = 'mailing-cover';
+                    cover.style.width = size + 'px';
+                    cover.style.height = size + 'px';
+                    cover.style.backgroundImage = `url('${src}')`;
+                    cover.style.backgroundColor = '#e8e8e8';
+                    cover.addEventListener('click', function() {
+                        console.log('Mailing cover clicked:', src);
+                    });
+                    mailingImageContainer.appendChild(cover);
+                });
+            }
             let itemWidth = 0;
             let oneSetWidth = 0;
 
@@ -680,7 +765,7 @@
                 const size = result.size;
                 const gap = result.gap;
                 oneSetWidth = RELEASES.length * itemWidth;
-
+                buildMailingGrid();
                 let loopScheduled = false;
 
                 function performLoopJump() {
@@ -701,7 +786,6 @@
                         }
                     });
                 }
-
                 let scrollStopTimer = null;
 
                 function onScrollStart() {
@@ -714,7 +798,6 @@
                 function onScrollEnd() {
                     performLoopJump();
                 }
-
                 if ('onscrollend' in window) {
                     wrapper.addEventListener('scrollend', onScrollEnd, { passive: true });
                     wrapper.addEventListener('scroll', onScrollStart, { passive: true });
@@ -727,77 +810,16 @@
                         }, 150);
                     }, { passive: true });
                 }
-
-                const isMobile = window.innerWidth < 640;
-
-                window.addEventListener('wheel', (e) => {
-                    e.preventDefault();
-                    const dx = e.deltaX || 0;
-                    const dy = e.deltaY || 0;
-                    const raw = Math.abs(dx) > Math.abs(dy) ? dx : dy;
-                    const sensitivity = isMobile ? 3.0 : 0.5;
-                    wrapper.scrollLeft += raw * sensitivity;
-                }, { passive: false });
-
-                let touchStartX = 0,
-                    touchStartY = 0,
-                    touchStartScroll = 0,
-                    touching = false;
-                let touchTargetIsWrapper = false;
-
-                window.addEventListener('touchstart', (e) => {
-                    if (e.touches.length === 1) {
-                        const touch = e.touches[0];
-                        const target = document.elementFromPoint(touch.clientX, touch.clientY);
-                        touchTargetIsWrapper = wrapper.contains(target);
-
-                        touchStartX = touch.clientX;
-                        touchStartY = touch.clientY;
-                        touchStartScroll = wrapper.scrollLeft;
-                        touching = true;
-                    }
-                }, { passive: true });
-
-                window.addEventListener('touchmove', (e) => {
-                    if (!touching || e.touches.length !== 1) return;
-
-                    if (touchTargetIsWrapper) {
-                        return;
-                    }
-
-                    e.preventDefault();
-                    const touch = e.touches[0];
-                    const dx = touchStartX - touch.clientX;
-                    const dy = touchStartY - touch.clientY;
-                    let raw = dx;
-                    if (Math.abs(dy) > Math.abs(dx) * 0.5) {
-                        raw = dy;
-                    }
-                    const sensitivity = isMobile ? 3.0 : 0.5;
-                    wrapper.scrollLeft = touchStartScroll + raw * sensitivity;
-                }, { passive: false });
-
-                window.addEventListener('touchend', () => {
-                    touching = false;
-                    touchTargetIsWrapper = false;
-                    setTimeout(onScrollEnd, 100);
-                }, { passive: true });
-
-                window.addEventListener('touchcancel', () => {
-                    touching = false;
-                    touchTargetIsWrapper = false;
-                    setTimeout(onScrollEnd, 100);
-                }, { passive: true });
-
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-                        e.preventDefault();
-                        const step = size * 0.6;
-                        wrapper.scrollLeft += e.key === 'ArrowLeft' ? -step : step;
-                        setTimeout(onScrollEnd, 50);
+                        if (wheelWrapper.classList.contains('expanded')) {
+                            e.preventDefault();
+                            const step = size * 0.6;
+                            wrapper.scrollLeft += e.key === 'ArrowLeft' ? -step : step;
+                            setTimeout(onScrollEnd, 50);
+                        }
                     }
                 });
-
                 let resizeTimer = null;
 
                 function onResize() {
@@ -815,17 +837,15 @@
                         oneSetWidth = RELEASES.length * itemWidth;
                         const ratio = wrapper.scrollLeft / (itemWidth || 1);
                         wrapper.scrollLeft = ratio * itemWidth;
+                        buildMailingGrid();
                         setTimeout(onScrollEnd, 100);
                     });
                 }
-
                 window.addEventListener('resize', onResize);
                 setTimeout(onScrollEnd, 200);
             }
-
             init();
         })();
     </script>
-
 </body>
 </html>
