@@ -40,6 +40,7 @@
         }
     </script>
     <style>
+        /* ... (Your existing CSS unchanged) ... */
         * {
             margin: 0;
             padding: 0;
@@ -1041,8 +1042,24 @@
                     totalDuration = shuffledDurations.reduce((a, b) => a + b, 0);
                 }
 
-                const now = new Date();
-                const secondsSinceMidnight = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
+                // ==== CHANGE: Use Pacific Time for syncing across time zones ====
+                // Get current time in America/Los_Angeles (PST/PDT)
+                const pstFormatter = new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'America/Los_Angeles',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric',
+                    hour12: false
+                });
+                const parts = pstFormatter.formatToParts(new Date());
+                let pstHours = 0, pstMinutes = 0, pstSeconds = 0;
+                parts.forEach(part => {
+                    if (part.type === 'hour') pstHours = parseInt(part.value, 10);
+                    else if (part.type === 'minute') pstMinutes = parseInt(part.value, 10);
+                    else if (part.type === 'second') pstSeconds = parseInt(part.value, 10);
+                });
+                const secondsSinceMidnight = pstHours * 3600 + pstMinutes * 60 + pstSeconds;
+                // ============================================================
 
                 let remaining = secondsSinceMidnight % totalDuration;
                 let trackIndex = 0;
