@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Friends With Bears Records</title>
+    <title>2 Friends With Bears Records</title>
     <meta name="description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok. Explore new releases, join our mailing list for free zines and stickers, and get in touch for press, marketing, or music submissions.">
     <meta name="keywords" content="Friends With Bears Records, creaturethief, April Fridae, eliesriot, Zayok, indie music, electronic, hyperpop, record label, music submissions, free zines, stickers, mailing list">
     <meta name="robots" content="index, follow, noimageindex">
@@ -128,14 +128,12 @@
             height: 0;
             transition: border-color 0.2s ease;
         }
-        /* Play icon - smaller */
         .player-header .play-btn .icon.play {
             border-top: 0.3rem solid transparent;
             border-bottom: 0.3rem solid transparent;
             border-left: 0.45rem solid currentColor;
             margin-left: 0.12rem;
         }
-        /* Pause icon - smaller */
         .player-header .play-btn .icon.pause {
             width: 0.45rem;
             height: 0.55rem;
@@ -693,7 +691,7 @@
                 </div>
                 <div class="wheel-wrapper" id="wheelWrapper">
                     <div class="releases-content">
-                        <p>April Fridae's "right now," OUT NOW! <a href="http://friendswithbears.com/fridae/right-now" target="_blank">Listen everywhere.</a></p>
+                        <p>April Fridae's "right now," August 26th. <a href="http://friendswithbears.com/fridae/right-now" target="_blank">Pre-save &amp; get a free zine here.</a></p>
                     </div>
                     <div class="scroll-wrapper" id="scrollWheel">
                         <div class="wheel-track" id="wheelTrack"></div>
@@ -734,7 +732,7 @@
             'use strict';
 
             // ============================================================
-            // 1. YOUR RADIO PLAYLIST (25 tracks - luvly restored)
+            // 1. YOUR RADIO PLAYLIST (25 tracks - updated)
             // ============================================================
             const PLAYLIST = [
                 'radio/118-creaturethief.mp3',
@@ -743,15 +741,15 @@
                 'radio/DAMN-april_fridae.mp3',
                 'radio/GNL-patricio_portales.mp3',
                 'radio/always-quas.mp3',
-                'radio/b_side-fridae:thief.mp3',
+                'radio/b_side-fridae_thief.mp3',
                 'radio/backtrack-fridae:thief.mp3',
-                'radio/bizzare-fridae:thief.mp3',
+                'radio/bizzare-creaturethief.mp3',
                 'radio/braziw-april_fridae.mp3',
                 'radio/clocks_cut_out_or_switch-luvly.mp3',
                 'radio/down_and_loading-luvly.mp3',
                 'radio/eurovision-creaturethief.mp3',
                 'radio/follow-creaturethief.mp3',
-                'radio/fortune_cookie-fridae:thief.mp3',
+                'radio/fortune_cookie-fridae_thief.mp3',
                 'radio/gfdgdfgdfgfdfgd-april_fridae.mp3',
                 'radio/good4-luvly.mp3',
                 'radio/inagaki-milk.mp3',
@@ -761,39 +759,39 @@
                 'radio/reef-milk.mp3',
                 'radio/sep4-creaturethief.mp3',
                 'radio/tube-creaturethief.mp3',
-                'radio/walle-fridae:thief.mp3'
+                'radio/walle-fridae_thief.mp3'
             ];
 
-            // 2. EXACT TRACK DURATIONS (in seconds) - luvly restored
+            // 2. EXACT TRACK DURATIONS (in seconds) - updated
             const TRACK_DURATIONS = {
-                '118-creaturethief.mp3': 65.149400,
+                '118-creaturethief.mp3': 65.149396,
                 '1214-creaturethief.mp3': 42.666667,
-                '148-creaturethief.mp3': 81.136300,
-                'DAMN-april_fridae.mp3': 119.142857,
-                'GNL-patricio_portales.mp3': 46.672109,
-                'always-quas.mp3': 109.766525,
-                'b_side-fridae:thief.mp3': 50.535011,
-                'backtrack-fridae:thief.mp3': 115.282404,
-                'bizzare-fridae:thief.mp3': 17.777800,
-                'braziw-april_fridae.mp3': 154.221156,
+                '148-creaturethief.mp3': 78.001600,
+                'DAMN-april_fridae.mp3': 89.234250,
+                'GNL-patricio_portales.mp3': 46.672104,
+                'always-quas.mp3': 54.961600,
+                'b_side-fridae_thief.mp3': 46.262825,
+                'backtrack-fridae:thief.mp3': 115.282417,
+                'bizzare-creaturethief.mp3': 35.552625,
+                'braziw-april_fridae.mp3': 148.610575,
                 'clocks_cut_out_or_switch-luvly.mp3': 163.176000,
                 'down_and_loading-luvly.mp3': 63.048000,
-                'eurovision-creaturethief.mp3': 169.613050,
-                'follow-creaturethief.mp3': 30.511000,
-                'fortune_cookie-fridae:thief.mp3': 147.296871,
+                'eurovision-creaturethief.mp3': 143.751800,
+                'follow-creaturethief.mp3': 30.511021,
+                'fortune_cookie-fridae_thief.mp3': 128.914250,
                 'gfdgdfgdfgfdfgd-april_fridae.mp3': 29.769229,
                 'good4-luvly.mp3': 61.080000,
-                'inagaki-milk.mp3': 69.224458,
-                'lingering_w:_sana-luvly.mp3': 76.617125,
-                'memory-creaturethief.mp3': 151.764172,
-                'redi-creaturethief.mp3': 75.702850,
-                'reef-milk.mp3': 46.497950,
-                'sep4-creaturethief.mp3': 59.402425,
-                'tube-creaturethief.mp3': 47.264218,
-                'walle-fridae:thief.mp3': 84.857143
+                'inagaki-milk.mp3': 69.224500,
+                'lingering_w:_sana-luvly.mp3': 76.617146,
+                'memory-creaturethief.mp3': 123.480775,
+                'redi-creaturethief.mp3': 75.702854,
+                'reef-milk.mp3': 46.497958,
+                'sep4-creaturethief.mp3': 59.402458,
+                'tube-creaturethief.mp3': 47.264229,
+                'walle-fridae_thief.mp3': 55.353425
             };
 
-            // Artist Instagram mapping (luvly restored)
+            // Artist Instagram mapping
             const ARTIST_INSTAGRAM = {
                 'april_fridae': 'https://instagram.com/aprilfridae',
                 'april fridae': 'https://instagram.com/aprilfridae',
@@ -803,6 +801,7 @@
                 'patricio portales': 'https://instagram.com/pato6p',
                 'milk': 'https://instagram.com/milkcores',
                 'fridae:thief': 'https://instagram.com/creaturethief',
+                'fridae_thief': 'https://instagram.com/creaturethief',
                 'fridae / thief': 'https://instagram.com/creaturethief',
                 'quas': 'https://instagram.com/playquas'
             };
@@ -855,7 +854,6 @@
             let audioProcessingSetup = false;
 
             const players = [new Audio(), new Audio()];
-            // Enable background playback on iOS
             players.forEach(p => {
                 p.setAttribute('playsinline', '');
                 p.setAttribute('webkit-playsinline', '');
@@ -930,7 +928,6 @@
                 }
                 nowPlayingEl.classList.remove('loading');
 
-                // Update Media Session metadata (using cover.jpg)
                 if ('mediaSession' in navigator) {
                     navigator.mediaSession.metadata = new MediaMetadata({
                         title: info.song,
@@ -994,7 +991,7 @@
                 }
             }
 
-            // ---------- Crossfade (robust, unchanged) ----------
+            // ---------- Crossfade ----------
             function performCrossfade() {
                 if (isTransitioning || !radioStarted) return;
                 isTransitioning = true;
