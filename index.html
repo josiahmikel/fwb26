@@ -732,63 +732,89 @@
             'use strict';
 
             // ============================================================
-            // 1. YOUR RADIO PLAYLIST (25 tracks - updated)
+            // 1. YOUR RADIO PLAYLIST (38 tracks - updated)
             // ============================================================
             const PLAYLIST = [
                 'radio/118-creaturethief.mp3',
                 'radio/1214-creaturethief.mp3',
                 'radio/148-creaturethief.mp3',
+                'radio/Ants_who_know-creaturethief.mp3',
+                'radio/As_You_Fall-creaturethief.mp3',
                 'radio/DAMN-april_fridae.mp3',
                 'radio/GNL-patricio_portales.mp3',
+                'radio/Watching_you_go-creaturethief.mp3',
                 'radio/always-quas.mp3',
                 'radio/b_side-fridae_thief.mp3',
                 'radio/backtrack-fridae:thief.mp3',
                 'radio/bizzare-creaturethief.mp3',
+                'radio/blue_demo-april_fridae.mp3',
                 'radio/braziw-april_fridae.mp3',
                 'radio/clocks_cut_out_or_switch-luvly.mp3',
                 'radio/down_and_loading-luvly.mp3',
+                'radio/easy_come_demo-april_fridae.mp3',
                 'radio/eurovision-creaturethief.mp3',
                 'radio/follow-creaturethief.mp3',
                 'radio/fortune_cookie-fridae_thief.mp3',
+                'radio/frisco_demo-april_fridae.mp3',
                 'radio/gfdgdfgdfgfdfgd-april_fridae.mp3',
                 'radio/good4-luvly.mp3',
                 'radio/inagaki-milk.mp3',
+                'radio/intro-creaturethief.mp3',
                 'radio/lingering_w:_sana-luvly.mp3',
                 'radio/memory-creaturethief.mp3',
+                'radio/my_head\'s_at _the_Jets-creaturethief.mp3',
                 'radio/redi-creaturethief.mp3',
                 'radio/reef-milk.mp3',
+                'radio/right_now-april_fridae.mp3',
                 'radio/sep4-creaturethief.mp3',
+                'radio/thatway_demo-april_fridae.mp3',
+                'radio/the_truth_demo-april_fridae.mp3',
                 'radio/tube-creaturethief.mp3',
-                'radio/walle-fridae_thief.mp3'
+                'radio/walle-fridae_thief.mp3',
+                'radio/while_back_demo-april_fridae.mp3',
+                'radio/wisconsin-creaturethief.mp3'
             ];
 
             // 2. EXACT TRACK DURATIONS (in seconds) - updated
             const TRACK_DURATIONS = {
                 '118-creaturethief.mp3': 65.149396,
                 '1214-creaturethief.mp3': 42.666667,
-                '148-creaturethief.mp3': 78.001600,
-                'DAMN-april_fridae.mp3': 89.234250,
+                '148-creaturethief.mp3': 78.001633,
+                'Ants_who_know-creaturethief.mp3': 100.519188,
+                'As_You_Fall-creaturethief.mp3': 101.239000,
+                'DAMN-april_fridae.mp3': 89.234286,
                 'GNL-patricio_portales.mp3': 46.672104,
-                'always-quas.mp3': 54.961600,
-                'b_side-fridae_thief.mp3': 46.262825,
+                'Watching_you_go-creaturethief.mp3': 89.559375,
+                'always-quas.mp3': 54.961633,
+                'b_side-fridae_thief.mp3': 46.262857,
                 'backtrack-fridae:thief.mp3': 115.282417,
-                'bizzare-creaturethief.mp3': 35.552625,
-                'braziw-april_fridae.mp3': 148.610575,
+                'bizzare-creaturethief.mp3': 35.552653,
+                'blue_demo-april_fridae.mp3': 24.460938,
+                'braziw-april_fridae.mp3': 148.610612,
                 'clocks_cut_out_or_switch-luvly.mp3': 163.176000,
                 'down_and_loading-luvly.mp3': 63.048000,
-                'eurovision-creaturethief.mp3': 143.751800,
+                'easy_come_demo-april_fridae.mp3': 40.000000,
+                'eurovision-creaturethief.mp3': 143.751837,
                 'follow-creaturethief.mp3': 30.511021,
-                'fortune_cookie-fridae_thief.mp3': 128.914250,
+                'fortune_cookie-fridae_thief.mp3': 128.914286,
+                'frisco_demo-april_fridae.mp3': 35.744667,
                 'gfdgdfgdfgfdfgd-april_fridae.mp3': 29.769229,
                 'good4-luvly.mp3': 61.080000,
                 'inagaki-milk.mp3': 69.224500,
+                'intro-creaturethief.mp3': 89.002083,
                 'lingering_w:_sana-luvly.mp3': 76.617146,
-                'memory-creaturethief.mp3': 123.480775,
+                'memory-creaturethief.mp3': 123.480816,
+                'my_head\'s_at _the_Jets-creaturethief.mp3': 174.474750,
                 'redi-creaturethief.mp3': 75.702854,
                 'reef-milk.mp3': 46.497958,
+                'right_now-april_fridae.mp3': 144.800000,
                 'sep4-creaturethief.mp3': 59.402458,
+                'thatway_demo-april_fridae.mp3': 41.377925,
+                'the_truth_demo-april_fridae.mp3': 87.272729,
                 'tube-creaturethief.mp3': 47.264229,
-                'walle-fridae_thief.mp3': 55.353425
+                'walle-fridae_thief.mp3': 55.353469,
+                'while_back_demo-april_fridae.mp3': 66.638325,
+                'wisconsin-creaturethief.mp3': 138.251625
             };
 
             // Artist Instagram mapping
@@ -807,8 +833,7 @@
             };
 
             // ============================================================
-            // 3. SMART SHUFFLE - avoids same artist back-to-back and
-            //    avoids repeating the same song too close together
+            // 3. SMART SHUFFLE
             // ============================================================
             function getArtistFromFilename(filename) {
                 const parts = filename.split('-');
@@ -834,27 +859,22 @@
                 const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
                 const rng = mulberry32(seed);
 
-                // Fisher-Yates shuffle
                 for (let i = indices.length - 1; i > 0; i--) {
                     const j = Math.floor(rng() * (i + 1));
                     [indices[i], indices[j]] = [indices[j], indices[i]];
                 }
 
-                // Now attempt to improve by avoiding same artist adjacent
                 for (let attempts = 0; attempts < 50; attempts++) {
                     let improved = false;
                     for (let i = 0; i < indices.length - 1; i++) {
                         if (artists[indices[i]] === artists[indices[i + 1]]) {
-                            // Find a swap candidate that doesn't create a new same-artist adjacency
                             for (let j = i + 2; j < indices.length; j++) {
                                 const prevArtist = j > 0 ? artists[indices[j - 1]] : null;
                                 const nextArtist = j < indices.length - 1 ? artists[indices[j + 1]] : null;
-                                const currentArtist = artists[indices[j]];
                                 
                                 const wouldCreateSameAdjacent = 
                                     (prevArtist === artists[indices[i]]) ||
-                                    (nextArtist === artists[indices[i + 1]]) ||
-                                    (artists[indices[i]] === artists[indices[i + 1]]);
+                                    (nextArtist === artists[indices[i + 1]]);
                                 
                                 if (!wouldCreateSameAdjacent) {
                                     [indices[i + 1], indices[j]] = [indices[j], indices[i + 1]];
@@ -1106,7 +1126,6 @@
                 });
                 const secondsSinceMidnight = pstHours * 3600 + pstMinutes * 60 + pstSeconds;
 
-                // Calculate position in the playlist using absolute time
                 let remaining = secondsSinceMidnight % totalDuration;
                 let trackIndex = 0;
                 let offset = 0;
@@ -1190,7 +1209,6 @@
                 await resumeAudioContext();
 
                 if (isPlaying) {
-                    // Fade out
                     if (masterGainNode && audioContext) {
                         const currentTime = audioContext.currentTime;
                         masterGainNode.gain.setValueAtTime(masterGainNode.gain.value, currentTime);
@@ -1212,7 +1230,6 @@
                             return;
                         }
                     }
-                    // Fade in
                     if (masterGainNode && audioContext) {
                         const currentTime = audioContext.currentTime;
                         masterGainNode.gain.setValueAtTime(0, currentTime);
