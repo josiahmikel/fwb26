@@ -865,6 +865,7 @@
             let currentTrackIndex = -1;
             let isTransitioning = false;
             let transitionTimeout = null;
+            let fadeTimeout = null;
 
             // ============================================================
             // 5. PARSER & MEDIA SESSION
@@ -880,6 +881,8 @@
                 }
                 song = song.replace(/_/g, ' ');
                 artist = artist.replace(/_/g, ' ');
+                // Replace colon or underscore with " / " for fridae:thief or fridae_thief
+                artist = artist.replace(/:/g, ' / ').replace(/_/g, ' / ');
                 
                 let instagramUrl = null;
                 const artistKey = artist.toLowerCase();
@@ -1131,7 +1134,7 @@
                 navigator.mediaSession.setActionHandler('nexttrack', null);
             }
 
-            // ---------- Toggle Mute/Unmute ----------
+            // ---------- Toggle Mute/Unmute with fade ----------
             async function togglePlay() {
                 if (!isInitialized) {
                     if (PLAYLIST.length === 0) {
@@ -1147,7 +1150,12 @@
                 await resumeAudioContext();
 
                 if (isPlaying) {
-                    if (masterGainNode) masterGainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                    // Fade out
+                    if (masterGainNode && audioContext) {
+                        const currentTime = audioContext.currentTime;
+                        masterGainNode.gain.setValueAtTime(masterGainNode.gain.value, currentTime);
+                        masterGainNode.gain.linearRampToValueAtTime(0, currentTime + 0.3);
+                    }
                     isPlaying = false;
                     playIcon.className = 'icon play';
                     playerHeader.classList.remove('playing');
@@ -1164,7 +1172,12 @@
                             return;
                         }
                     }
-                    if (masterGainNode) masterGainNode.gain.setValueAtTime(1, audioContext.currentTime);
+                    // Fade in
+                    if (masterGainNode && audioContext) {
+                        const currentTime = audioContext.currentTime;
+                        masterGainNode.gain.setValueAtTime(0, currentTime);
+                        masterGainNode.gain.linearRampToValueAtTime(1, currentTime + 0.3);
+                    }
                     isPlaying = true;
                     playIcon.className = 'icon pause';
                     playerHeader.classList.add('playing');
