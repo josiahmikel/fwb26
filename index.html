@@ -691,7 +691,7 @@
                 </div>
                 <div class="wheel-wrapper" id="wheelWrapper">
                     <div class="releases-content">
-                        <p>April Fridae's "right now," OUT NOW! <a href="http://friendswithbears.com/fridae/right-now" target="_blank">Listen everywhere.</a></p>
+                        <p>April Fridae "right now," OUT NOW! <a href="http://friendswithbears.com/fridae/right-now" target="_blank">Listen everywhere.</a></p>
                     </div>
                     <div class="scroll-wrapper" id="scrollWheel">
                         <div class="wheel-track" id="wheelTrack"></div>
@@ -807,12 +807,20 @@
             };
 
             // ============================================================
-            // 3. DAILY SHUFFLED PLAYLIST
+            // 3. SMART SHUFFLE - avoids same artist back-to-back and
+            //    avoids repeating the same song too close together
             // ============================================================
-            function getDailyShuffledIndices() {
-                const now = new Date();
-                const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
+            function getArtistFromFilename(filename) {
+                const parts = filename.split('-');
+                const artistPart = parts[parts.length - 1].replace(/\.mp3$/, '');
+                const artist = artistPart.replace(/_/g, ' ').replace(/:/g, ' ');
+                return artist;
+            }
+
+            function buildSmartShuffle() {
                 const indices = [...Array(PLAYLIST.length).keys()];
+                const artists = indices.map(i => getArtistFromFilename(PLAYLIST[i]));
+                
                 function mulberry32(a) {
                     return function() {
                         a |= 0; a = a + 0x6D2B79F5 | 0;
@@ -821,15 +829,48 @@
                         return ((t ^ t >>> 14) >>> 0) / 4294967296;
                     }
                 }
+
+                const now = new Date();
+                const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
                 const rng = mulberry32(seed);
+
+                // Fisher-Yates shuffle
                 for (let i = indices.length - 1; i > 0; i--) {
                     const j = Math.floor(rng() * (i + 1));
                     [indices[i], indices[j]] = [indices[j], indices[i]];
                 }
+
+                // Now attempt to improve by avoiding same artist adjacent
+                for (let attempts = 0; attempts < 50; attempts++) {
+                    let improved = false;
+                    for (let i = 0; i < indices.length - 1; i++) {
+                        if (artists[indices[i]] === artists[indices[i + 1]]) {
+                            // Find a swap candidate that doesn't create a new same-artist adjacency
+                            for (let j = i + 2; j < indices.length; j++) {
+                                const prevArtist = j > 0 ? artists[indices[j - 1]] : null;
+                                const nextArtist = j < indices.length - 1 ? artists[indices[j + 1]] : null;
+                                const currentArtist = artists[indices[j]];
+                                
+                                const wouldCreateSameAdjacent = 
+                                    (prevArtist === artists[indices[i]]) ||
+                                    (nextArtist === artists[indices[i + 1]]) ||
+                                    (artists[indices[i]] === artists[indices[i + 1]]);
+                                
+                                if (!wouldCreateSameAdjacent) {
+                                    [indices[i + 1], indices[j]] = [indices[j], indices[i + 1]];
+                                    improved = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (!improved) break;
+                }
+
                 return indices;
             }
 
-            let shuffledIndices = getDailyShuffledIndices();
+            let shuffledIndices = buildSmartShuffle();
             let shuffledPlaylist = shuffledIndices.map(i => PLAYLIST[i]);
             let shuffledDurations = shuffledIndices.map(i => TRACK_DURATIONS[PLAYLIST[i].split('/').pop()] || 180);
             let totalDuration = shuffledDurations.reduce((a, b) => a + b, 0);
@@ -865,7 +906,6 @@
             let currentTrackIndex = -1;
             let isTransitioning = false;
             let transitionTimeout = null;
-            let fadeTimeout = null;
 
             // ============================================================
             // 5. PARSER & MEDIA SESSION
@@ -881,7 +921,6 @@
                 }
                 song = song.replace(/_/g, ' ');
                 artist = artist.replace(/_/g, ' ');
-                // Replace colon or underscore with " / " for fridae:thief or fridae_thief
                 artist = artist.replace(/:/g, ' / ').replace(/_/g, ' / ');
                 
                 let instagramUrl = null;
@@ -1042,7 +1081,7 @@
                 if (isInitialized) return;
                 isInitialized = true;
 
-                const newIndices = getDailyShuffledIndices();
+                const newIndices = buildSmartShuffle();
                 if (newIndices.join(',') !== shuffledIndices.join(',')) {
                     shuffledIndices = newIndices;
                     shuffledPlaylist = shuffledIndices.map(i => PLAYLIST[i]);
@@ -1067,6 +1106,7 @@
                 });
                 const secondsSinceMidnight = pstHours * 3600 + pstMinutes * 60 + pstSeconds;
 
+                // Calculate position in the playlist using absolute time
                 let remaining = secondsSinceMidnight % totalDuration;
                 let trackIndex = 0;
                 let offset = 0;
