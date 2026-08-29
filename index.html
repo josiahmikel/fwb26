@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Friends With Bears Records</title>
-    <meta name="description" content="Friends With Bears Records (Friends With Bears) is an independent record label featuring creaturethief, April Fridae, eliesriot, zayok, and more. Explore new releases, join our mailing list, and get in touch.">
-    <meta name="keywords" content="Friends With Bears, Friends With Bears Records, creaturethief, April Fridae, eliesriot, zayok, luvly, milk, indie music, electronic, hyperpop, record label, music submissions, free zines, stickers, mailing list">
+    <title>Friends With Bears Records | Friends With Bears – creaturethief, April Fridae, eliesriot, Zayok, luvly, milk</title>
+    <meta name="description" content="Friends With Bears Records (Friends With Bears) is an independent record label featuring creaturethief, April Fridae, eliesriot, Zayok, luvly, milk, and more. Explore new releases, join our mailing list, and get in touch.">
+    <meta name="keywords" content="Friends With Bears, Friends With Bears Records, creaturethief, April Fridae, eliesriot, Zayok, luvly, milk, indie music, electronic, hyperpop, record label, music submissions, free zines, stickers, mailing list">
     <meta name="author" content="Friends With Bears Records">
     <meta name="publisher" content="Friends With Bears Records">
     <meta name="robots" content="index, follow, noimageindex">
     <link rel="canonical" href="https://friendswithbears.com">
     <meta property="og:title" content="Friends With Bears Records | Friends With Bears">
-    <meta property="og:description" content="Friends With Bears Records –featuring creaturethief, April Fridae, eliesriot, zayok. Explore new releases, join our mailing list, and get in touch.">
+    <meta property="og:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, Zayok, luvly, milk. Explore new releases, join our mailing list, and get in touch.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://friendswithbears.com">
     <meta property="og:image" content="https://friendswithbears.com/assets/cover.jpg">
     <meta property="og:site_name" content="Friends With Bears Records">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Friends With Bears Records | Friends With Bears">
-    <meta name="twitter:description" content="Friends With Bears Records – featuring creaturethief, April Fridae, eliesriot, zayok.">
+    <meta name="twitter:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, Zayok, luvly, milk.">
     <meta name="twitter:image" content="https://friendswithbears.com/assets/cover.jpg">
     <meta name="twitter:creator" content="@friendswbears">
     <meta name="twitter:site" content="@friendswbears">
@@ -320,8 +320,10 @@
             'use strict';
 
             // ============================================================
-            // 1. YOUR RADIO PLAYLIST (25 tracks)
+            // RADIO – SIMPLIFIED SINGLE-PLAYER LOGIC
             // ============================================================
+
+            // Playlist (order is shuffled daily)
             const PLAYLIST = [
                 'radio/118-creaturethief.mp3',
                 'radio/1214-creaturethief.mp3',
@@ -350,7 +352,6 @@
                 'radio/walle-fridae:thief.mp3'
             ];
 
-            // 2. EXACT TRACK DURATIONS (in seconds)
             const TRACK_DURATIONS = {
                 '118-creaturethief.mp3': 65.149400,
                 '1214-creaturethief.mp3': 42.666667,
@@ -379,9 +380,6 @@
                 'walle-fridae:thief.mp3': 84.857143
             };
 
-            // ============================================================
-            // 3. DAILY SHUFFLED PLAYLIST
-            // ============================================================
             function getDailyShuffledIndices() {
                 const now = new Date();
                 const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
@@ -407,39 +405,12 @@
             let shuffledDurations = shuffledIndices.map(i => TRACK_DURATIONS[PLAYLIST[i].split('/').pop()] || 180);
             let totalDuration = shuffledDurations.reduce((a, b) => a + b, 0);
 
-            // ============================================================
-            // 4. WEB AUDIO SETUP
-            // ============================================================
-            const playBtn = document.getElementById('playBtn');
-            const playIcon = document.getElementById('playIcon');
-            const nowPlayingEl = document.getElementById('nowPlaying');
-            const playerHeader = document.getElementById('playerHeader');
-
-            if (!playBtn || !playIcon || !nowPlayingEl || !playerHeader) return;
-
-            let isPlaying = false;
-            let isInitialized = false;
-            let radioStarted = false;
-
-            let audioContext = null;
-            let compressorNode = null;
-            let masterGainNode = null;
-            let audioProcessingSetup = false;
-
-            const players = [new Audio(), new Audio()];
-            let sources = [];
-            let gains = [];
-
-            let activePlayerIndex = 0;
+            const audio = new Audio();
             let currentTrackIndex = -1;
-            let nextTrackIndex = -1;
-            let isCrossfading = false;
-            let crossfadeTimeout = null;
-            let crossfadePrepared = false;
+            let isPlaying = false;   // "mute/unmute" state
+            let radioStarted = false; // actual audio started
+            let pollInterval = null;
 
-            // ============================================================
-            // 5. PARSER
-            // ============================================================
             function parseTrackInfo(filename) {
                 const name = filename.replace(/\.[^.]+$/, '');
                 const parts = name.split('-');
@@ -461,296 +432,131 @@
                 return parseTrackInfo(filename);
             }
 
-            function updateNowPlaying(trackIndex) {
-                if (!isInitialized) {
-                    nowPlayingEl.innerHTML = `<span class="status-msg">Loading radio...</span>`;
-                    return;
-                }
-                if (shuffledPlaylist.length === 0) {
-                    nowPlayingEl.innerHTML = `<span class="status-msg">No tracks found</span>`;
-                    return;
-                }
-                const info = getDisplayName(trackIndex);
+            function updateNowPlaying() {
+                const info = getDisplayName(currentTrackIndex);
+                const el = document.getElementById('nowPlaying');
                 if (!info) {
-                    nowPlayingEl.innerHTML = `<span class="status-msg">Track unavailable</span>`;
+                    el.innerHTML = `<span class="status-msg">Track unavailable</span>`;
                     return;
                 }
                 if (info.artist) {
-                    nowPlayingEl.innerHTML = `<span class="song-title">${info.song}</span><span class="separator">·</span><span class="artist-name">${info.artist}</span>`;
+                    el.innerHTML = `<span class="song-title">${info.song}</span><span class="separator">·</span><span class="artist-name">${info.artist}</span>`;
                 } else {
-                    nowPlayingEl.innerHTML = `<span class="song-title">${info.song}</span>`;
+                    el.innerHTML = `<span class="song-title">${info.song}</span>`;
                 }
-                nowPlayingEl.classList.remove('loading');
+                el.classList.remove('loading');
             }
 
             function showStatus(msg, isError) {
-                nowPlayingEl.innerHTML = `<span class="status-msg" style="${isError ? 'color:#cc3333;' : ''}">${msg}</span>`;
-                nowPlayingEl.classList.add('loading');
+                const el = document.getElementById('nowPlaying');
+                el.innerHTML = `<span class="status-msg" style="${isError ? 'color:#cc3333;' : ''}">${msg}</span>`;
+                el.classList.add('loading');
             }
 
-            function setupAudio() {
-                if (audioProcessingSetup) return;
-                try {
-                    audioContext = new(window.AudioContext || window.webkitAudioContext)();
-
-                    compressorNode = audioContext.createDynamicsCompressor();
-                    compressorNode.threshold.value = -6;
-                    compressorNode.knee.value = 0;
-                    compressorNode.ratio.value = 20;
-                    compressorNode.attack.value = 0.001;
-                    compressorNode.release.value = 0.05;
-
-                    masterGainNode = audioContext.createGain();
-                    masterGainNode.gain.value = 0;
-
-                    sources[0] = audioContext.createMediaElementSource(players[0]);
-                    sources[1] = audioContext.createMediaElementSource(players[1]);
-
-                    gains[0] = audioContext.createGain();
-                    gains[1] = audioContext.createGain();
-
-                    gains[0].gain.value = 1.0;
-                    gains[1].gain.value = 0.0;
-
-                    sources[0].connect(gains[0]);
-                    gains[0].connect(compressorNode);
-                    sources[1].connect(gains[1]);
-                    gains[1].connect(compressorNode);
-                    compressorNode.connect(masterGainNode);
-                    masterGainNode.connect(audioContext.destination);
-
-                    audioProcessingSetup = true;
-                    console.log('🔊 Audio setup complete');
-                } catch (e) {
-                    console.warn('Audio setup failed:', e);
-                    audioProcessingSetup = true;
-                }
-            }
-
-            async function resumeAudioContext() {
-                if (audioContext && audioContext.state === 'suspended') {
-                    try { await audioContext.resume(); } catch (e) { console.warn('Could not resume AudioContext', e); }
-                }
-            }
-
-            function executeCrossfade() {
-                const nextPlayerIndex = 1 - activePlayerIndex;
-                const nextTrackIdx = (currentTrackIndex + 1) % shuffledPlaylist.length;
-
-                const startTime = audioContext.currentTime;
-                const fadeDuration = 3.0;
-
-                gains[activePlayerIndex].gain.setValueAtTime(gains[activePlayerIndex].gain.value, startTime);
-                gains[activePlayerIndex].gain.linearRampToValueAtTime(0, startTime + fadeDuration);
-
-                gains[nextPlayerIndex].gain.setValueAtTime(0, startTime);
-                gains[nextPlayerIndex].gain.linearRampToValueAtTime(1, startTime + fadeDuration);
-
-                if (crossfadeTimeout) { clearTimeout(crossfadeTimeout); crossfadeTimeout = null; }
-
-                crossfadeTimeout = setTimeout(() => {
-                    players[activePlayerIndex].pause();
-                    activePlayerIndex = nextPlayerIndex;
-                    currentTrackIndex = nextTrackIdx;
-                    nextTrackIndex = (nextTrackIdx + 1) % shuffledPlaylist.length;
-                    updateNowPlaying(currentTrackIndex);
-                    isCrossfading = false;
-                    crossfadePrepared = false;
-                    crossfadeTimeout = null;
-
-                    const preloadNextIdx = 1 - activePlayerIndex;
-                    const preloadTrack = shuffledPlaylist[(currentTrackIndex + 1) % shuffledPlaylist.length];
-                    players[preloadNextIdx].src = preloadTrack;
-                    players[preloadNextIdx].load();
-                }, fadeDuration * 1000 + 50);
-            }
-
-            function prepareCrossfade() {
-                if (isCrossfading || crossfadePrepared) return;
-                crossfadePrepared = true;
-                isCrossfading = true;
-
-                const nextPlayerIndex = 1 - activePlayerIndex;
-                const nextTrackIdx = (currentTrackIndex + 1) % shuffledPlaylist.length;
-                const nextSrc = shuffledPlaylist[nextTrackIdx];
-
-                players[nextPlayerIndex].src = nextSrc;
-                players[nextPlayerIndex].currentTime = 0;
-                players[nextPlayerIndex].load();
-
-                const playPromise = players[nextPlayerIndex].play();
-                if (playPromise) playPromise.catch(() => {});
-
-                const onCanPlay = () => executeCrossfade();
-                const onPlaying = () => executeCrossfade();
-                const onError = () => executeCrossfade();
-
-                players[nextPlayerIndex].addEventListener('canplaythrough', onCanPlay, { once: true });
-                players[nextPlayerIndex].addEventListener('playing', onPlaying, { once: true });
-                players[nextPlayerIndex].addEventListener('error', onError, { once: true });
-
-                setTimeout(() => {
-                    if (isCrossfading && !crossfadeTimeout) executeCrossfade();
-                }, 2000);
-            }
-
-            function startSyncedPlayback() {
-                if (isInitialized) return;
-                isInitialized = true;
-
-                const newIndices = getDailyShuffledIndices();
-                if (newIndices.join(',') !== shuffledIndices.join(',')) {
-                    shuffledIndices = newIndices;
-                    shuffledPlaylist = shuffledIndices.map(i => PLAYLIST[i]);
-                    shuffledDurations = shuffledIndices.map(i => TRACK_DURATIONS[PLAYLIST[i].split('/').pop()] || 180);
-                    totalDuration = shuffledDurations.reduce((a, b) => a + b, 0);
-                }
-
+            function computeCurrentTrackAndOffset() {
                 const now = new Date();
                 const secondsSinceMidnight = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
-
                 let remaining = secondsSinceMidnight % totalDuration;
-                let trackIndex = 0;
-                let offset = 0;
                 for (let i = 0; i < shuffledDurations.length; i++) {
                     const dur = shuffledDurations[i] || 180;
                     if (remaining < dur) {
-                        trackIndex = i;
-                        offset = remaining;
-                        break;
+                        return { trackIndex: i, offset: remaining };
                     }
                     remaining -= dur;
-                    trackIndex = i + 1;
                 }
-                if (trackIndex >= shuffledPlaylist.length) {
-                    trackIndex = shuffledPlaylist.length - 1;
-                    offset = shuffledDurations[trackIndex] || 180;
-                }
+                return { trackIndex: shuffledPlaylist.length - 1, offset: shuffledDurations[shuffledPlaylist.length - 1] || 180 };
+            }
 
-                const currentSrc = shuffledPlaylist[trackIndex];
-                const nextSrc = shuffledPlaylist[(trackIndex + 1) % shuffledPlaylist.length];
-
-                players[0].src = currentSrc;
-                players[0].currentTime = offset;
-                players[1].src = nextSrc;
-                players[1].currentTime = 0;
-
-                gains[0].gain.value = 1.0;
-                gains[1].gain.value = 0.0;
-
-                activePlayerIndex = 0;
+            function loadTrack(trackIndex, offset) {
                 currentTrackIndex = trackIndex;
-                nextTrackIndex = (trackIndex + 1) % shuffledPlaylist.length;
-
-                players[0].load();
-                players[1].load();
-
-                const info = getDisplayName(trackIndex);
-                console.log(`⏱️ Time-synced track (shuffled): #${trackIndex+1} - ${info ? info.song + ' · ' + info.artist : 'unknown'}`);
-
-                updateNowPlaying(trackIndex);
-
-                setInterval(() => {
-                    if (!radioStarted) return;
-
-                    const activePlayer = players[activePlayerIndex];
-                    if (activePlayer.paused) {
-                        if (!isCrossfading) activePlayer.play().catch(() => {});
-                        return;
-                    }
-
-                    const currentTime = activePlayer.currentTime || 0;
-                    const duration = shuffledDurations[currentTrackIndex] || 180;
-
-                    if (currentTime >= duration - 5 && !crossfadePrepared) {
-                        prepareCrossfade();
-                    }
-                    if (currentTime >= duration && !crossfadePrepared) {
-                        prepareCrossfade();
-                    }
-                }, 250);
-
-                players[0].addEventListener('error', () => {
-                    if (!isInitialized) return;
-                    if (!crossfadePrepared && radioStarted) prepareCrossfade();
-                });
-                players[1].addEventListener('error', () => {
-                    if (!isInitialized) return;
-                    if (!crossfadePrepared && radioStarted) prepareCrossfade();
-                });
-
-                isPlaying = false;
-                playIcon.textContent = '▶';
-                playerHeader.classList.remove('playing');
-                nowPlayingEl.classList.remove('loading');
+                audio.src = shuffledPlaylist[trackIndex];
+                audio.currentTime = offset;
+                audio.load();
+                updateNowPlaying();
             }
 
-            async function togglePlay() {
-                if (!isInitialized) {
-                    if (PLAYLIST.length === 0) {
-                        showStatus('No tracks – add files to the PLAYLIST array', true);
-                        return;
-                    }
-                    setupAudio();
-                    await resumeAudioContext();
-                    startSyncedPlayback();
+            function startRadio() {
+                const { trackIndex, offset } = computeCurrentTrackAndOffset();
+                loadTrack(trackIndex, offset);
+                audio.volume = 0; // start muted, user can unmute later
+                audio.play().then(() => {
+                    radioStarted = true;
+                    // Start polling for track end
+                    if (pollInterval) clearInterval(pollInterval);
+                    pollInterval = setInterval(checkTrackProgress, 1000);
+                }).catch(err => {
+                    console.error('Radio start failed:', err);
+                    showStatus('Playback error – check console', true);
+                });
+            }
+
+            function checkTrackProgress() {
+                if (!radioStarted) return;
+                if (audio.paused && isPlaying) {
+                    // Attempt to resume if paused unexpectedly
+                    audio.play().catch(() => {});
+                    return;
                 }
+                const duration = shuffledDurations[currentTrackIndex] || 180;
+                const buffer = 1.5; // seconds before end
+                if (audio.currentTime >= duration - buffer) {
+                    advanceToNextTrack();
+                }
+            }
 
-                if (!audioProcessingSetup) setupAudio();
-                await resumeAudioContext();
-
+            function advanceToNextTrack() {
+                // Move to next index in shuffled playlist
+                const nextIndex = (currentTrackIndex + 1) % shuffledPlaylist.length;
+                loadTrack(nextIndex, 0);
                 if (isPlaying) {
-                    if (masterGainNode) masterGainNode.gain.setValueAtTime(0, audioContext.currentTime);
-                    isPlaying = false;
-                    playIcon.textContent = '▶';
-                    playerHeader.classList.remove('playing');
+                    audio.play().catch(() => {});
                 } else {
-                    if (!radioStarted) {
-                        try {
-                            await players[activePlayerIndex].play();
-                            radioStarted = true;
-                        } catch (err) {
-                            console.error('Playback failed:', err);
-                            // Attempt to reload the audio and retry once
-                            players[activePlayerIndex].load();
-                            try {
-                                await players[activePlayerIndex].play();
-                                radioStarted = true;
-                            } catch (retryErr) {
-                                console.error('Retry failed:', retryErr);
-                                showStatus('Playback error – check console', true);
-                                return;
-                            }
-                        }
-                    }
-                    if (masterGainNode) masterGainNode.gain.setValueAtTime(1, audioContext.currentTime);
-                    isPlaying = true;
-                    playIcon.textContent = '❚❚';
-                    playerHeader.classList.add('playing');
-                    updateNowPlaying(currentTrackIndex);
+                    // If muted, keep playing but volume is 0
+                    audio.play().then(() => { audio.volume = 0; }).catch(() => {});
                 }
             }
 
-            playBtn.addEventListener('click', (e) => {
+            function togglePlay() {
+                if (!radioStarted) {
+                    startRadio();
+                    return;
+                }
+                if (isPlaying) {
+                    // Mute
+                    audio.volume = 0;
+                    isPlaying = false;
+                    document.getElementById('playIcon').textContent = '▶';
+                    document.getElementById('playerHeader').classList.remove('playing');
+                } else {
+                    // Unmute
+                    audio.volume = 1;
+                    isPlaying = true;
+                    document.getElementById('playIcon').textContent = '❚❚';
+                    document.getElementById('playerHeader').classList.add('playing');
+                }
+            }
+
+            // Wire up events
+            document.getElementById('playBtn').addEventListener('click', (e) => {
                 e.stopPropagation();
                 togglePlay();
             });
 
             document.addEventListener('keydown', (e) => {
-                const target = e.target;
-                if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
                 if (e.key === ' ' || e.key === 'Space') {
+                    const target = e.target;
+                    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
                     e.preventDefault();
                     togglePlay();
                 }
             });
 
-            if (PLAYLIST.length === 0) {
-                showStatus('No tracks – add files to the PLAYLIST array', true);
-            } else {
-                setupAudio();
-                startSyncedPlayback();
-            }
+            // Initialize UI: show "Loading radio..." but don't start audio yet
+            showStatus('Loading radio...', false);
+
+            // ============================================================
+            // ACCORDION & RELEASES WHEEL (unchanged from previous, but included below)
+            // ============================================================
 
             // ---------- ACCORDION ----------
             const releasesHeader = document.getElementById('releasesHeader');
@@ -999,7 +805,6 @@
 
                 initWheel();
             }
-
         })();
     </script>
 </body>
