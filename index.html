@@ -37,12 +37,7 @@
             "https://www.youtube.com/@friendswithbears"
           ],
           "logo": "https://friendswithbears.com/assets/cover.jpg",
-          "foundingDate": "2023",
-          "contactPoint": {
-            "@type": "ContactPoint",
-            "email": "hi@friendswithbears.com",
-            "contactType": "customer support"
-          }
+          "foundingDate": "2023"
         },
         {
           "@type": "WebSite",
@@ -50,9 +45,7 @@
           "url": "https://friendswithbears.com",
           "name": "Friends With Bears Records",
           "alternateName": "Friends With Bears",
-          "publisher": {
-            "@id": "https://friendswithbears.com/#organization"
-          }
+          "publisher": { "@id": "https://friendswithbears.com/#organization" }
         },
         {
           "@type": "MusicGroup",
@@ -194,495 +187,68 @@
     }
     </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            overflow: hidden;
-        }
-        .wheel-container {
-            width: 100vw;
-            height: 100vh;
-            height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            background: #fff;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .player-header {
-            flex: 0 0 auto;
-            font-family: system-ui, -apple-system, sans-serif;
-            font-size: 0.75rem;
-            padding: 0.75rem 0 0.5rem 0;
-            width: 94%;
-            max-width: 1800px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.5rem;
-            flex-shrink: 0;
-            transition: color 0.2s ease;
-            color: #999;
-        }
-        .player-header .radio-group {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            flex-shrink: 0;
-        }
-        .player-header .radio-label {
-            font-weight: 400;
-            letter-spacing: 0.05em;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            transition: color 0.2s ease;
-        }
-        .player-header .radio-label .dot {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            background: #e74c3c;
-            border-radius: 50%;
-            animation: pulse-dot 1.5s ease-in-out infinite;
-            flex-shrink: 0;
-        }
-        @keyframes pulse-dot {
-            0% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        .player-header .play-btn {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0.05rem 0.1rem;
-            font-size: 0.6rem;
-            display: flex;
-            align-items: center;
-            font-family: system-ui, -apple-system, sans-serif;
-            transition: color 0.2s ease;
-            color: inherit;
-        }
-        .player-header .play-btn .icon {
-            font-size: 0.8rem;
-            line-height: 1;
-        }
-        .player-header .line {
-            flex: 1 1 auto;
-            height: 1px;
-            min-width: 20px;
-            margin: 0 0.5rem;
-            background: #e0e0e0;
-            transition: background 0.2s ease;
-        }
-        .player-header .now-playing {
-            font-weight: 400;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            flex-shrink: 1;
-            min-width: 0;
-            text-align: right;
-            transition: color 0.2s ease;
-        }
-        .player-header .now-playing .song-title {
-            font-weight: 400;
-        }
-        .player-header .now-playing .artist-name {
-            font-weight: 700;
-        }
-        .player-header .now-playing .separator {
-            font-weight: 300;
-            opacity: 0.4;
-            margin: 0 0.2rem;
-        }
-        .player-header .now-playing .status-msg {
-            font-style: italic;
-            opacity: 0.6;
-        }
-        .player-header .now-playing.loading {
-            opacity: 0.6;
-        }
-        .player-header .now-playing.offline {
-            opacity: 0.4;
-            font-style: italic;
-        }
-
-        .player-header:hover,
-        .player-header:hover .radio-label,
-        .player-header:hover .play-btn,
-        .player-header:hover .now-playing,
-        .player-header:hover .now-playing .song-title,
-        .player-header:hover .now-playing .artist-name {
-            color: #292929;
-        }
-        .player-header:hover .line {
-            background: #292929;
-        }
-
-        .player-header.playing,
-        .player-header.playing .radio-label,
-        .player-header.playing .play-btn,
-        .player-header.playing .now-playing,
-        .player-header.playing .now-playing .song-title,
-        .player-header.playing .now-playing .artist-name {
-            color: #292929;
-        }
-        .player-header.playing .line {
-            background: #292929;
-        }
-        .player-header .radio-label .dot,
-        .player-header:hover .radio-label .dot,
-        .player-header.playing .radio-label .dot {
-            background: #e74c3c;
-        }
-
-        @media (max-width: 640px) {
-            .player-header {
-                font-size: 0.6rem;
-                padding: 0.5rem 0 0.35rem 0;
-                width: 92%;
-                gap: 0.3rem;
-            }
-            .player-header .radio-label .dot {
-                width: 5px;
-                height: 5px;
-            }
-            .player-header .play-btn {
-                font-size: 0.5rem;
-            }
-            .player-header .play-btn .icon {
-                font-size: 0.7rem;
-            }
-            .player-header .line {
-                margin: 0 0.3rem;
-            }
-        }
-
-        .accordion-wrapper {
-            flex: 1 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem 0.5rem;
-            min-height: 0;
-        }
-        .accordion-group {
-            width: 94%;
-            max-width: 1800px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 0 auto;
-        }
-        .header-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 0.5rem 0.2rem;
-            flex-shrink: 0;
-            z-index: 10;
-            cursor: pointer;
-            user-select: none;
-        }
-        .title-image {
-            display: block;
-            object-fit: contain;
-            flex-shrink: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-        }
-        .arrow-image {
-            display: block;
-            object-fit: contain;
-            flex-shrink: 0;
-            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1), opacity 0.2s ease;
-            opacity: 1;
-            transform: rotate(0deg);
-            pointer-events: none;
-        }
-        .arrow-image:active {
-            opacity: 0.8;
-        }
-        .arrow-image.rotated {
-            transform: rotate(90deg);
-        }
-        .releases-content {
-            font-family: system-ui, -apple-system, sans-serif;
-            font-size: 1rem;
-            color: #292929;
-            padding: 0.75rem 0.2rem;
-            width: 100%;
-            text-align: left;
-        }
-        .releases-content a {
-            color: #292929;
-            text-decoration: underline;
-            text-underline-offset: 0.2em;
-            text-decoration-thickness: 1px;
-            transition: text-decoration-color 0.2s ease;
-        }
-        .releases-content a:hover {
-            text-decoration-color: #000;
-        }
-        .wheel-wrapper {
-            width: 100%;
-            overflow: hidden;
-            max-height: 0;
-            opacity: 0;
-            transition: max-height 0.15s cubic-bezier(0.2, 0.9, 0.4, 1),
-                opacity 0.12s ease,
-                margin 0.12s ease;
-            margin: 0;
-            flex-shrink: 0;
-        }
-        .wheel-wrapper.expanded {
-            max-height: 2000px;
-            opacity: 1;
-            margin: 0.25rem 0;
-        }
-        .mailing-wrapper {
-            width: 100%;
-            overflow: hidden;
-            max-height: 0;
-            opacity: 0;
-            transition: max-height 0.15s cubic-bezier(0.2, 0.9, 0.4, 1),
-                opacity 0.12s ease,
-                margin 0.12s ease;
-            margin: 0;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            padding: 0 0.2rem;
-        }
-        .mailing-wrapper.expanded {
-            max-height: 2000px;
-            opacity: 1;
-            margin: 0.25rem 0 0 0;
-        }
-        .mailing-content {
-            font-family: system-ui, -apple-system, sans-serif;
-            font-size: 1rem;
-            color: #292929;
-            padding: 0.75rem 0.2rem 0 0.2rem;
-            width: 100%;
-            text-align: left;
-        }
-        .mailing-content a {
-            color: #292929;
-            text-decoration: underline;
-            text-underline-offset: 0.1em;
-            text-decoration-thickness: 1px;
-            text-decoration-color: #292929;
-            transition: text-decoration-color 0.2s ease;
-        }
-        .mailing-content a:hover {
-            text-decoration-color: #000;
-        }
-        .mailing-image-container {
-            width: 100%;
-            padding: 0 0.2rem 0 0.2rem;
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            overflow-y: hidden;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 20px;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            touch-action: pan-x;
-        }
-        .mailing-image-container::-webkit-scrollbar {
-            display: none;
-        }
-        .mailing-cover {
-            flex: 0 0 auto;
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            border: none;
-            border-radius: 0;
-            box-shadow: none;
-            background-color: #fff;
-        }
-        .contact-wrapper {
-            width: 100%;
-            overflow: hidden;
-            max-height: 0;
-            opacity: 0;
-            transition: max-height 0.15s cubic-bezier(0.2, 0.9, 0.4, 1),
-                opacity 0.12s ease,
-                margin 0.12s ease;
-            margin: 0;
-            flex-shrink: 0;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            padding: 0 0.2rem;
-        }
-        .contact-wrapper.expanded {
-            max-height: 300px;
-            opacity: 1;
-            margin: 0.25rem 0;
-        }
-        .contact-text {
-            font-family: system-ui, -apple-system, sans-serif;
-            font-size: 1rem;
-            color: #292929;
-            padding: 0.75rem 0.2rem;
-            width: 100%;
-            line-height: 1.5;
-        }
-        .contact-text a {
-            color: #292929;
-            text-decoration: underline;
-            text-underline-offset: 0.2em;
-            text-decoration-thickness: 1px;
-            transition: text-decoration-color 0.2s ease;
-        }
-        .contact-text a:hover {
-            text-decoration-color: #000;
-        }
-        .scroll-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            overflow-y: hidden;
-            scroll-behavior: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            padding: 1rem 0.2rem;
-            display: flex;
-            align-items: center;
-            touch-action: pan-x;
-        }
-        .scroll-wrapper::-webkit-scrollbar {
-            display: none;
-        }
-        .wheel-track {
-            display: flex;
-            flex-wrap: nowrap;
-            gap: 0;
-            padding: 0;
-            width: fit-content;
-            height: 100%;
-            align-items: center;
-            will-change: transform;
-            transform: translateZ(0);
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-        }
-        .album-square {
-            flex: 0 0 auto;
-            position: relative;
-            border: none;
-            border-radius: 0;
-            box-shadow: none;
-            cursor: pointer;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-            will-change: transform;
-            transform: scale(1);
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-        }
-        .album-square:hover {
-            transform: scale(1.03);
-        }
-        .album-square:not(:last-child) {
-            margin-right: 32px;
-        }
-        .album-square .cover-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        .footer {
-            font-family: system-ui, -apple-system, sans-serif;
-            font-size: 0.75rem;
-            color: #999;
-            text-align: left;
-            padding: 0.5rem 0 0.75rem 0;
-            width: 94%;
-            max-width: 1800px;
-            margin: 0 auto;
-            flex-shrink: 0;
-        }
-        .seo-text {
-            position: absolute;
-            left: -9999px;
-            top: -9999px;
-            width: 1px;
-            height: 1px;
-            overflow: hidden;
-        }
-        @media (max-width: 900px) {
-            .album-square:not(:last-child) {
-                margin-right: 26px;
-            }
-        }
-        @media (max-width: 700px) {
-            .album-square:not(:last-child) {
-                margin-right: 22px;
-            }
-        }
-        @media (max-width: 640px) {
-            .wheel-container {
-                padding: 0;
-            }
-            .scroll-wrapper {
-                padding: 0.5rem 0.1rem;
-            }
-            .album-square:not(:last-child) {
-                margin-right: 14px;
-            }
-            .releases-content,
-            .mailing-content,
-            .contact-text {
-                font-size: 0.9rem;
-                padding: 0.5rem 0.1rem;
-            }
-            .mailing-image-container {
-                gap: 12px;
-                padding: 0 0.1rem 0 0.1rem;
-            }
-            .footer {
-                font-size: 0.65rem;
-                padding: 0.25rem 0 0.75rem 0;
-                width: 92%;
-            }
-            .releases-content a,
-            .mailing-content a,
-            .contact-text a {
-                text-underline-offset: 0.15em;
-            }
-        }
-        @media (max-width: 480px) {
-            .album-square:not(:last-child) {
-                margin-right: 10px;
-            }
-            .mailing-image-container {
-                gap: 8px;
-            }
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html, body { width:100%; height:100%; background:#fff; overflow:hidden; }
+        .wheel-container { width:100vw; height:100vh; height:100dvh; display:flex; flex-direction:column; background:#fff; overflow:hidden; position:relative; }
+        .player-header { flex:0 0 auto; font-family:system-ui, -apple-system, sans-serif; font-size:0.75rem; padding:0.75rem 0 0.5rem 0; width:94%; max-width:1800px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:0.5rem; flex-shrink:0; transition:color 0.2s ease; color:#999; }
+        .player-header .radio-group { display:flex; align-items:center; gap:0.4rem; flex-shrink:0; }
+        .player-header .radio-label { font-weight:400; letter-spacing:0.05em; display:flex; align-items:center; gap:0.4rem; transition:color 0.2s ease; }
+        .player-header .radio-label .dot { display:inline-block; width:6px; height:6px; background:#e74c3c; border-radius:50%; animation:pulse-dot 1.5s ease-in-out infinite; flex-shrink:0; }
+        @keyframes pulse-dot { 0% { opacity:1; transform:scale(1); } 50% { opacity:0.3; transform:scale(0.8); } 100% { opacity:1; transform:scale(1); } }
+        .player-header .play-btn { background:none; border:none; cursor:pointer; padding:0.05rem 0.1rem; font-size:0.6rem; display:flex; align-items:center; font-family:system-ui, -apple-system, sans-serif; transition:color 0.2s ease; color:inherit; }
+        .player-header .play-btn .icon { font-size:0.8rem; line-height:1; }
+        .player-header .line { flex:1 1 auto; height:1px; min-width:20px; margin:0 0.5rem; background:#e0e0e0; transition:background 0.2s ease; }
+        .player-header .now-playing { font-weight:400; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; flex-shrink:1; min-width:0; text-align:right; transition:color 0.2s ease; }
+        .player-header .now-playing .song-title { font-weight:400; }
+        .player-header .now-playing .artist-name { font-weight:700; }
+        .player-header .now-playing .separator { font-weight:300; opacity:0.4; margin:0 0.2rem; }
+        .player-header .now-playing .status-msg { font-style:italic; opacity:0.6; }
+        .player-header .now-playing.loading { opacity:0.6; }
+        .player-header .now-playing.offline { opacity:0.4; font-style:italic; }
+        .player-header:hover, .player-header:hover .radio-label, .player-header:hover .play-btn, .player-header:hover .now-playing, .player-header:hover .now-playing .song-title, .player-header:hover .now-playing .artist-name { color:#292929; }
+        .player-header:hover .line { background:#292929; }
+        .player-header.playing, .player-header.playing .radio-label, .player-header.playing .play-btn, .player-header.playing .now-playing, .player-header.playing .now-playing .song-title, .player-header.playing .now-playing .artist-name { color:#292929; }
+        .player-header.playing .line { background:#292929; }
+        .player-header .radio-label .dot, .player-header:hover .radio-label .dot, .player-header.playing .radio-label .dot { background:#e74c3c; }
+        @media (max-width:640px) { .player-header { font-size:0.6rem; padding:0.5rem 0 0.35rem 0; width:92%; gap:0.3rem; } .player-header .radio-label .dot { width:5px; height:5px; } .player-header .play-btn { font-size:0.5rem; } .player-header .play-btn .icon { font-size:0.7rem; } .player-header .line { margin:0 0.3rem; } }
+        .accordion-wrapper { flex:1 0 auto; display:flex; align-items:center; justify-content:center; padding:0.5rem 0.5rem; min-height:0; }
+        .accordion-group { width:94%; max-width:1800px; display:flex; flex-direction:column; align-items:center; margin:0 auto; }
+        .header-item { display:flex; align-items:center; justify-content:space-between; width:100%; padding:0.5rem 0.2rem; flex-shrink:0; z-index:10; cursor:pointer; user-select:none; }
+        .title-image { display:block; object-fit:contain; flex-shrink:0; transition:opacity 0.3s ease; pointer-events:none; }
+        .arrow-image { display:block; object-fit:contain; flex-shrink:0; transition:transform 0.4s cubic-bezier(0.2,0.9,0.4,1), opacity 0.2s ease; opacity:1; transform:rotate(0deg); pointer-events:none; }
+        .arrow-image:active { opacity:0.8; }
+        .arrow-image.rotated { transform:rotate(90deg); }
+        .releases-content { font-family:system-ui, -apple-system, sans-serif; font-size:1rem; color:#292929; padding:0.75rem 0.2rem; width:100%; text-align:left; }
+        .releases-content a { color:#292929; text-decoration:underline; text-underline-offset:0.2em; text-decoration-thickness:1px; transition:text-decoration-color 0.2s ease; }
+        .releases-content a:hover { text-decoration-color:#000; }
+        .wheel-wrapper { width:100%; overflow:hidden; max-height:0; opacity:0; transition:max-height 0.15s cubic-bezier(0.2,0.9,0.4,1), opacity 0.12s ease, margin 0.12s ease; margin:0; flex-shrink:0; }
+        .wheel-wrapper.expanded { max-height:2000px; opacity:1; margin:0.25rem 0; }
+        .mailing-wrapper { width:100%; overflow:hidden; max-height:0; opacity:0; transition:max-height 0.15s cubic-bezier(0.2,0.9,0.4,1), opacity 0.12s ease, margin 0.12s ease; margin:0; flex-shrink:0; display:flex; flex-direction:column; align-items:flex-start; padding:0 0.2rem; }
+        .mailing-wrapper.expanded { max-height:2000px; opacity:1; margin:0.25rem 0 0 0; }
+        .mailing-content { font-family:system-ui, -apple-system, sans-serif; font-size:1rem; color:#292929; padding:0.75rem 0.2rem 0 0.2rem; width:100%; text-align:left; }
+        .mailing-content a { color:#292929; text-decoration:underline; text-underline-offset:0.1em; text-decoration-thickness:1px; text-decoration-color:#292929; transition:text-decoration-color 0.2s ease; }
+        .mailing-content a:hover { text-decoration-color:#000; }
+        .mailing-image-container { width:100%; padding:0 0.2rem 0 0.2rem; display:flex; flex-wrap:nowrap; overflow-x:auto; overflow-y:hidden; justify-content:flex-start; align-items:center; gap:20px; -webkit-overflow-scrolling:touch; scrollbar-width:none; touch-action:pan-x; }
+        .mailing-image-container::-webkit-scrollbar { display:none; }
+        .mailing-cover { flex:0 0 auto; background-size:contain; background-position:center; background-repeat:no-repeat; border:none; border-radius:0; box-shadow:none; background-color:#fff; }
+        .contact-wrapper { width:100%; overflow:hidden; max-height:0; opacity:0; transition:max-height 0.15s cubic-bezier(0.2,0.9,0.4,1), opacity 0.12s ease, margin 0.12s ease; margin:0; flex-shrink:0; display:flex; justify-content:flex-start; align-items:center; padding:0 0.2rem; }
+        .contact-wrapper.expanded { max-height:300px; opacity:1; margin:0.25rem 0; }
+        .contact-text { font-family:system-ui, -apple-system, sans-serif; font-size:1rem; color:#292929; padding:0.75rem 0.2rem; width:100%; line-height:1.5; }
+        .contact-text a { color:#292929; text-decoration:underline; text-underline-offset:0.2em; text-decoration-thickness:1px; transition:text-decoration-color 0.2s ease; }
+        .contact-text a:hover { text-decoration-color:#000; }
+        .scroll-wrapper { width:100%; overflow-x:auto; overflow-y:hidden; scroll-behavior:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; -ms-overflow-style:none; padding:1rem 0.2rem; display:flex; align-items:center; touch-action:pan-x; }
+        .scroll-wrapper::-webkit-scrollbar { display:none; }
+        .wheel-track { display:flex; flex-wrap:nowrap; gap:0; padding:0; width:fit-content; height:100%; align-items:center; will-change:transform; transform:translateZ(0); backface-visibility:hidden; -webkit-backface-visibility:hidden; }
+        .album-square { flex:0 0 auto; position:relative; border:none; border-radius:0; box-shadow:none; cursor:pointer; overflow:hidden; transition:transform 0.3s ease; will-change:transform; transform:scale(1); backface-visibility:hidden; -webkit-backface-visibility:hidden; }
+        .album-square:hover { transform:scale(1.03); }
+        .album-square:not(:last-child) { margin-right:32px; }
+        .album-square .cover-layer { position:absolute; top:0; left:0; width:100%; height:100%; background-size:cover; background-position:center; background-repeat:no-repeat; }
+        .footer { font-family:system-ui, -apple-system, sans-serif; font-size:0.75rem; color:#999; text-align:left; padding:0.5rem 0 0.75rem 0; width:94%; max-width:1800px; margin:0 auto; flex-shrink:0; }
+        .seo-text { position:absolute; left:-9999px; top:-9999px; width:1px; height:1px; overflow:hidden; }
+        @media (max-width:900px) { .album-square:not(:last-child) { margin-right:26px; } }
+        @media (max-width:700px) { .album-square:not(:last-child) { margin-right:22px; } }
+        @media (max-width:640px) { .wheel-container { padding:0; } .scroll-wrapper { padding:0.5rem 0.1rem; } .album-square:not(:last-child) { margin-right:14px; } .releases-content, .mailing-content, .contact-text { font-size:0.9rem; padding:0.5rem 0.1rem; } .mailing-image-container { gap:12px; padding:0 0.1rem 0 0.1rem; } .footer { font-size:0.65rem; padding:0.25rem 0 0.75rem 0; width:92%; } .releases-content a, .mailing-content a, .contact-text a { text-underline-offset:0.15em; } }
+        @media (max-width:480px) { .album-square:not(:last-child) { margin-right:10px; } .mailing-image-container { gap:8px; } }
     </style>
 </head>
 <body>
@@ -691,18 +257,11 @@
         <!-- PLAYER HEADER -->
         <div class="player-header" id="playerHeader">
             <div class="radio-group">
-                <span class="radio-label">
-                    <span class="dot"></span>
-                    RADIO
-                </span>
-                <button class="play-btn" id="playBtn" aria-label="Play / Pause">
-                    <span class="icon" id="playIcon">▶</span>
-                </button>
+                <span class="radio-label"><span class="dot"></span> RADIO</span>
+                <button class="play-btn" id="playBtn" aria-label="Play / Pause"><span class="icon" id="playIcon">▶</span></button>
             </div>
             <div class="line"></div>
-            <span class="now-playing" id="nowPlaying">
-                <span class="status-msg">Loading radio...</span>
-            </span>
+            <span class="now-playing" id="nowPlaying"><span class="status-msg">Loading radio...</span></span>
         </div>
 
         <!-- ACCORDION WRAPPER -->
@@ -718,9 +277,7 @@
                     <div class="releases-content">
                         <p>April Fridae's "right now," OUT NOW. <a href="https://now.aprilfridae.com" target="_blank">Listen everywhere.</a></p>
                     </div>
-                    <div class="scroll-wrapper" id="scrollWheel">
-                        <div class="wheel-track" id="wheelTrack"></div>
-                    </div>
+                    <div class="scroll-wrapper" id="scrollWheel"><div class="wheel-track" id="wheelTrack"></div></div>
                 </div>
 
                 <!-- MAILING LIST ITEM -->
@@ -919,8 +476,7 @@
                     return;
                 }
                 if (info.artist) {
-                    nowPlayingEl.innerHTML =
-                        `<span class="song-title">${info.song}</span><span class="separator">·</span><span class="artist-name">${info.artist}</span>`;
+                    nowPlayingEl.innerHTML = `<span class="song-title">${info.song}</span><span class="separator">·</span><span class="artist-name">${info.artist}</span>`;
                 } else {
                     nowPlayingEl.innerHTML = `<span class="song-title">${info.song}</span>`;
                 }
@@ -973,11 +529,7 @@
 
             async function resumeAudioContext() {
                 if (audioContext && audioContext.state === 'suspended') {
-                    try {
-                        await audioContext.resume();
-                    } catch (e) {
-                        console.warn('Could not resume AudioContext', e);
-                    }
+                    try { await audioContext.resume(); } catch (e) { console.warn('Could not resume AudioContext', e); }
                 }
             }
 
@@ -994,10 +546,7 @@
                 gains[nextPlayerIndex].gain.setValueAtTime(0, startTime);
                 gains[nextPlayerIndex].gain.linearRampToValueAtTime(1, startTime + fadeDuration);
 
-                if (crossfadeTimeout) {
-                    clearTimeout(crossfadeTimeout);
-                    crossfadeTimeout = null;
-                }
+                if (crossfadeTimeout) { clearTimeout(crossfadeTimeout); crossfadeTimeout = null; }
 
                 crossfadeTimeout = setTimeout(() => {
                     players[activePlayerIndex].pause();
@@ -1030,28 +579,18 @@
                 players[nextPlayerIndex].load();
 
                 const playPromise = players[nextPlayerIndex].play();
-                if (playPromise) {
-                    playPromise.catch(() => {});
-                }
+                if (playPromise) playPromise.catch(() => {});
 
-                const onCanPlay = () => {
-                    executeCrossfade();
-                };
-                const onPlaying = () => {
-                    executeCrossfade();
-                };
-                const onError = () => {
-                    executeCrossfade();
-                };
+                const onCanPlay = () => executeCrossfade();
+                const onPlaying = () => executeCrossfade();
+                const onError = () => executeCrossfade();
 
                 players[nextPlayerIndex].addEventListener('canplaythrough', onCanPlay, { once: true });
                 players[nextPlayerIndex].addEventListener('playing', onPlaying, { once: true });
                 players[nextPlayerIndex].addEventListener('error', onError, { once: true });
 
                 setTimeout(() => {
-                    if (isCrossfading && !crossfadeTimeout) {
-                        executeCrossfade();
-                    }
+                    if (isCrossfading && !crossfadeTimeout) executeCrossfade();
                 }, 2000);
             }
 
@@ -1116,9 +655,7 @@
 
                     const activePlayer = players[activePlayerIndex];
                     if (activePlayer.paused) {
-                        if (!isCrossfading) {
-                            activePlayer.play().catch(() => {});
-                        }
+                        if (!isCrossfading) activePlayer.play().catch(() => {});
                         return;
                     }
 
@@ -1128,24 +665,18 @@
                     if (currentTime >= duration - 5 && !crossfadePrepared) {
                         prepareCrossfade();
                     }
-
                     if (currentTime >= duration && !crossfadePrepared) {
                         prepareCrossfade();
                     }
-
                 }, 250);
 
-                players[0].addEventListener('error', function() {
+                players[0].addEventListener('error', () => {
                     if (!isInitialized) return;
-                    if (!crossfadePrepared && radioStarted) {
-                        prepareCrossfade();
-                    }
+                    if (!crossfadePrepared && radioStarted) prepareCrossfade();
                 });
-                players[1].addEventListener('error', function() {
+                players[1].addEventListener('error', () => {
                     if (!isInitialized) return;
-                    if (!crossfadePrepared && radioStarted) {
-                        prepareCrossfade();
-                    }
+                    if (!crossfadePrepared && radioStarted) prepareCrossfade();
                 });
 
                 isPlaying = false;
@@ -1165,15 +696,11 @@
                     startSyncedPlayback();
                 }
 
-                if (!audioProcessingSetup) {
-                    setupAudio();
-                }
+                if (!audioProcessingSetup) setupAudio();
                 await resumeAudioContext();
 
                 if (isPlaying) {
-                    if (masterGainNode) {
-                        masterGainNode.gain.setValueAtTime(0, audioContext.currentTime);
-                    }
+                    if (masterGainNode) masterGainNode.gain.setValueAtTime(0, audioContext.currentTime);
                     isPlaying = false;
                     playIcon.textContent = '▶';
                     playerHeader.classList.remove('playing');
@@ -1184,13 +711,19 @@
                             radioStarted = true;
                         } catch (err) {
                             console.error('Playback failed:', err);
-                            showStatus('Playback error – check console', true);
-                            return;
+                            // Attempt to reload the audio and retry once
+                            players[activePlayerIndex].load();
+                            try {
+                                await players[activePlayerIndex].play();
+                                radioStarted = true;
+                            } catch (retryErr) {
+                                console.error('Retry failed:', retryErr);
+                                showStatus('Playback error – check console', true);
+                                return;
+                            }
                         }
                     }
-                    if (masterGainNode) {
-                        masterGainNode.gain.setValueAtTime(1, audioContext.currentTime);
-                    }
+                    if (masterGainNode) masterGainNode.gain.setValueAtTime(1, audioContext.currentTime);
                     isPlaying = true;
                     playIcon.textContent = '❚❚';
                     playerHeader.classList.add('playing');
@@ -1198,12 +731,12 @@
                 }
             }
 
-            playBtn.addEventListener('click', function(e) {
+            playBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 togglePlay();
             });
 
-            document.addEventListener('keydown', function(e) {
+            document.addEventListener('keydown', (e) => {
                 const target = e.target;
                 if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
                 if (e.key === ' ' || e.key === 'Space') {
@@ -1233,15 +766,8 @@
             let currentlyOpen = null;
             let openTimer = null;
 
-            function closeSection(wrapper, arrow) {
-                if (wrapper) wrapper.classList.remove('expanded');
-                if (arrow) arrow.classList.remove('rotated');
-            }
-
-            function openSection(wrapper, arrow) {
-                if (wrapper) wrapper.classList.add('expanded');
-                if (arrow) arrow.classList.add('rotated');
-            }
+            function closeSection(wrapper, arrow) { if (wrapper) wrapper.classList.remove('expanded'); if (arrow) arrow.classList.remove('rotated'); }
+            function openSection(wrapper, arrow) { if (wrapper) wrapper.classList.add('expanded'); if (arrow) arrow.classList.add('rotated'); }
 
             function toggleSection(targetWrapper, targetArrow, targetName) {
                 clearTimeout(openTimer);
@@ -1250,13 +776,9 @@
                     currentlyOpen = null;
                     return;
                 }
-                if (currentlyOpen === 'releases') {
-                    closeSection(wheelWrapper, releasesArrow);
-                } else if (currentlyOpen === 'mailing') {
-                    closeSection(mailingWrapper, mailingArrow);
-                } else if (currentlyOpen === 'contact') {
-                    closeSection(contactWrapper, contactArrow);
-                }
+                if (currentlyOpen === 'releases') closeSection(wheelWrapper, releasesArrow);
+                else if (currentlyOpen === 'mailing') closeSection(mailingWrapper, mailingArrow);
+                else if (currentlyOpen === 'contact') closeSection(contactWrapper, contactArrow);
                 openTimer = setTimeout(() => {
                     openSection(targetWrapper, targetArrow);
                     currentlyOpen = targetName;
@@ -1264,15 +786,9 @@
                 }, 30);
             }
 
-            if (releasesHeader) releasesHeader.addEventListener('click', function(e) {
-                toggleSection(wheelWrapper, releasesArrow, 'releases');
-            });
-            if (mailingHeader) mailingHeader.addEventListener('click', function(e) {
-                toggleSection(mailingWrapper, mailingArrow, 'mailing');
-            });
-            if (contactHeader) contactHeader.addEventListener('click', function(e) {
-                toggleSection(contactWrapper, contactArrow, 'contact');
-            });
+            if (releasesHeader) releasesHeader.addEventListener('click', () => toggleSection(wheelWrapper, releasesArrow, 'releases'));
+            if (mailingHeader) mailingHeader.addEventListener('click', () => toggleSection(mailingWrapper, mailingArrow, 'mailing'));
+            if (contactHeader) contactHeader.addEventListener('click', () => toggleSection(contactWrapper, contactArrow, 'contact'));
 
             // ---------- RELEASES WHEEL ----------
             const wrapper = document.getElementById('scrollWheel');
@@ -1298,11 +814,8 @@
                     const vw = window.innerWidth;
                     const vh = window.innerHeight;
                     let s;
-                    if (vw < 640) {
-                        s = Math.min(vh * 0.28, 220);
-                    } else {
-                        s = Math.min(vh * 0.40, 450);
-                    }
+                    if (vw < 640) s = Math.min(vh * 0.28, 220);
+                    else s = Math.min(vh * 0.40, 450);
                     s = Math.max(s, 80);
                     return s;
                 }
@@ -1321,24 +834,17 @@
                     const releasesTitle = document.getElementById('releasesTitle');
                     const contactTitle = document.getElementById('contactTitle');
                     const mailingTitle = document.getElementById('mailingTitle');
-                    if (releasesTitle) { releasesTitle.style.height = titleHeight + 'px';
-                        releasesTitle.style.width = titleWidth + 'px'; }
-                    if (contactTitle) { contactTitle.style.height = titleHeight + 'px';
-                        contactTitle.style.width = titleWidth + 'px'; }
+                    if (releasesTitle) { releasesTitle.style.height = titleHeight + 'px'; releasesTitle.style.width = titleWidth + 'px'; }
+                    if (contactTitle) { contactTitle.style.height = titleHeight + 'px'; contactTitle.style.width = titleWidth + 'px'; }
                     const mailingHeight = titleHeight * 0.7;
-                    if (mailingTitle) { mailingTitle.style.height = mailingHeight + 'px';
-                        mailingTitle.style.width = 'auto';
-                        mailingTitle.style.objectFit = 'contain'; }
+                    if (mailingTitle) { mailingTitle.style.height = mailingHeight + 'px'; mailingTitle.style.width = 'auto'; mailingTitle.style.objectFit = 'contain'; }
                     const arrowSize = titleHeight * 0.5;
                     const rA = document.getElementById('releasesArrow');
                     const cA = document.getElementById('contactArrow');
                     const mA = document.getElementById('mailingArrow');
-                    if (rA) { rA.style.height = arrowSize + 'px';
-                        rA.style.width = arrowSize + 'px'; }
-                    if (cA) { cA.style.height = arrowSize + 'px';
-                        cA.style.width = arrowSize + 'px'; }
-                    if (mA) { mA.style.height = arrowSize + 'px';
-                        mA.style.width = arrowSize + 'px'; }
+                    if (rA) { rA.style.height = arrowSize + 'px'; rA.style.width = arrowSize + 'px'; }
+                    if (cA) { cA.style.height = arrowSize + 'px'; cA.style.width = arrowSize + 'px'; }
+                    if (mA) { mA.style.height = arrowSize + 'px'; mA.style.width = arrowSize + 'px'; }
                 }
                 let currentSize = getSize();
 
@@ -1371,9 +877,7 @@
                         track.appendChild(container);
                     }
                     const squares = track.querySelectorAll('.album-square');
-                    squares.forEach((el, i) => {
-                        if (i < squares.length - 1) el.style.marginRight = gap + 'px';
-                    });
+                    squares.forEach((el, i) => { if (i < squares.length - 1) el.style.marginRight = gap + 'px'; });
                     updateTitleSize(size);
                     currentSize = size;
                     const itemWidth = size + gap;
@@ -1396,9 +900,7 @@
                             cover.style.height = h + 'px';
                             cover.style.backgroundImage = `url('${src}')`;
                             cover.style.backgroundColor = '#fff';
-                            cover.addEventListener('click', function() {
-                                console.log('Mailing cover clicked:', src);
-                            });
+                            cover.addEventListener('click', () => console.log('Mailing cover clicked:', src));
                             mailingImageContainer.appendChild(cover);
                         });
                     }
@@ -1435,11 +937,8 @@
                         const dx = e.deltaX || 0;
                         const dy = e.deltaY || 0;
                         let delta = dx;
-                        if (Math.abs(dy) > Math.abs(dx)) {
-                            delta = dy;
-                        } else if (Math.abs(dx) > 0) {
-                            delta = dx;
-                        }
+                        if (Math.abs(dy) > Math.abs(dx)) delta = dy;
+                        else if (Math.abs(dx) > 0) delta = dx;
                         wheelElement.scrollLeft += delta;
                         if (loopCallback) {
                             clearTimeout(wheelTimeout);
@@ -1448,7 +947,7 @@
                     }, { passive: false });
                     if (loopCallback) {
                         let scrollStopTimer = null;
-                        wheelElement.addEventListener('scroll', function() {
+                        wheelElement.addEventListener('scroll', () => {
                             clearTimeout(scrollStopTimer);
                             scrollStopTimer = setTimeout(loopCallback, 150);
                         });
@@ -1464,11 +963,9 @@
                     buildMailingGrid();
 
                     setupWheelScrolling(wrapper, performLoopJump);
-                    if (mailingImageContainer) {
-                        setupWheelScrolling(mailingImageContainer, null);
-                    }
+                    if (mailingImageContainer) setupWheelScrolling(mailingImageContainer, null);
 
-                    document.addEventListener('keydown', function(e) {
+                    document.addEventListener('keydown', (e) => {
                         if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
                             if (wheelWrapper && wheelWrapper.classList.contains('expanded')) {
                                 e.preventDefault();
@@ -1480,7 +977,7 @@
                     });
 
                     let resizeTimer = null;
-                    window.addEventListener('resize', function() {
+                    window.addEventListener('resize', () => {
                         if (resizeTimer) cancelAnimationFrame(resizeTimer);
                         resizeTimer = requestAnimationFrame(() => {
                             resizeTimer = null;
