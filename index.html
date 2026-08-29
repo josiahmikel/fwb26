@@ -320,10 +320,9 @@
             'use strict';
 
             // ============================================================
-            // RADIO – SIMPLIFIED SINGLE-PLAYER LOGIC
+            // RADIO – SIMPLIFIED SINGLE-PLAYER LOGIC (FIXED)
             // ============================================================
 
-            // Playlist (order is shuffled daily)
             const PLAYLIST = [
                 'radio/118-creaturethief.mp3',
                 'radio/1214-creaturethief.mp3',
@@ -407,8 +406,8 @@
 
             const audio = new Audio();
             let currentTrackIndex = -1;
-            let isPlaying = false;   // "mute/unmute" state
-            let radioStarted = false; // actual audio started
+            let isPlaying = false;
+            let radioStarted = false;
             let pollInterval = null;
 
             function parseTrackInfo(filename) {
@@ -470,18 +469,22 @@
             function loadTrack(trackIndex, offset) {
                 currentTrackIndex = trackIndex;
                 audio.src = shuffledPlaylist[trackIndex];
-                audio.currentTime = offset;
                 audio.load();
                 updateNowPlaying();
+
+                // Wait for metadata before setting currentTime
+                audio.addEventListener('loadedmetadata', function onLoaded() {
+                    audio.currentTime = offset;
+                    audio.removeEventListener('loadedmetadata', onLoaded);
+                }, { once: true });
             }
 
             function startRadio() {
                 const { trackIndex, offset } = computeCurrentTrackAndOffset();
                 loadTrack(trackIndex, offset);
-                audio.volume = 0; // start muted, user can unmute later
+                audio.volume = 0; // muted initially
                 audio.play().then(() => {
                     radioStarted = true;
-                    // Start polling for track end
                     if (pollInterval) clearInterval(pollInterval);
                     pollInterval = setInterval(checkTrackProgress, 1000);
                 }).catch(err => {
@@ -493,25 +496,22 @@
             function checkTrackProgress() {
                 if (!radioStarted) return;
                 if (audio.paused && isPlaying) {
-                    // Attempt to resume if paused unexpectedly
                     audio.play().catch(() => {});
                     return;
                 }
                 const duration = shuffledDurations[currentTrackIndex] || 180;
-                const buffer = 1.5; // seconds before end
+                const buffer = 1.5;
                 if (audio.currentTime >= duration - buffer) {
                     advanceToNextTrack();
                 }
             }
 
             function advanceToNextTrack() {
-                // Move to next index in shuffled playlist
                 const nextIndex = (currentTrackIndex + 1) % shuffledPlaylist.length;
                 loadTrack(nextIndex, 0);
                 if (isPlaying) {
                     audio.play().catch(() => {});
                 } else {
-                    // If muted, keep playing but volume is 0
                     audio.play().then(() => { audio.volume = 0; }).catch(() => {});
                 }
             }
@@ -522,13 +522,11 @@
                     return;
                 }
                 if (isPlaying) {
-                    // Mute
                     audio.volume = 0;
                     isPlaying = false;
                     document.getElementById('playIcon').textContent = '▶';
                     document.getElementById('playerHeader').classList.remove('playing');
                 } else {
-                    // Unmute
                     audio.volume = 1;
                     isPlaying = true;
                     document.getElementById('playIcon').textContent = '❚❚';
@@ -536,7 +534,6 @@
                 }
             }
 
-            // Wire up events
             document.getElementById('playBtn').addEventListener('click', (e) => {
                 e.stopPropagation();
                 togglePlay();
@@ -551,14 +548,13 @@
                 }
             });
 
-            // Initialize UI: show "Loading radio..." but don't start audio yet
+            // Initialize UI: show loading status but don't start audio until user clicks
             showStatus('Loading radio...', false);
 
             // ============================================================
-            // ACCORDION & RELEASES WHEEL (unchanged from previous, but included below)
+            // ACCORDION & RELEASES WHEEL (same as before)
             // ============================================================
 
-            // ---------- ACCORDION ----------
             const releasesHeader = document.getElementById('releasesHeader');
             const releasesArrow = document.getElementById('releasesArrow');
             const wheelWrapper = document.getElementById('wheelWrapper');
