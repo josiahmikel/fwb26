@@ -6,6 +6,8 @@
     <title>Friends With Bears Records</title>
     <meta name="description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok. Explore new releases, join our mailing list for free zines and stickers, and get in touch for press, marketing, or music submissions.">
     <meta name="keywords" content="Friends With Bears Records, creaturethief, April Fridae, eliesriot, Zayok, indie music, electronic, hyperpop, record label, music submissions, free zines, stickers, mailing list">
+    <meta name="author" content="Friends With Bears Records">
+    <meta name="publisher" content="Friends With Bears Records">
     <meta name="robots" content="index, follow, noimageindex">
     <link rel="canonical" href="https://friendswithbears.com">
     <meta property="og:title" content="Friends With Bears Records">
@@ -13,26 +15,168 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://friendswithbears.com">
     <meta property="og:image" content="https://friendswithbears.com/assets/cover.jpg">
+    <meta property="og:site_name" content="Friends With Bears Records">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Friends With Bears Records">
     <meta name="twitter:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok.">
     <meta name="twitter:image" content="https://friendswithbears.com/assets/cover.jpg">
+    <meta name="twitter:creator" content="@friendswbears">
+    <meta name="twitter:site" content="@friendswbears">
     <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
         {
-            "@context": "https://schema.org",
-            "@type": "MusicGroup",
-            "name": "Friends With Bears Records",
-            "description": "Independent record label featuring creaturethief, April Fridae, eliesriot, and Zayok.",
-            "url": "https://friendswithbears.com",
-            "genre": ["Electronic", "Indie", "Hyperpop", "Alternative"],
-            "foundingDate": "2023",
-            "member": [
-                { "@type": "MusicGroup", "name": "creaturethief" },
-                { "@type": "MusicGroup", "name": "April Fridae" },
-                { "@type": "MusicGroup", "name": "eliesriot" },
-                { "@type": "MusicGroup", "name": "Zayok" }
-            ]
+          "@type": "Organization",
+          "@id": "https://friendswithbears.com/#organization",
+          "name": "Friends With Bears Records",
+          "url": "https://friendswithbears.com",
+          "sameAs": [
+            "https://www.instagram.com/friendswbears",
+            "https://www.youtube.com/@friendswithbears"
+          ],
+          "logo": "https://friendswithbears.com/assets/cover.jpg",
+          "foundingDate": "2023",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "hi@friendswithbears.com",
+            "contactType": "customer support"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://friendswithbears.com/#website",
+          "url": "https://friendswithbears.com",
+          "name": "Friends With Bears Records",
+          "publisher": {
+            "@id": "https://friendswithbears.com/#organization"
+          }
+        },
+        {
+          "@type": "MusicGroup",
+          "@id": "https://friendswithbears.com/#label",
+          "name": "Friends With Bears Records",
+          "url": "https://friendswithbears.com",
+          "sameAs": [
+            "https://www.instagram.com/friendswbears",
+            "https://www.youtube.com/@friendswithbears"
+          ],
+          "genre": ["Electronic", "Indie", "Hyperpop", "Alternative"],
+          "foundingDate": "2023",
+          "member": [
+            { "@id": "https://friendswithbears.com/#creaturethief" },
+            { "@id": "https://friendswithbears.com/#aprilfridae" },
+            { "@id": "https://friendswithbears.com/#eliesriot" },
+            { "@id": "https://friendswithbears.com/#zayok" }
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://friendswithbears.com/#creaturethief",
+          "name": "creaturethief",
+          "sameAs": "https://www.instagram.com/creaturethief"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://friendswithbears.com/#aprilfridae",
+          "name": "April Fridae",
+          "sameAs": "https://www.instagram.com/aprilfridae"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://friendswithbears.com/#eliesriot",
+          "name": "eliesriot",
+          "sameAs": "https://www.instagram.com/eliesriot"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://friendswithbears.com/#zayok",
+          "name": "Zayok",
+          "sameAs": "https://www.instagram.com/zayoklove"
+        },
+        {
+          "@type": "MusicAlbum",
+          "@id": "https://friendswithbears.com/releases/fridae#right-now",
+          "name": "right now",
+          "byArtist": { "@id": "https://friendswithbears.com/#aprilfridae" },
+          "url": "https://now.aprilfridae.com",
+          "image": "https://friendswithbears.com/assets/fridae-cover.jpg",
+          "recordLabel": { "@id": "https://friendswithbears.com/#label" }
+        },
+        {
+          "@type": "MusicAlbum",
+          "@id": "https://friendswithbears.com/releases/dying-to-live",
+          "name": "DYING TO LIVE",
+          "byArtist": { "@id": "https://friendswithbears.com/#eliesriot" },
+          "url": "https://songport.link/t/eliesriot-dying-to-live-bm32qdtx",
+          "image": "https://friendswithbears.com/assets/eliesriot_dying_to_live.jpg",
+          "recordLabel": { "@id": "https://friendswithbears.com/#label" }
+        },
+        {
+          "@type": "MusicAlbum",
+          "@id": "https://friendswithbears.com/releases/ct-24",
+          "name": "CT-24",
+          "byArtist": { "@id": "https://friendswithbears.com/#creaturethief" },
+          "url": "https://songport.link/t/creaturethief-ct-24-ep-d3egznh0",
+          "image": "https://friendswithbears.com/assets/creaturethief_ct-24.jpg",
+          "recordLabel": { "@id": "https://friendswithbears.com/#label" }
+        },
+        {
+          "@type": "MusicAlbum",
+          "@id": "https://friendswithbears.com/releases/in-elsewhere",
+          "name": "In, elsewhere",
+          "byArtist": { "@id": "https://friendswithbears.com/#zayok" },
+          "url": "https://songport.link/t/zayok-in-elsewhere-00w4ekwj",
+          "image": "https://friendswithbears.com/assets/zayok_in_elsewhere.jpg",
+          "recordLabel": { "@id": "https://friendswithbears.com/#label" }
+        },
+        {
+          "@type": "MusicAlbum",
+          "@id": "https://friendswithbears.com/releases/getting-by",
+          "name": "getting by",
+          "byArtist": { "@id": "https://friendswithbears.com/#aprilfridae" },
+          "url": "https://songport.link/t/april-fridae-getting-by-2zqbyyiq",
+          "image": "https://friendswithbears.com/assets/fridae-cover.jpg",
+          "recordLabel": { "@id": "https://friendswithbears.com/#label" }
+        },
+        {
+          "@type": "MusicAlbum",
+          "@id": "https://friendswithbears.com/releases/then-you-lay-waste-to-the-world",
+          "name": "....Then you lay waste to the world",
+          "byArtist": { "@id": "https://friendswithbears.com/#zayok" },
+          "url": "https://songport.link/t/zayok-then-you-lay-waste-to-the-world-e832kcnk",
+          "image": "https://friendswithbears.com/assets/____Then_you_lay_waste_to_the_world.jpg",
+          "recordLabel": { "@id": "https://friendswithbears.com/#label" }
+        },
+        {
+          "@type": "MusicAlbum",
+          "@id": "https://friendswithbears.com/releases/hatchback",
+          "name": "hatchback",
+          "byArtist": { "@id": "https://friendswithbears.com/#aprilfridae" },
+          "url": "https://songport.link/t/april-fridae-hatchback-pn9fldvu",
+          "image": "https://friendswithbears.com/assets/fridae-cover.jpg",
+          "recordLabel": { "@id": "https://friendswithbears.com/#label" }
+        },
+        {
+          "@type": "MusicAlbum",
+          "@id": "https://friendswithbears.com/releases/all-eyes-on-me-ep",
+          "name": "All eyes on me EP",
+          "byArtist": { "@id": "https://friendswithbears.com/#zayok" },
+          "url": "https://music.apple.com/us/album/all-eyes-on-me-ep/1846372035",
+          "image": "https://friendswithbears.com/assets/All_eyes_on_me_EP.jpg",
+          "recordLabel": { "@id": "https://friendswithbears.com/#label" }
+        },
+        {
+          "@type": "MusicAlbum",
+          "@id": "https://friendswithbears.com/releases/moreheart",
+          "name": "moreheart*",
+          "byArtist": { "@type": "Person", "name": "fzwl" },
+          "url": "https://music.apple.com/us/album/fzwl-moreheart-ep/1862235718",
+          "image": "https://friendswithbears.com/assets/fzwl_moreheart_.jpg",
+          "recordLabel": { "@id": "https://friendswithbears.com/#label" }
         }
+      ]
+    }
     </script>
     <style>
         * {
