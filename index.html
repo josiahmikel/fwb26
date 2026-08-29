@@ -12,16 +12,11 @@
     <meta property="og:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok. Explore new releases, join our mailing list, and get in touch.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://friendswithbears.com">
-    <meta property="og:image" content="https://friendswithbears.com/assets/fridae-cover.jpg">
+    <meta property="og:image" content="https://friendswithbears.com/assets/cover.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Friends With Bears Records">
     <meta name="twitter:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok.">
-    <meta name="twitter:image" content="https://friendswithbears.com/assets/fridae-cover.jpg">
-    <!-- PWA / iOS background audio support -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="FWB Radio">
-    <link rel="apple-touch-icon" href="assets/cover.jpg">
+    <meta name="twitter:image" content="https://friendswithbears.com/assets/cover.jpg">
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -115,32 +110,13 @@
             font-size: 0.6rem;
             display: flex;
             align-items: center;
-            justify-content: center;
             font-family: system-ui, -apple-system, sans-serif;
             transition: color 0.2s ease;
             color: inherit;
-            width: 1.2rem;
-            height: 1.2rem;
         }
         .player-header .play-btn .icon {
-            display: block;
-            width: 0;
-            height: 0;
-            transition: border-color 0.2s ease;
-        }
-        .player-header .play-btn .icon.play {
-            border-top: 0.3rem solid transparent;
-            border-bottom: 0.3rem solid transparent;
-            border-left: 0.45rem solid currentColor;
-            margin-left: 0.12rem;
-        }
-        .player-header .play-btn .icon.pause {
-            width: 0.45rem;
-            height: 0.55rem;
-            border-left: 0.15rem solid currentColor;
-            border-right: 0.15rem solid currentColor;
-            border-top: none;
-            border-bottom: none;
+            font-size: 0.8rem;
+            line-height: 1;
         }
         .player-header .line {
             flex: 1 1 auto;
@@ -166,18 +142,6 @@
         .player-header .now-playing .artist-name {
             font-weight: 700;
         }
-        .player-header .now-playing .artist-link {
-            font-weight: 700;
-            color: inherit;
-            text-decoration: none;
-            transition: opacity 0.2s ease, text-decoration-color 0.2s ease;
-        }
-        .player-header .now-playing .artist-link:hover {
-            text-decoration: underline;
-            text-underline-offset: 0.2em;
-            text-decoration-thickness: 1px;
-            opacity: 0.7;
-        }
         .player-header .now-playing .separator {
             font-weight: 300;
             opacity: 0.4;
@@ -200,8 +164,7 @@
         .player-header:hover .play-btn,
         .player-header:hover .now-playing,
         .player-header:hover .now-playing .song-title,
-        .player-header:hover .now-playing .artist-name,
-        .player-header:hover .now-playing .artist-link {
+        .player-header:hover .now-playing .artist-name {
             color: #292929;
         }
         .player-header:hover .line {
@@ -213,8 +176,7 @@
         .player-header.playing .play-btn,
         .player-header.playing .now-playing,
         .player-header.playing .now-playing .song-title,
-        .player-header.playing .now-playing .artist-name,
-        .player-header.playing .now-playing .artist-link {
+        .player-header.playing .now-playing .artist-name {
             color: #292929;
         }
         .player-header.playing .line {
@@ -239,20 +201,9 @@
             }
             .player-header .play-btn {
                 font-size: 0.5rem;
-                width: 1rem;
-                height: 1rem;
             }
-            .player-header .play-btn .icon.play {
-                border-top: 0.22rem solid transparent;
-                border-bottom: 0.22rem solid transparent;
-                border-left: 0.34rem solid currentColor;
-                margin-left: 0.08rem;
-            }
-            .player-header .play-btn .icon.pause {
-                width: 0.35rem;
-                height: 0.4rem;
-                border-left: 0.12rem solid currentColor;
-                border-right: 0.12rem solid currentColor;
+            .player-header .play-btn .icon {
+                font-size: 0.7rem;
             }
             .player-header .line {
                 margin: 0 0.3rem;
@@ -373,8 +324,9 @@
         .mailing-content a {
             color: #292929;
             text-decoration: underline;
-            text-underline-offset: 0.2em;
+            text-underline-offset: 0.1em;
             text-decoration-thickness: 1px;
+            text-decoration-color: #292929;
             transition: text-decoration-color 0.2s ease;
         }
         .mailing-content a:hover {
@@ -482,28 +434,17 @@
             box-shadow: none;
             cursor: pointer;
             overflow: hidden;
-            transform: translateZ(0) scale(1);
+            transition: transform 0.3s ease;
+            will-change: transform;
+            transform: scale(1);
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            will-change: transform;
+        }
+        .album-square:hover {
+            transform: scale(1.03);
         }
         .album-square:not(:last-child) {
             margin-right: 32px;
-        }
-        @keyframes breathe-container {
-            0% { transform: translateZ(0) scale(1); }
-            30% { transform: translateZ(0) scale(1.015); }
-            70% { transform: translateZ(0) scale(1.008); }
-            100% { transform: translateZ(0) scale(1); }
-        }
-        @keyframes breathe-image {
-            0% { transform: translateY(0px) scale(1); }
-            30% { transform: translateY(-4px) scale(1.015); }
-            70% { transform: translateY(-2px) scale(1.008); }
-            100% { transform: translateY(0px) scale(1); }
-        }
-        .album-square:hover {
-            animation: breathe-container 6s ease-in-out infinite;
         }
         .album-square .cover-layer {
             position: absolute;
@@ -514,120 +455,17 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            transition: opacity 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
-            will-change: opacity, transform;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-        }
-        .album-square:hover .cover-pixelated {
-            animation: breathe-image 6s ease-in-out infinite;
-        }
-        .album-square:hover .cover-sharp {
-            animation: breathe-image 6s ease-in-out infinite;
-        }
-        .album-square:not(:hover) .cover-pixelated,
-        .album-square:not(:hover) .cover-sharp {
-            animation: none;
-            transform: translateY(0px) scale(1);
-        }
-        .album-square:not(:hover) {
-            animation: none;
-            transform: translateZ(0) scale(1);
-        }
-        .album-square .cover-pixelated {
-            z-index: 2;
-            image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
-            opacity: 1;
-        }
-        .album-square .cover-sharp {
-            z-index: 1;
-            opacity: 0;
-        }
-        .album-square:not(.animating) .cover-sharp {
-            opacity: 0;
-        }
-        .album-square:not(.animating):hover .cover-pixelated {
-            opacity: 0;
-        }
-        .album-square:not(.animating):hover .cover-sharp {
-            opacity: 1;
-        }
-        .album-square.animated-cover .cover-sharp {
-            display: none;
-        }
-        .album-square.animated-cover .cover-pixelated {
-            opacity: 1 !important;
-            transition: none;
         }
         .footer {
             font-family: system-ui, -apple-system, sans-serif;
             font-size: 0.75rem;
             color: #999;
             text-align: left;
-            padding: 0.5rem 0 0.25rem 0;
+            padding: 0.5rem 0 0.75rem 0;
             width: 94%;
             max-width: 1800px;
             margin: 0 auto;
             flex-shrink: 0;
-        }
-        @media (max-width: 640px) {
-            .album-square:hover {
-                animation: none !important;
-                transform: scale(1) !important;
-            }
-            .album-square:hover .cover-pixelated,
-            .album-square:hover .cover-sharp {
-                animation: none !important;
-                transform: translateY(0) scale(1) !important;
-            }
-            .album-square:not(.animated-cover):hover .cover-pixelated {
-                opacity: 1 !important;
-            }
-            .album-square:not(.animated-cover):hover .cover-sharp {
-                opacity: 0 !important;
-            }
-            .arrow-image:hover {
-                opacity: 1 !important;
-            }
-            .album-square.animated-cover .cover-pixelated {
-                opacity: 1 !important;
-            }
-            .album-square.animated-cover .cover-sharp {
-                display: none !important;
-            }
-            .header-item {
-                padding: 0.3rem 0.1rem;
-            }
-            .wheel-wrapper.expanded,
-            .mailing-wrapper.expanded,
-            .contact-wrapper.expanded {
-                margin: 0.1rem 0 0 0;
-            }
-            .scroll-wrapper {
-                padding: 0.5rem 0.1rem;
-            }
-            .releases-content,
-            .mailing-content,
-            .contact-text {
-                font-size: 0.9rem;
-                padding: 0.5rem 0.1rem;
-            }
-            .mailing-image-container {
-                gap: 12px;
-                padding: 0 0.1rem 0 0.1rem;
-            }
-            .footer {
-                font-size: 0.65rem;
-                padding: 0.25rem 0 0.1rem 0;
-                width: 92%;
-            }
-            .releases-content a,
-            .mailing-content a,
-            .contact-text a {
-                text-underline-offset: 0.15em;
-            }
         }
         @media (max-width: 900px) {
             .album-square:not(:last-child) {
@@ -648,6 +486,26 @@
             }
             .album-square:not(:last-child) {
                 margin-right: 14px;
+            }
+            .releases-content,
+            .mailing-content,
+            .contact-text {
+                font-size: 0.9rem;
+                padding: 0.5rem 0.1rem;
+            }
+            .mailing-image-container {
+                gap: 12px;
+                padding: 0 0.1rem 0 0.1rem;
+            }
+            .footer {
+                font-size: 0.65rem;
+                padding: 0.25rem 0 0.75rem 0;
+                width: 92%;
+            }
+            .releases-content a,
+            .mailing-content a,
+            .contact-text a {
+                text-underline-offset: 0.15em;
             }
         }
         @media (max-width: 480px) {
@@ -671,7 +529,7 @@
                     RADIO
                 </span>
                 <button class="play-btn" id="playBtn" aria-label="Play / Pause">
-                    <span class="icon play" id="playIcon"></span>
+                    <span class="icon" id="playIcon">▶</span>
                 </button>
             </div>
             <div class="line"></div>
@@ -691,7 +549,7 @@
                 </div>
                 <div class="wheel-wrapper" id="wheelWrapper">
                     <div class="releases-content">
-                        <p>April Fridae "right now," OUT NOW! <a href="http://friendswithbears.com/fridae/right-now" target="_blank">Listen everywhere.</a></p>
+                        <p>April Fridae's "right now," OUT NOW. <a href="https://now.aprilfridae.com" target="_blank">Listen everywhere.</a></p>
                     </div>
                     <div class="scroll-wrapper" id="scrollWheel">
                         <div class="wheel-track" id="wheelTrack"></div>
@@ -732,120 +590,72 @@
             'use strict';
 
             // ============================================================
-            // 1. YOUR RADIO PLAYLIST (38 tracks - updated)
+            // 1. YOUR RADIO PLAYLIST (25 tracks)
             // ============================================================
             const PLAYLIST = [
                 'radio/118-creaturethief.mp3',
                 'radio/1214-creaturethief.mp3',
                 'radio/148-creaturethief.mp3',
-                'radio/Ants_who_know-creaturethief.mp3',
-                'radio/As_You_Fall-creaturethief.mp3',
                 'radio/DAMN-april_fridae.mp3',
                 'radio/GNL-patricio_portales.mp3',
-                'radio/Watching_you_go-creaturethief.mp3',
                 'radio/always-quas.mp3',
-                'radio/b_side-fridae_thief.mp3',
+                'radio/b_side-fridae:thief.mp3',
                 'radio/backtrack-fridae:thief.mp3',
-                'radio/bizzare-creaturethief.mp3',
-                'radio/blue_demo-april_fridae.mp3',
+                'radio/bizzare-fridae:thief.mp3',
                 'radio/braziw-april_fridae.mp3',
                 'radio/clocks_cut_out_or_switch-luvly.mp3',
                 'radio/down_and_loading-luvly.mp3',
-                'radio/easy_come_demo-april_fridae.mp3',
                 'radio/eurovision-creaturethief.mp3',
                 'radio/follow-creaturethief.mp3',
-                'radio/fortune_cookie-fridae_thief.mp3',
-                'radio/frisco_demo-april_fridae.mp3',
+                'radio/fortune_cookie-fridae:thief.mp3',
                 'radio/gfdgdfgdfgfdfgd-april_fridae.mp3',
                 'radio/good4-luvly.mp3',
                 'radio/inagaki-milk.mp3',
-                'radio/intro-creaturethief.mp3',
                 'radio/lingering_w:_sana-luvly.mp3',
                 'radio/memory-creaturethief.mp3',
-                'radio/my_head\'s_at _the_Jets-creaturethief.mp3',
                 'radio/redi-creaturethief.mp3',
                 'radio/reef-milk.mp3',
-                'radio/right_now-april_fridae.mp3',
                 'radio/sep4-creaturethief.mp3',
-                'radio/thatway_demo-april_fridae.mp3',
-                'radio/the_truth_demo-april_fridae.mp3',
                 'radio/tube-creaturethief.mp3',
-                'radio/walle-fridae_thief.mp3',
-                'radio/while_back_demo-april_fridae.mp3',
-                'radio/wisconsin-creaturethief.mp3'
+                'radio/walle-fridae:thief.mp3'
             ];
 
-            // 2. EXACT TRACK DURATIONS (in seconds) - updated
+            // 2. EXACT TRACK DURATIONS (in seconds)
             const TRACK_DURATIONS = {
-                '118-creaturethief.mp3': 65.149396,
+                '118-creaturethief.mp3': 65.149400,
                 '1214-creaturethief.mp3': 42.666667,
-                '148-creaturethief.mp3': 78.001633,
-                'Ants_who_know-creaturethief.mp3': 100.519188,
-                'As_You_Fall-creaturethief.mp3': 101.239000,
-                'DAMN-april_fridae.mp3': 89.234286,
-                'GNL-patricio_portales.mp3': 46.672104,
-                'Watching_you_go-creaturethief.mp3': 89.559375,
-                'always-quas.mp3': 54.961633,
-                'b_side-fridae_thief.mp3': 46.262857,
-                'backtrack-fridae:thief.mp3': 115.282417,
-                'bizzare-creaturethief.mp3': 35.552653,
-                'blue_demo-april_fridae.mp3': 24.460938,
-                'braziw-april_fridae.mp3': 148.610612,
+                '148-creaturethief.mp3': 81.136300,
+                'DAMN-april_fridae.mp3': 119.142857,
+                'GNL-patricio_portales.mp3': 46.672109,
+                'always-quas.mp3': 109.766525,
+                'b_side-fridae:thief.mp3': 50.535011,
+                'backtrack-fridae:thief.mp3': 115.282404,
+                'bizzare-fridae:thief.mp3': 17.777800,
+                'braziw-april_fridae.mp3': 154.221156,
                 'clocks_cut_out_or_switch-luvly.mp3': 163.176000,
                 'down_and_loading-luvly.mp3': 63.048000,
-                'easy_come_demo-april_fridae.mp3': 40.000000,
-                'eurovision-creaturethief.mp3': 143.751837,
-                'follow-creaturethief.mp3': 30.511021,
-                'fortune_cookie-fridae_thief.mp3': 128.914286,
-                'frisco_demo-april_fridae.mp3': 35.744667,
+                'eurovision-creaturethief.mp3': 169.613050,
+                'follow-creaturethief.mp3': 30.511000,
+                'fortune_cookie-fridae:thief.mp3': 147.296871,
                 'gfdgdfgdfgfdfgd-april_fridae.mp3': 29.769229,
                 'good4-luvly.mp3': 61.080000,
-                'inagaki-milk.mp3': 69.224500,
-                'intro-creaturethief.mp3': 89.002083,
-                'lingering_w:_sana-luvly.mp3': 76.617146,
-                'memory-creaturethief.mp3': 123.480816,
-                'my_head\'s_at _the_Jets-creaturethief.mp3': 174.474750,
-                'redi-creaturethief.mp3': 75.702854,
-                'reef-milk.mp3': 46.497958,
-                'right_now-april_fridae.mp3': 144.800000,
-                'sep4-creaturethief.mp3': 59.402458,
-                'thatway_demo-april_fridae.mp3': 41.377925,
-                'the_truth_demo-april_fridae.mp3': 87.272729,
-                'tube-creaturethief.mp3': 47.264229,
-                'walle-fridae_thief.mp3': 55.353469,
-                'while_back_demo-april_fridae.mp3': 66.638325,
-                'wisconsin-creaturethief.mp3': 138.251625
-            };
-
-            // Artist Instagram mapping
-            const ARTIST_INSTAGRAM = {
-                'april_fridae': 'https://instagram.com/aprilfridae',
-                'april fridae': 'https://instagram.com/aprilfridae',
-                'creaturethief': 'https://instagram.com/creaturethief',
-                'luvly': 'https://instagram.com/luvly.ghost',
-                'patricio_portales': 'https://instagram.com/pato6p',
-                'patricio portales': 'https://instagram.com/pato6p',
-                'milk': 'https://instagram.com/milkcores',
-                'fridae:thief': 'https://instagram.com/creaturethief',
-                'fridae_thief': 'https://instagram.com/creaturethief',
-                'fridae / thief': 'https://instagram.com/creaturethief',
-                'quas': 'https://instagram.com/playquas'
+                'inagaki-milk.mp3': 69.224458,
+                'lingering_w:_sana-luvly.mp3': 76.617125,
+                'memory-creaturethief.mp3': 151.764172,
+                'redi-creaturethief.mp3': 75.702850,
+                'reef-milk.mp3': 46.497950,
+                'sep4-creaturethief.mp3': 59.402425,
+                'tube-creaturethief.mp3': 47.264218,
+                'walle-fridae:thief.mp3': 84.857143
             };
 
             // ============================================================
-            // 3. SMART SHUFFLE
+            // 3. DAILY SHUFFLED PLAYLIST
             // ============================================================
-            function getArtistFromFilename(filename) {
-                const parts = filename.split('-');
-                const artistPart = parts[parts.length - 1].replace(/\.mp3$/, '');
-                const artist = artistPart.replace(/_/g, ' ').replace(/:/g, ' ');
-                return artist;
-            }
-
-            function buildSmartShuffle() {
+            function getDailyShuffledIndices() {
+                const now = new Date();
+                const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
                 const indices = [...Array(PLAYLIST.length).keys()];
-                const artists = indices.map(i => getArtistFromFilename(PLAYLIST[i]));
-                
                 function mulberry32(a) {
                     return function() {
                         a |= 0; a = a + 0x6D2B79F5 | 0;
@@ -854,43 +664,15 @@
                         return ((t ^ t >>> 14) >>> 0) / 4294967296;
                     }
                 }
-
-                const now = new Date();
-                const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
                 const rng = mulberry32(seed);
-
                 for (let i = indices.length - 1; i > 0; i--) {
                     const j = Math.floor(rng() * (i + 1));
                     [indices[i], indices[j]] = [indices[j], indices[i]];
                 }
-
-                for (let attempts = 0; attempts < 50; attempts++) {
-                    let improved = false;
-                    for (let i = 0; i < indices.length - 1; i++) {
-                        if (artists[indices[i]] === artists[indices[i + 1]]) {
-                            for (let j = i + 2; j < indices.length; j++) {
-                                const prevArtist = j > 0 ? artists[indices[j - 1]] : null;
-                                const nextArtist = j < indices.length - 1 ? artists[indices[j + 1]] : null;
-                                
-                                const wouldCreateSameAdjacent = 
-                                    (prevArtist === artists[indices[i]]) ||
-                                    (nextArtist === artists[indices[i + 1]]);
-                                
-                                if (!wouldCreateSameAdjacent) {
-                                    [indices[i + 1], indices[j]] = [indices[j], indices[i + 1]];
-                                    improved = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    if (!improved) break;
-                }
-
                 return indices;
             }
 
-            let shuffledIndices = buildSmartShuffle();
+            let shuffledIndices = getDailyShuffledIndices();
             let shuffledPlaylist = shuffledIndices.map(i => PLAYLIST[i]);
             let shuffledDurations = shuffledIndices.map(i => TRACK_DURATIONS[PLAYLIST[i].split('/').pop()] || 180);
             let totalDuration = shuffledDurations.reduce((a, b) => a + b, 0);
@@ -905,9 +687,9 @@
 
             if (!playBtn || !playIcon || !nowPlayingEl || !playerHeader) return;
 
-            let isPlaying = false;
+            let isPlaying = false;           // user wants sound (unmuted)
             let isInitialized = false;
-            let radioStarted = false;
+            let radioStarted = false;        // audio is actually running
 
             let audioContext = null;
             let compressorNode = null;
@@ -915,20 +697,18 @@
             let audioProcessingSetup = false;
 
             const players = [new Audio(), new Audio()];
-            players.forEach(p => {
-                p.setAttribute('playsinline', '');
-                p.setAttribute('webkit-playsinline', '');
-            });
             let sources = [];
             let gains = [];
 
             let activePlayerIndex = 0;
             let currentTrackIndex = -1;
-            let isTransitioning = false;
-            let transitionTimeout = null;
+            let nextTrackIndex = -1;
+            let isCrossfading = false;
+            let crossfadeTimeout = null;
+            let crossfadePrepared = false;
 
             // ============================================================
-            // 5. PARSER & MEDIA SESSION
+            // 5. PARSER
             // ============================================================
             function parseTrackInfo(filename) {
                 const name = filename.replace(/\.[^.]+$/, '');
@@ -941,19 +721,8 @@
                 }
                 song = song.replace(/_/g, ' ');
                 artist = artist.replace(/_/g, ' ');
-                artist = artist.replace(/:/g, ' / ').replace(/_/g, ' / ');
-                
-                let instagramUrl = null;
-                const artistKey = artist.toLowerCase();
-                if (ARTIST_INSTAGRAM.hasOwnProperty(artistKey)) {
-                    instagramUrl = ARTIST_INSTAGRAM[artistKey];
-                }
-                
-                return { 
-                    song: song.trim(), 
-                    artist: artist.trim(),
-                    instagramUrl: instagramUrl
-                };
+                artist = artist.replace(/:/g, ' / ');
+                return { song: song.trim(), artist: artist.trim() };
             }
 
             function getDisplayName(trackIndex) {
@@ -976,30 +745,13 @@
                     nowPlayingEl.innerHTML = `<span class="status-msg">Track unavailable</span>`;
                     return;
                 }
-                
                 if (info.artist) {
-                    if (info.instagramUrl) {
-                        nowPlayingEl.innerHTML = 
-                            `<span class="song-title">${info.song}</span><span class="separator">·</span><a href="${info.instagramUrl}" target="_blank" class="artist-link">${info.artist}</a>`;
-                    } else {
-                        nowPlayingEl.innerHTML = 
-                            `<span class="song-title">${info.song}</span><span class="separator">·</span><span class="artist-name">${info.artist}</span>`;
-                    }
+                    nowPlayingEl.innerHTML =
+                        `<span class="song-title">${info.song}</span><span class="separator">·</span><span class="artist-name">${info.artist}</span>`;
                 } else {
                     nowPlayingEl.innerHTML = `<span class="song-title">${info.song}</span>`;
                 }
                 nowPlayingEl.classList.remove('loading');
-
-                if ('mediaSession' in navigator) {
-                    navigator.mediaSession.metadata = new MediaMetadata({
-                        title: info.song,
-                        artist: info.artist || 'Friends With Bears Records',
-                        album: 'Friends With Bears Radio',
-                        artwork: [
-                            { src: 'assets/cover.jpg', sizes: '512x512', type: 'image/jpeg' }
-                        ]
-                    });
-                }
             }
 
             function showStatus(msg, isError) {
@@ -1021,7 +773,7 @@
                     compressorNode.release.value = 0.05;
 
                     masterGainNode = audioContext.createGain();
-                    masterGainNode.gain.value = 0;
+                    masterGainNode.gain.value = 0; // start muted
 
                     sources[0] = audioContext.createMediaElementSource(players[0]);
                     sources[1] = audioContext.createMediaElementSource(players[1]);
@@ -1049,51 +801,88 @@
 
             async function resumeAudioContext() {
                 if (audioContext && audioContext.state === 'suspended') {
-                    try { await audioContext.resume(); } catch (e) {}
+                    try {
+                        await audioContext.resume();
+                    } catch (e) {
+                        console.warn('Could not resume AudioContext', e);
+                    }
                 }
             }
 
             // ---------- Crossfade ----------
-            function performCrossfade() {
-                if (isTransitioning || !radioStarted) return;
-                isTransitioning = true;
-
+            function executeCrossfade() {
                 const nextPlayerIndex = 1 - activePlayerIndex;
                 const nextTrackIdx = (currentTrackIndex + 1) % shuffledPlaylist.length;
-                const fadeDuration = 3.0;
-
-                const nextSrc = shuffledPlaylist[nextTrackIdx];
-                if (players[nextPlayerIndex].src !== nextSrc) {
-                    players[nextPlayerIndex].src = nextSrc;
-                    players[nextPlayerIndex].currentTime = 0;
-                    players[nextPlayerIndex].load();
-                    players[nextPlayerIndex].play().catch(() => {});
-                }
 
                 const startTime = audioContext.currentTime;
+                const fadeDuration = 3.0;
+
                 gains[activePlayerIndex].gain.setValueAtTime(gains[activePlayerIndex].gain.value, startTime);
                 gains[activePlayerIndex].gain.linearRampToValueAtTime(0, startTime + fadeDuration);
+
                 gains[nextPlayerIndex].gain.setValueAtTime(0, startTime);
                 gains[nextPlayerIndex].gain.linearRampToValueAtTime(1, startTime + fadeDuration);
 
-                if (transitionTimeout) clearTimeout(transitionTimeout);
+                if (crossfadeTimeout) {
+                    clearTimeout(crossfadeTimeout);
+                    crossfadeTimeout = null;
+                }
 
-                transitionTimeout = setTimeout(() => {
+                crossfadeTimeout = setTimeout(() => {
                     players[activePlayerIndex].pause();
                     activePlayerIndex = nextPlayerIndex;
                     currentTrackIndex = nextTrackIdx;
+                    nextTrackIndex = (nextTrackIdx + 1) % shuffledPlaylist.length;
                     updateNowPlaying(currentTrackIndex);
+                    isCrossfading = false;
+                    crossfadePrepared = false;
+                    crossfadeTimeout = null;
 
-                    const inactiveIdx = 1 - activePlayerIndex;
-                    const followingTrackIdx = (currentTrackIndex + 1) % shuffledPlaylist.length;
-                    players[inactiveIdx].src = shuffledPlaylist[followingTrackIdx];
-                    players[inactiveIdx].currentTime = 0;
-                    players[inactiveIdx].load();
-                    players[inactiveIdx].play().catch(() => {});
-
-                    isTransitioning = false;
-                    transitionTimeout = null;
+                    // Preload the next track
+                    const preloadNextIdx = 1 - activePlayerIndex;
+                    const preloadTrack = shuffledPlaylist[(currentTrackIndex + 1) % shuffledPlaylist.length];
+                    players[preloadNextIdx].src = preloadTrack;
+                    players[preloadNextIdx].load();
                 }, fadeDuration * 1000 + 50);
+            }
+
+            function prepareCrossfade() {
+                if (isCrossfading || crossfadePrepared) return;
+                crossfadePrepared = true;
+                isCrossfading = true;
+
+                const nextPlayerIndex = 1 - activePlayerIndex;
+                const nextTrackIdx = (currentTrackIndex + 1) % shuffledPlaylist.length;
+                const nextSrc = shuffledPlaylist[nextTrackIdx];
+
+                players[nextPlayerIndex].src = nextSrc;
+                players[nextPlayerIndex].currentTime = 0;
+                players[nextPlayerIndex].load();
+
+                const playPromise = players[nextPlayerIndex].play();
+                if (playPromise) {
+                    playPromise.catch(() => {});
+                }
+
+                const onCanPlay = () => {
+                    executeCrossfade();
+                };
+                const onPlaying = () => {
+                    executeCrossfade();
+                };
+                const onError = () => {
+                    executeCrossfade();
+                };
+
+                players[nextPlayerIndex].addEventListener('canplaythrough', onCanPlay, { once: true });
+                players[nextPlayerIndex].addEventListener('playing', onPlaying, { once: true });
+                players[nextPlayerIndex].addEventListener('error', onError, { once: true });
+
+                setTimeout(() => {
+                    if (isCrossfading && !crossfadeTimeout) {
+                        executeCrossfade();
+                    }
+                }, 2000);
             }
 
             // ---------- Start time-synced playback ----------
@@ -1101,7 +890,8 @@
                 if (isInitialized) return;
                 isInitialized = true;
 
-                const newIndices = buildSmartShuffle();
+                // Recalculate shuffled order if the day has changed
+                const newIndices = getDailyShuffledIndices();
                 if (newIndices.join(',') !== shuffledIndices.join(',')) {
                     shuffledIndices = newIndices;
                     shuffledPlaylist = shuffledIndices.map(i => PLAYLIST[i]);
@@ -1109,22 +899,8 @@
                     totalDuration = shuffledDurations.reduce((a, b) => a + b, 0);
                 }
 
-                // Use Pacific Time for syncing across time zones
-                const pstFormatter = new Intl.DateTimeFormat('en-US', {
-                    timeZone: 'America/Los_Angeles',
-                    hour: 'numeric',
-                    minute: 'numeric',
-                    second: 'numeric',
-                    hour12: false
-                });
-                const parts = pstFormatter.formatToParts(new Date());
-                let pstHours = 0, pstMinutes = 0, pstSeconds = 0;
-                parts.forEach(part => {
-                    if (part.type === 'hour') pstHours = parseInt(part.value, 10);
-                    else if (part.type === 'minute') pstMinutes = parseInt(part.value, 10);
-                    else if (part.type === 'second') pstSeconds = parseInt(part.value, 10);
-                });
-                const secondsSinceMidnight = pstHours * 3600 + pstMinutes * 60 + pstSeconds;
+                const now = new Date();
+                const secondsSinceMidnight = now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
 
                 let remaining = secondsSinceMidnight % totalDuration;
                 let trackIndex = 0;
@@ -1137,6 +913,11 @@
                         break;
                     }
                     remaining -= dur;
+                    trackIndex = i + 1;
+                }
+                if (trackIndex >= shuffledPlaylist.length) {
+                    trackIndex = shuffledPlaylist.length - 1;
+                    offset = shuffledDurations[trackIndex] || 180;
                 }
 
                 const currentSrc = shuffledPlaylist[trackIndex];
@@ -1152,48 +933,63 @@
 
                 activePlayerIndex = 0;
                 currentTrackIndex = trackIndex;
+                nextTrackIndex = (trackIndex + 1) % shuffledPlaylist.length;
 
                 players[0].load();
                 players[1].load();
 
+                const info = getDisplayName(trackIndex);
+                console.log(`⏱️ Time-synced track (shuffled): #${trackIndex+1} - ${info ? info.song + ' · ' + info.artist : 'unknown'}`);
+
                 updateNowPlaying(trackIndex);
 
+                // Interval to check playback and crossfade (runs regardless of mute)
                 setInterval(() => {
-                    if (!radioStarted || isTransitioning) return;
+                    if (!radioStarted) return;
 
-                    const active = players[activePlayerIndex];
-                    if (active.paused) {
-                        active.play().catch(() => {});
+                    const activePlayer = players[activePlayerIndex];
+                    if (activePlayer.paused) {
+                        // If it somehow paused, try to resume (shouldn't happen)
+                        if (!isCrossfading) {
+                            activePlayer.play().catch(() => {});
+                        }
                         return;
                     }
 
-                    const currentTime = active.currentTime || 0;
+                    const currentTime = activePlayer.currentTime || 0;
                     const duration = shuffledDurations[currentTrackIndex] || 180;
 
-                    if (currentTime >= duration - 5) {
-                        performCrossfade();
+                    if (currentTime >= duration - 5 && !crossfadePrepared) {
+                        prepareCrossfade();
                     }
+
+                    if (currentTime >= duration && !crossfadePrepared) {
+                        prepareCrossfade();
+                    }
+
                 }, 250);
 
+                players[0].addEventListener('error', function() {
+                    if (!isInitialized) return;
+                    if (!crossfadePrepared && radioStarted) {
+                        prepareCrossfade();
+                    }
+                });
+                players[1].addEventListener('error', function() {
+                    if (!isInitialized) return;
+                    if (!crossfadePrepared && radioStarted) {
+                        prepareCrossfade();
+                    }
+                });
+
+                // Initial state: paused (muted)
                 isPlaying = false;
-                playIcon.className = 'icon play';
+                playIcon.textContent = '▶';
                 playerHeader.classList.remove('playing');
                 nowPlayingEl.classList.remove('loading');
             }
 
-            // ---------- Media Session Handlers ----------
-            if ('mediaSession' in navigator) {
-                navigator.mediaSession.setActionHandler('play', () => {
-                    if (!isPlaying) togglePlay();
-                });
-                navigator.mediaSession.setActionHandler('pause', () => {
-                    if (isPlaying) togglePlay();
-                });
-                navigator.mediaSession.setActionHandler('previoustrack', null);
-                navigator.mediaSession.setActionHandler('nexttrack', null);
-            }
-
-            // ---------- Toggle Mute/Unmute with fade ----------
+            // ---------- Toggle Mute/Unmute ----------
             async function togglePlay() {
                 if (!isInitialized) {
                     if (PLAYLIST.length === 0) {
@@ -1205,24 +1001,25 @@
                     startSyncedPlayback();
                 }
 
-                if (!audioProcessingSetup) setupAudio();
+                if (!audioProcessingSetup) {
+                    setupAudio();
+                }
                 await resumeAudioContext();
 
                 if (isPlaying) {
-                    if (masterGainNode && audioContext) {
-                        const currentTime = audioContext.currentTime;
-                        masterGainNode.gain.setValueAtTime(masterGainNode.gain.value, currentTime);
-                        masterGainNode.gain.linearRampToValueAtTime(0, currentTime + 0.3);
+                    // Mute
+                    if (masterGainNode) {
+                        masterGainNode.gain.setValueAtTime(0, audioContext.currentTime);
                     }
                     isPlaying = false;
-                    playIcon.className = 'icon play';
+                    playIcon.textContent = '▶';
                     playerHeader.classList.remove('playing');
-                    if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'paused';
                 } else {
+                    // Unmute and ensure playback has started
                     if (!radioStarted) {
+                        // First time: start the active player
                         try {
-                            await players[0].play();
-                            await players[1].play();
+                            await players[activePlayerIndex].play();
                             radioStarted = true;
                         } catch (err) {
                             console.error('Playback failed:', err);
@@ -1230,15 +1027,12 @@
                             return;
                         }
                     }
-                    if (masterGainNode && audioContext) {
-                        const currentTime = audioContext.currentTime;
-                        masterGainNode.gain.setValueAtTime(0, currentTime);
-                        masterGainNode.gain.linearRampToValueAtTime(1, currentTime + 0.3);
+                    if (masterGainNode) {
+                        masterGainNode.gain.setValueAtTime(1, audioContext.currentTime);
                     }
                     isPlaying = true;
-                    playIcon.className = 'icon pause';
+                    playIcon.textContent = '⏸';
                     playerHeader.classList.add('playing');
-                    if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
                     updateNowPlaying(currentTrackIndex);
                 }
             }
@@ -1265,9 +1059,7 @@
                 startSyncedPlayback();
             }
 
-            // ============================================================
-            // 6. ACCORDION
-            // ============================================================
+            // ---------- ACCORDION ----------
             const releasesHeader = document.getElementById('releasesHeader');
             const releasesArrow = document.getElementById('releasesArrow');
             const wheelWrapper = document.getElementById('wheelWrapper');
@@ -1322,45 +1114,25 @@
                 toggleSection(contactWrapper, contactArrow, 'contact');
             });
 
-            // ============================================================
-            // 7. RELEASES WHEEL
-            // ============================================================
+            // ---------- RELEASES WHEEL ----------
             const wrapper = document.getElementById('scrollWheel');
             const track = document.getElementById('wheelTrack');
             const mailingImageContainer = document.getElementById('mailingImageContainer');
 
             if (wrapper && track) {
                 const RELEASES_DATA = [
-                    { src: 'assets/fridae-cover.jpg', artist: 'April Fridae', title: 'Fridae', url: 'https://friendswithbears.com/releases/fridae' },
-                    { src: 'assets/eliesriot_dying_to_live.jpg', artist: 'eliesriot', title: 'Dying to Live', url: 'https://friendswithbears.com/releases/dying-to-live' },
-                    { src: 'assets/creaturethief_ct-24.jpg', artist: 'creaturethief', title: 'CT-24', url: 'https://friendswithbears.com/releases/ct-24' },
-                    { src: 'assets/zayok_in_elsewhere.jpg', artist: 'Zayok', title: 'In elsewhere', url: 'https://friendswithbears.com/releases/in-elsewhere' },
-                    { src: 'assets/creaturethief_verdant.jpg', artist: 'creaturethief', title: 'verdant', url: 'https://friendswithbears.com/releases/verdant' }
+                    { src: 'assets/fridae-cover.jpg', artist: 'April Fridae', title: 'right now', url: 'https://now.aprilfridae.com' },
+                    { src: 'assets/eliesriot_dying_to_live.jpg', artist: 'eliesriot', title: 'DYING TO LIVE', url: 'https://songport.link/t/eliesriot-dying-to-live-bm32qdtx' },
+                    { src: 'assets/creaturethief_ct-24.jpg', artist: 'creaturethief', title: 'CT-24', url: 'https://songport.link/t/creaturethief-ct-24-ep-d3egznh0' },
+                    { src: 'assets/zayok_in_elsewhere.jpg', artist: 'zayok', title: 'In, elsewhere', url: 'https://songport.link/t/zayok-in-elsewhere-00w4ekwj' },
+                    { src: 'assets/fridae-cover.jpg', artist: 'April Fridae', title: 'getting by', url: 'https://songport.link/t/april-fridae-getting-by-2zqbyyiq' },
+                    { src: 'assets/____Then_you_lay_waste_to_the_world.jpg', artist: 'zayok', title: '....Then you lay waste to the world', url: 'https://songport.link/t/zayok-then-you-lay-waste-to-the-world-e832kcnk' },
+                    { src: 'assets/fridae-cover.jpg', artist: 'April Fridae', title: 'hatchback', url: 'https://songport.link/t/april-fridae-hatchback-pn9fldvu' },
+                    { src: 'assets/All_eyes_on_me_EP.jpg', artist: 'zayok', title: 'All eyes on me EP', url: 'https://music.apple.com/us/album/all-eyes-on-me-ep/1846372035' },
+                    { src: 'assets/fzwl_moreheart_.jpg', artist: 'fzwl', title: 'moreheart*', url: 'https://music.apple.com/us/album/fzwl-moreheart-ep/1862235718' }
                 ];
-                const FALLBACKS = ['#b5838d', '#6d597a', '#2a9d8f', '#e76f51', '#264653'];
+                const FALLBACKS = ['#b5838d', '#6d597a', '#2a9d8f', '#e76f51', '#264653', '#8a5a44', '#5e548e', '#9a8c98', '#c9ada7'];
                 const COPIES = 5;
-                const ANIMATIONS_DATA = {
-                    'assets/fridae-cover.jpg': {
-                        frames: ['assets/animation/fridae-cover-1.jpg', 'assets/animation/fridae-cover-2.jpg'],
-                        frameDelay: 20
-                    },
-                    'assets/eliesriot_dying_to_live.jpg': {
-                        frames: ['assets/animation/eliesriot_dying_to_live-1.jpg', 'assets/animation/eliesriot_dying_to_live-2.jpg'],
-                        frameDelay: 20
-                    },
-                    'assets/creaturethief_ct-24.jpg': {
-                        frames: ['assets/animation/creaturethief_ct-24-1.jpg', 'assets/animation/creaturethief_ct-24-2.jpg'],
-                        frameDelay: 20
-                    },
-                    'assets/zayok_in_elsewhere.jpg': {
-                        frames: ['assets/animation/zayok_in_elsewhere-1.jpg', 'assets/animation/zayok_in_elsewhere-2.jpg'],
-                        frameDelay: 20
-                    },
-                    'assets/creaturethief_verdant.jpg': {
-                        frames: ['assets/animation/creaturethief_verdant-1.jpg', 'assets/animation/creaturethief_verdant-2.jpg'],
-                        frameDelay: 20
-                    }
-                };
 
                 function getSize() {
                     const vw = window.innerWidth;
@@ -1415,11 +1187,9 @@
                     const gap = getSpacing();
                     track.innerHTML = '';
                     const total = RELEASES_DATA.length * COPIES;
-                    const isMobile = window.innerWidth <= 640;
                     for (let i = 0; i < total; i++) {
                         const idx = i % RELEASES_DATA.length;
                         const release = RELEASES_DATA[idx];
-                        const isAnimated = ANIMATIONS_DATA.hasOwnProperty(release.src);
                         const container = document.createElement('div');
                         container.className = 'album-square';
                         container.style.width = size + 'px';
@@ -1428,88 +1198,15 @@
                         container.dataset.artist = release.artist;
                         container.dataset.title = release.title;
                         container.dataset.url = release.url;
-                        const sharp = document.createElement('div');
-                        sharp.className = 'cover-layer cover-sharp';
-                        sharp.style.backgroundImage = `url('${release.src}')`;
-                        sharp.style.backgroundColor = FALLBACKS[idx];
-                        const pixelated = document.createElement('div');
-                        pixelated.className = 'cover-layer cover-pixelated';
-                        pixelated.style.backgroundColor = FALLBACKS[idx];
-                        pixelated.style.imageRendering = 'pixelated';
-                        pixelated.style.imageRendering = '-moz-crisp-edges';
-                        pixelated.style.imageRendering = 'crisp-edges';
-                        if (isAnimated) {
-                            container.classList.add('animated-cover');
-                            const animData = ANIMATIONS_DATA[release.src];
-                            pixelated.style.backgroundImage = `url('${release.src}')`;
-                            animData.frames.forEach(frame => {
-                                const img = new Image();
-                                img.src = frame;
-                            });
-                            container._animData = animData;
-                            container._currentFrameIndex = 0;
-                            container._animInterval = null;
-                            container._pixelatedLayer = pixelated;
-                            if (!isMobile) {
-                                container.addEventListener('mouseenter', function(e) {
-                                    if (this._animInterval) {
-                                        clearInterval(this._animInterval);
-                                        this._animInterval = null;
-                                    }
-                                    const data = this._animData;
-                                    const frames = data.frames;
-                                    this._currentFrameIndex = 0;
-                                    this._pixelatedLayer.style.backgroundImage = `url('${frames[0]}')`;
-                                    this._animInterval = setInterval(() => {
-                                        const nextIndex = this._currentFrameIndex + 1;
-                                        if (nextIndex < frames.length) {
-                                            this._currentFrameIndex = nextIndex;
-                                            this._pixelatedLayer.style.backgroundImage =
-                                                `url('${frames[nextIndex]}')`;
-                                        } else {
-                                            clearInterval(this._animInterval);
-                                            this._animInterval = null;
-                                        }
-                                    }, data.frameDelay);
-                                });
-                                container.addEventListener('mouseleave', function(e) {
-                                    if (this._animInterval) {
-                                        clearInterval(this._animInterval);
-                                        this._animInterval = null;
-                                    }
-                                    if (this._currentFrameIndex <= 0) {
-                                        this._pixelatedLayer.style.backgroundImage = `url('${this.dataset.src}')`;
-                                        return;
-                                    }
-                                    const data = this._animData;
-                                    const frames = data.frames;
-                                    this._animInterval = setInterval(() => {
-                                        const nextIndex = this._currentFrameIndex - 1;
-                                        if (nextIndex >= 0) {
-                                            this._currentFrameIndex = nextIndex;
-                                            this._pixelatedLayer.style.backgroundImage =
-                                                `url('${frames[nextIndex]}')`;
-                                        } else {
-                                            clearInterval(this._animInterval);
-                                            this._animInterval = null;
-                                            this._pixelatedLayer.style.backgroundImage = `url('${this.dataset.src}')`;
-                                        }
-                                    }, data.frameDelay);
-                                });
-                            }
-                        } else {
-                            const pixelatedSrc = release.src.replace(/\.(jpe?g|png|webp)$/i, '-pixelated.$1');
-                            pixelated.style.backgroundImage = `url('${pixelatedSrc}')`;
-                            const imgTest = new Image();
-                            imgTest.onerror = function() {
-                                pixelated.style.backgroundImage = `url('${release.src}')`;
-                            };
-                            imgTest.src = pixelatedSrc;
-                        }
-                        container.appendChild(sharp);
-                        container.appendChild(pixelated);
+                        const cover = document.createElement('div');
+                        cover.className = 'cover-layer';
+                        cover.style.backgroundImage = `url('${release.src}')`;
+                        cover.style.backgroundColor = FALLBACKS[idx];
+                        container.appendChild(cover);
                         container.addEventListener('click', function() {
-                            window.location.href = this.dataset.url;
+                            if (this.dataset.url && this.dataset.url !== '#') {
+                                window.open(this.dataset.url, '_blank');
+                            }
                         });
                         track.appendChild(container);
                     }
@@ -1645,6 +1342,7 @@
 
                 initWheel();
             }
+
         })();
     </script>
 </body>
