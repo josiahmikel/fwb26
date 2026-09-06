@@ -76,6 +76,9 @@
             border-radius: 10px;
             transition: border-color 0.3s ease;
         }
+        .btn-border.disabled {
+            animation: rainbowLoading 2s linear infinite;
+        }
         button[type="submit"] {
             display: inline-block;
             min-width: 140px;
@@ -93,23 +96,53 @@
             line-height: 1.2;
             transition: color 0.3s ease;
         }
-        button[type="submit"]:disabled { cursor: not-allowed; opacity: 0.5; }
-        .btn-border.success { border-color: #00ff44; }
-        .btn-border.success button[type="submit"] { color: #00ff44; }
         .btn-border:not(.disabled):not(.success):hover {
             animation: rainbow 2s linear infinite;
         }
         .btn-border:not(.disabled):not(.success):hover button[type="submit"] {
-            animation: rainbow 2s linear infinite;
+            animation: rainbowText 2s linear infinite;
         }
+        button[type="submit"]:disabled {
+            cursor: not-allowed;
+            animation: rainbowTextLoading 2s linear infinite;
+        }
+        .btn-border.success { border-color: #00ff44; animation: none; }
+        .btn-border.success button[type="submit"] { color: #00ff44; animation: none; }
         @keyframes rainbow {
-            0% { border-color: #ff0040; color: #ff0040; }
-            16% { border-color: #ff4400; color: #ff4400; }
-            33% { border-color: #ffdd00; color: #ffdd00; }
-            50% { border-color: #00ff44; color: #00ff44; }
-            66% { border-color: #00ddff; color: #00ddff; }
-            83% { border-color: #cc00ff; color: #cc00ff; }
-            100% { border-color: #ff0040; color: #ff0040; }
+            0% { border-color: #ff0040; }
+            16% { border-color: #ff4400; }
+            33% { border-color: #ffdd00; }
+            50% { border-color: #00ff44; }
+            66% { border-color: #00ddff; }
+            83% { border-color: #cc00ff; }
+            100% { border-color: #ff0040; }
+        }
+        @keyframes rainbowText {
+            0% { color: #ff0040; }
+            16% { color: #ff4400; }
+            33% { color: #ffdd00; }
+            50% { color: #00ff44; }
+            66% { color: #00ddff; }
+            83% { color: #cc00ff; }
+            100% { color: #ff0040; }
+        }
+        @keyframes rainbowLoading {
+            0% { border-color: rgba(255, 0, 64, 0.5); }
+            16% { border-color: rgba(255, 68, 0, 0.5); }
+            33% { border-color: rgba(255, 221, 0, 0.5); }
+            50% { border-color: rgba(0, 255, 68, 0.5); }
+            66% { border-color: rgba(0, 221, 255, 0.5); }
+            83% { border-color: rgba(204, 0, 255, 0.5); }
+            100% { border-color: rgba(255, 0, 64, 0.5); }
+        }
+        @keyframes rainbowTextLoading {
+            0% { color: rgba(255, 0, 64, 0.5); }
+            16% { color: rgba(255, 68, 0, 0.5); }
+            33% { color: rgba(255, 221, 0, 0.5); }
+            50% { color: rgba(0, 255, 68, 0.5); }
+            66% { color: rgba(0, 221, 255, 0.5); }
+            83% { color: rgba(204, 0, 255, 0.5); }
+            100% { color: rgba(255, 0, 64, 0.5); }
         }
         .star-burst-container {
             position: absolute;
@@ -211,278 +244,4 @@
             const btnBorder = document.getElementById('btnBorder');
             const firstName = document.getElementById('first-name');
             const lastName = document.getElementById('last-name');
-            const email = document.getElementById('email');
-            const address = document.getElementById('address');
-            const starContainer = document.getElementById('starBurstContainer');
-
-            const firstNameError = document.getElementById('first-name-error');
-            const lastNameError = document.getElementById('last-name-error');
-            const emailError = document.getElementById('email-error');
-            const addressError = document.getElementById('address-error');
-            const zipError = document.getElementById('zip-error');
-
-            const neonColors = ['#ff0040', '#ff4400', '#ffdd00', '#00ff44', '#00ddff', '#cc00ff'];
-            const starChars = ['★', '✦', '✧'];
-
-            const stateAbbreviations = {
-                'al': 'AL', 'ak': 'AK', 'az': 'AZ', 'ar': 'AR', 'ca': 'CA',
-                'co': 'CO', 'ct': 'CT', 'de': 'DE', 'fl': 'FL', 'ga': 'GA',
-                'hi': 'HI', 'id': 'ID', 'il': 'IL', 'in': 'IN', 'ia': 'IA',
-                'ks': 'KS', 'ky': 'KY', 'la': 'LA', 'me': 'ME', 'md': 'MD',
-                'ma': 'MA', 'mi': 'MI', 'mn': 'MN', 'ms': 'MS', 'mo': 'MO',
-                'mt': 'MT', 'ne': 'NE', 'nv': 'NV', 'nh': 'NH', 'nj': 'NJ',
-                'nm': 'NM', 'ny': 'NY', 'nc': 'NC', 'nd': 'ND', 'oh': 'OH',
-                'ok': 'OK', 'or': 'OR', 'pa': 'PA', 'ri': 'RI', 'sc': 'SC',
-                'sd': 'SD', 'tn': 'TN', 'tx': 'TX', 'ut': 'UT', 'vt': 'VT',
-                'va': 'VA', 'wa': 'WA', 'wv': 'WV', 'wi': 'WI', 'wy': 'WY'
-            };
-
-            let isSubmitting = false;
-
-            function setLoadingState() {
-                isSubmitting = true;
-                submitBtn.disabled = true;
-                btnText.innerHTML = 'updating...';
-                form.querySelectorAll('input, textarea').forEach(el => el.disabled = true);
-            }
-
-            function setSuccessState() {
-                isSubmitting = false;
-                btnBorder.classList.add('success');
-                btnText.innerHTML = 'updated!';
-                submitBtn.disabled = true;
-                form.reset();
-                form.querySelectorAll('input, textarea').forEach(el => el.disabled = false);
-                document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
-                document.querySelectorAll('.field-error.show').forEach(el => el.classList.remove('show'));
-                createStarBurst();
-            }
-
-            function setErrorState(message) {
-                isSubmitting = false;
-                submitBtn.disabled = false;
-                btnText.innerHTML = 'update';
-                form.querySelectorAll('input, textarea').forEach(el => el.disabled = false);
-                const errorMsg = document.createElement('div');
-                errorMsg.style.cssText = 'text-align:center;padding:0.75rem;margin-top:1rem;background:#fef0f0;border-radius:6px;border:1px solid #cc0000;color:#cc0000;font-size:0.9rem;';
-                errorMsg.textContent = message || 'Something went wrong. Please try again.';
-                const existingError = document.querySelector('.fetch-error');
-                if (existingError) existingError.remove();
-                errorMsg.className = 'fetch-error';
-                form.appendChild(errorMsg);
-                setTimeout(() => { if (errorMsg.parentNode) errorMsg.remove(); }, 5000);
-            }
-
-            function capitalizeWords(input) {
-                let value = input.value;
-                if (!value) return;
-                let words = value.split(' ');
-                let capitalizedWords = words.map(word => {
-                    if (word.length === 0) return word;
-                    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-                });
-                let newValue = capitalizedWords.join(' ');
-                if (newValue !== value) input.value = newValue;
-            }
-
-            function lowercaseEmail(input) {
-                let value = input.value;
-                if (!value) return;
-                let newValue = value.toLowerCase();
-                if (newValue !== value) input.value = newValue;
-            }
-
-            function validateZipCode() {
-                const val = address.value.trim();
-                const zipMatch = val.match(/\b\d{5}\b/);
-                if (!zipMatch) {
-                    address.classList.add('error');
-                    zipError.style.display = 'block';
-                    return false;
-                }
-                address.classList.remove('error');
-                zipError.style.display = 'none';
-                return true;
-            }
-
-            function createStarBurst() {
-                const numStars = 50;
-                const containerRect = starContainer.getBoundingClientRect();
-                const centerX = containerRect.width / 2;
-                const centerY = containerRect.height / 2;
-                for (let i = 0; i < numStars; i++) {
-                    const star = document.createElement('div');
-                    star.className = 'star';
-                    const angle = Math.random() * Math.PI * 2;
-                    const distance = 40 + Math.random() * 160;
-                    const tx = Math.cos(angle) * distance;
-                    const ty = Math.sin(angle) * distance;
-                    star.style.setProperty('--tx', tx + 'px');
-                    star.style.setProperty('--ty', ty + 'px');
-                    star.textContent = starChars[Math.floor(Math.random() * starChars.length)];
-                    star.style.color = neonColors[Math.floor(Math.random() * neonColors.length)];
-                    star.style.fontSize = '10px';
-                    star.style.left = centerX + 'px';
-                    star.style.top = centerY + 'px';
-                    star.style.animationDuration = (1 + Math.random() * 0.6) + 's';
-                    star.style.animationDelay = (Math.random() * 0.2) + 's';
-                    starContainer.appendChild(star);
-                }
-                setTimeout(() => { starContainer.innerHTML = ''; }, 2500);
-            }
-
-            function validateName(input, errorEl) {
-                const val = input.value.trim();
-                if (val.length === 0) {
-                    input.classList.add('error');
-                    errorEl.classList.add('show');
-                    return false;
-                }
-                input.classList.remove('error');
-                errorEl.classList.remove('show');
-                return true;
-            }
-
-            function validateEmail() {
-                const val = email.value.trim();
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(val)) {
-                    email.classList.add('error');
-                    emailError.classList.add('show');
-                    return false;
-                }
-                email.classList.remove('error');
-                emailError.classList.remove('show');
-                return true;
-            }
-
-            function validateAddress() {
-                const val = address.value.trim();
-                if (val.length < 5) {
-                    address.classList.add('error');
-                    addressError.classList.add('show');
-                    return false;
-                }
-                address.classList.remove('error');
-                addressError.classList.remove('show');
-                return true;
-            }
-
-            firstName.addEventListener('input', function() {
-                capitalizeWords(this);
-                if (this.value.trim().length > 0) {
-                    this.classList.remove('error');
-                    firstNameError.classList.remove('show');
-                }
-            });
-            firstName.addEventListener('blur', function() { validateName(this, firstNameError); });
-
-            lastName.addEventListener('input', function() {
-                capitalizeWords(this);
-                if (this.value.trim().length > 0) {
-                    this.classList.remove('error');
-                    lastNameError.classList.remove('show');
-                }
-            });
-            lastName.addEventListener('blur', function() { validateName(this, lastNameError); });
-
-            email.addEventListener('input', function() {
-                lowercaseEmail(this);
-                const val = this.value.trim();
-                if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-                    this.classList.remove('error');
-                    emailError.classList.remove('show');
-                }
-            });
-            email.addEventListener('blur', validateEmail);
-
-            address.addEventListener('input', function() {
-                if (this.value.trim().length > 5) {
-                    this.classList.remove('error');
-                    addressError.classList.remove('show');
-                    zipError.style.display = 'none';
-                }
-            });
-            address.addEventListener('blur', function() {
-                validateAddress();
-                validateZipCode();
-            });
-
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                if (isSubmitting) return;
-
-                if (firstName.value.trim().length > 0) {
-                    firstName.value = firstName.value.split(' ').map(word =>
-                        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-                    ).join(' ');
-                }
-                if (lastName.value.trim().length > 0) {
-                    lastName.value = lastName.value.split(' ').map(word =>
-                        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-                    ).join(' ');
-                }
-                if (email.value.trim().length > 0) {
-                    email.value = email.value.toLowerCase();
-                }
-                if (address.value.trim().length > 0) {
-                    let words = address.value.split(' ');
-                    let capitalizedWords = words.map(word => {
-                        if (word.length === 0) return word;
-                        if (word.length === 2) {
-                            let lowerWord = word.toLowerCase();
-                            if (stateAbbreviations[lowerWord]) {
-                                return stateAbbreviations[lowerWord];
-                            }
-                        }
-                        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-                    });
-                    address.value = capitalizedWords.join(' ');
-                }
-
-                const isFirstValid = validateName(firstName, firstNameError);
-                const isLastValid = validateName(lastName, lastNameError);
-                const isEmailValid = validateEmail();
-                const isAddressValid = validateAddress();
-                const isZipValid = validateZipCode();
-
-                if (!isFirstValid || !isLastValid || !isEmailValid || !isAddressValid || !isZipValid) {
-                    if (!isFirstValid) firstName.focus();
-                    else if (!isLastValid) lastName.focus();
-                    else if (!isEmailValid) email.focus();
-                    else if (!isAddressValid || !isZipValid) address.focus();
-                    return;
-                }
-
-                setLoadingState();
-
-                const formData = {
-                    firstName: firstName.value.trim(),
-                    lastName: lastName.value.trim(),
-                    email: email.value.trim(),
-                    address: address.value.trim(),
-                    type: 'update'
-                };
-
-                fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData)
-                })
-                .then(() => {
-                    setSuccessState();
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    setErrorState(error.message);
-                });
-            });
-
-        })();
-    </script>
-
-</body>
-</html>
+           
