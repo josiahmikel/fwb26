@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Mailing List – Friends With Bears Records</title>
+    <style>
+        @font-face {
+            font-family: 'CustomTitle';
+            src: url('edrfghu34567/tcfygvuhbjn23456.otf') format('opentype');
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1.5rem;
+            padding-bottom: 8rem;
+            background: #ffffff;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .container { width: 94%; max-width: 480px; }
+        .page-header { text-align: center; margin-bottom: 2rem; }
+        .page-header h1 {
+            font-family: 'CustomTitle', system-ui, -apple-system, sans-serif;
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #000000;
+            text-transform: lowercase;
+        }
+        .form-header { text-align: center; margin-bottom: 2rem; }
+        .form-header .text-block {
+            display: inline-block;
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #000000;
+        }
+        .form-group { margin-bottom: 1.25rem; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        @media (max-width: 480px) { .form-row { grid-template-columns: 1fr; } }
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #000000;
+            margin-bottom: 0.3rem;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            font-size: 0.95rem;
+            border: 1.5px solid #cccccc;
+            border-radius: 6px;
+            outline: none;
+            background: #ffffff;
+            color: #000000;
+            resize: none;
+            transition: border-color 0.2s ease, opacity 0.3s ease;
+        }
+        textarea { min-height: 80px; }
+        input:focus, textarea:focus { border-color: #888888; }
+        input:disabled, textarea:disabled { opacity: 0.5; cursor: not-allowed; }
+        .error { border-color: #cc0000 !important; }
+        .field-error {
+            display: none;
+            font-size: 0.8rem;
+            color: #cc0000;
+            margin-top: 0.25rem;
+            font-weight: 500;
+        }
+        .field-error.show { display: block; }
+        .button-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 4px;
+            position: relative;
+        }
+        .btn-border {
+            display: inline-block;
+            padding: 5px;
+            border: 3px dotted #000000;
+            border-radius: 10px;
+            transition: border-color 0.3s ease;
+        }
+        button[type="submit"] {
+            display: inline-block;
+            min-width: 140px;
+            padding: 0.4rem 2rem;
+            font-size: 2rem;
+            font-family: 'CustomTitle', system-ui, -apple-system, sans-serif;
+            font-weight: 600;
+            color: #000000;
+            background: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: lowercase;
+            letter-spacing: 0.03em;
+            line-height: 1.2;
+            transition: color 0.3s ease;
+        }
+        button[type="submit"]:disabled { cursor: not-allowed; opacity: 0.5; }
+        .btn-border.success { border-color: #00ff44; }
+        .btn-border.success button[type="submit"] { color: #00ff44; }
+        .btn-border:not(.disabled):not(.success):hover {
+            animation: rainbow 2s linear infinite;
+        }
+        .btn-border:not(.disabled):not(.success):hover button[type="submit"] {
+            animation: rainbow 2s linear infinite;
+        }
+        @keyframes rainbow {
+            0% { border-color: #ff0040; color: #ff0040; }
+            16% { border-color: #ff4400; color: #ff4400; }
+            33% { border-color: #ffdd00; color: #ffdd00; }
+            50% { border-color: #00ff44; color: #00ff44; }
+            66% { border-color: #00ddff; color: #00ddff; }
+            83% { border-color: #cc00ff; color: #cc00ff; }
+            100% { border-color: #ff0040; color: #ff0040; }
+        }
+        .star-burst-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10;
+            overflow: visible;
+        }
+        .star {
+            position: absolute;
+            font-size: 10px;
+            font-weight: bold;
+            animation: starExplode 1.2s ease-out forwards;
+            pointer-events: none;
+        }
+        @keyframes starExplode {
+            0% { transform: translate(0, 0) scale(0.3) rotate(0deg); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(1) rotate(360deg); opacity: 0; }
+        }
+        .page-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 0.75rem 1.5rem 1rem 1.5rem;
+            font-size: 0.75rem;
+            color: #999999;
+            text-align: center;
+            background: #ffffff;
+            z-index: 1000;
+            line-height: 1.8;
+        }
+        .page-footer a { color: #999999; text-decoration: none; }
+        .page-footer a:hover { color: #444444; text-decoration: underline; }
+        .page-footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+        .page-footer .divider { color: #999999; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header"><h1>join our mailing list</h1></div>
+        <div class="form-header">
+            <div class="text-block">
+                Stay in the loop via snail mail. Get stickers, zines, post cards,<br>and more. All for free!
+            </div>
+        </div>
+        <form id="signup-form" novalidate>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>First name <span class="required-star">*</span></label>
+                    <input type="text" id="first-name" required autocomplete="given-name" />
+                    <div class="field-error" id="first-name-error">Please enter your first name.</div>
+                </div>
+                <div class="form-group">
+                    <label>Last name <span class="required-star">*</span></label>
+                    <input type="text" id="last-name" required autocomplete="family-name" />
+                    <div class="field-error" id="last-name-error">Please enter your last name.</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Email address <span class="required-star">*</span></label>
+                <input type="email" id="email" placeholder="you@example.com" required autocomplete="email" />
+                <div class="field-error" id="email-error">Please enter a valid email address.</div>
+            </div>
+            <div class="form-group">
+                <label>Mailing address <span class="required-star">*</span></label>
+                <textarea id="address" rows="3" placeholder="Enter your full US mailing address" required autocomplete="street-address"></textarea>
+                <div class="field-error" id="address-error">Please enter your mailing address.</div>
+                <div class="field-error" id="zip-error" style="display:none;">Please enter a valid 5-digit ZIP code.</div>
+            </div>
+            <div class="button-wrapper">
+                <div class="btn-border" id="btnBorder">
+                    <button type="submit" id="submit-btn">
+                        <span class="btn-text" id="btnText">sign up</span>
+                    </button>
+                </div>
+                <div class="star-burst-container" id="starBurstContainer"></div>
+            </div>
+        </form>
+    </div>
+    <div class="page-footer">
+        <div class="footer-links">
+            <a href="mailto:unsubscribe@friendswithbears.com?subject=Unsubscribe&body=I%20wish%20to%20unsubscribe.">Unsubscribe</a>
+            <span class="divider">|</span>
+            <a href="update/">Update Address</a>
+        </div>
+        <div>©2026 <a href="https://friendswithbears.com">Friends With Bears Records</a></div>
+    </div>
+
+    <script>
+        (function() {
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxGVdoAhVYjvz4nDWgRNjgF3v95s0_wM3S97b0wm2HfSM99w60VYI9vYjfgmIgOJyCfFg/exec';
+
+            const form = document.getElementById('signup-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btnText');
+            const btnBorder = document.getElementById('btnBorder');
+            const firstName = document.getElementById('first-name');
+            const lastName = document.getElementById('last-name');
+            const email = document.getElementById('email');
+            const address = document.getElementById('address');
+            const starContainer = document.getElementById('starBurstContainer');
+
+            const firstNameError = document.getElementById('first-name-error');
+            const lastNameError = document.getElementById('last-name-error');
+            const emailError = document.getElementById('email-error');
+            const addressError = document.getElementById('address-error');
+            const zipError = document.getElementById('zip-error');
+
+            const neonColors = ['#ff0040', '#ff4400', '#ffdd00', '#00ff44', '#00ddff', '#cc00ff'];
+            const starChars = ['★', '✦', '✧'];
+
+            const stateAbbreviations = {
+                'al': 'AL', 'ak': 'AK', 'az': 'AZ', 'ar': 'AR', 'ca': 'CA',
+                'co': 'CO', 'ct': 'CT', 'de': 'DE', 'fl': 'FL', 'ga': 'GA',
+                'hi': 'HI', 'id': 'ID', 'il': 'IL', 'in': 'IN', 'ia': 'IA',
+                'ks': 'KS', 'ky': 'KY', 'la': 'LA', 'me': 'ME', 'md': 'MD',
+                'ma': 'MA', 'mi': 'MI', 'mn': 'MN', 'ms': 'MS', 'mo': 'MO',
+                'mt': 'MT', 'ne': 'NE', 'nv': 'NV', 'nh': 'NH', 'nj': 'NJ',
+                'nm': 'NM', 'ny': 'NY', 'nc': 'NC', 'nd': 'ND', 'oh': 'OH',
+                'ok': 'OK', 'or': 'OR', 'pa': 'PA', 'ri': 'RI', 'sc': 'SC',
+                'sd': 'SD', 'tn': 'TN', 'tx': 'TX', 'ut': 'UT', 'vt': 'VT',
+                'va': 'VA', 'wa': 'WA', 'wv': 'WV', 'wi': 'WI', 'wy': 'WY'
+            };
+
+            let isSubmitting = false;
+
+            function setLoadingState() {
+                isSubmitting = true;
+                submitBtn.disabled = true;
+                btnText.innerHTML = 'sending...';
+                form.querySelectorAll('input, textarea').forEach(el => el.disabled = true);
+            }
+
+            function setSuccessState() {
+                isSubmitting = false;
+                btnBorder.classList.add('success');
+                btnText.innerHTML = 'success!';
+                submitBtn.disabled = true;
+                form.reset();
+                form.querySelectorAll('input, textarea').forEach(el => el.disabled = false);
+                document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+                document.querySelectorAll('.field-error.show').forEach(el => el.classList.remove('show'));
+                createStarBurst();
+            }
+
+            function setErrorState(message) {
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                btnText.innerHTML = 'sign up';
+                form.querySelectorAll('input, textarea').forEach(el => el.disabled = false);
+                const errorMsg = document.createElement('div');
+                errorMsg.style.cssText = 'text-align:center;padding:0.75rem;margin-top:1rem;background:#fef0f0;border-radius:6px;border:1px solid #cc0000;color:#cc0000;font-size:0.9rem;';
+                errorMsg.textContent = message || 'Something went wrong. Please try again.';
+                const existingError = document.querySelector('.fetch-error');
+                if (existingError) existingError.remove();
+                errorMsg.className = 'fetch-error';
+                form.appendChild(errorMsg);
+                setTimeout(() => { if (errorMsg.parentNode) errorMsg.remove(); }, 5000);
+            }
+
+            function capitalizeWords(input) {
+                let value = input.value;
+                if (!value) return;
+                let words = value.split(' ');
+                let capitalizedWords = words.map(word => {
+                    if (word.length === 0) return word;
+                    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+                });
+                let newValue = capitalizedWords.join(' ');
+                if (newValue !== value) input.value = newValue;
+            }
+
+            function lowercaseEmail(input) {
+                let value = input.value;
+                if (!value) return;
+                let newValue = value.toLowerCase();
+                if (newValue !== value) input.value = newValue;
+            }
+
+            function validateZipCode() {
+                const val = address.value.trim();
+                const zipMatch = val.match(/\b\d{5}\b/);
+                if (!zipMatch) {
+                    address.classList.add('error');
+                    zipError.style.display = 'block';
+                    return false;
+                }
+                address.classList.remove('error');
+                zipError.style.display = 'none';
+                return true;
+            }
+
+            function createStarBurst() {
+                const numStars = 50;
+                const containerRect = starContainer.getBoundingClientRect();
+                const centerX = containerRect.width / 2;
+                const centerY = containerRect.height / 2;
+                for (let i = 0; i < numStars; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 40 + Math.random() * 160;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+                    star.style.setProperty('--tx', tx + 'px');
+                    star.style.setProperty('--ty', ty + 'px');
+                    star.textContent = starChars[Math.floor(Math.random() * starChars.length)];
+                    star.style.color = neonColors[Math.floor(Math.random() * neonColors.length)];
+                    star.style.fontSize = '10px';
+                    star.style.left = centerX + 'px';
+                    star.style.top = centerY + 'px';
+                    star.style.animationDuration = (1 + Math.random() * 0.6) + 's';
+                    star.style.animationDelay = (Math.random() * 0.2) + 's';
+                    starContainer.appendChild(star);
+                }
+                setTimeout(() => { starContainer.innerHTML = ''; }, 2500);
+            }
+
+            function validateName(input, errorEl) {
+                const val = input.value.trim();
+                if (val.length === 0) {
+                    input.classList.add('error');
+                    errorEl.classList.add('show');
+                    return false;
+                }
+                input.classList.remove('error');
+                errorEl.classList.remove('show');
+                return true;
+            }
+
+            function validateEmail() {
+                const val = email.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(val)) {
+                    email.classList.add('error');
+                    emailError.classList.add('show');
+                    return false;
+                }
+                email.classList.remove('error');
+                emailError.classList.remove('show');
+                return true;
+            }
+
+            function validateAddress() {
+                const val = address.value.trim();
+                if (val.length < 5) {
+                    address.classList.add('error');
+                    addressError.classList.add('show');
+                    return false;
+                }
+                address.classList.remove('error');
+                addressError.classList.remove('show');
+                return true;
+            }
+
+            firstName.addEventListener('input', function() {
+                capitalizeWords(this);
+                if (this.value.trim().length > 0) {
+                    this.classList.remove('error');
+                    firstNameError.classList.remove('show');
+                }
+            });
+            firstName.addEventListener('blur', function() { validateName(this, firstNameError); });
+
+            lastName.addEventListener('input', function() {
+                capitalizeWords(this);
+                if (this.value.trim().length > 0) {
+                    this.classList.remove('error');
+                    lastNameError.classList.remove('show');
+                }
+            });
+            lastName.addEventListener('blur', function() { validateName(this, lastNameError); });
+
+            email.addEventListener('input', function() {
+                lowercaseEmail(this);
+                const val = this.value.trim();
+                if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+                    this.classList.remove('error');
+                    emailError.classList.remove('show');
+                }
+            });
+            email.addEventListener('blur', validateEmail);
+
+            address.addEventListener('input', function() {
+                if (this.value.trim().length > 5) {
+                    this.classList.remove('error');
+                    addressError.classList.remove('show');
+                    zipError.style.display = 'none';
+                }
+            });
+            address.addEventListener('blur', function() {
+                validateAddress();
+                validateZipCode();
+            });
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (isSubmitting) return;
+
+                if (firstName.value.trim().length > 0) {
+                    firstName.value = firstName.value.split(' ').map(word =>
+                        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                    ).join(' ');
+                }
+                if (lastName.value.trim().length > 0) {
+                    lastName.value = lastName.value.split(' ').map(word =>
+                        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                    ).join(' ');
+                }
+                if (email.value.trim().length > 0) {
+                    email.value = email.value.toLowerCase();
+                }
+                if (address.value.trim().length > 0) {
+                    let words = address.value.split(' ');
+                    let capitalizedWords = words.map(word => {
+                        if (word.length === 0) return word;
+                        if (word.length === 2) {
+                            let lowerWord = word.toLowerCase();
+                            if (stateAbbreviations[lowerWord]) {
+                                return stateAbbreviations[lowerWord];
+                            }
+                        }
+                        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+                    });
+                    address.value = capitalizedWords.join(' ');
+                }
+
+                const isFirstValid = validateName(firstName, firstNameError);
+                const isLastValid = validateName(lastName, lastNameError);
+                const isEmailValid = validateEmail();
+                const isAddressValid = validateAddress();
+                const isZipValid = validateZipCode();
+
+                if (!isFirstValid || !isLastValid || !isEmailValid || !isAddressValid || !isZipValid) {
+                    if (!isFirstValid) firstName.focus();
+                    else if (!isLastValid) lastName.focus();
+                    else if (!isEmailValid) email.focus();
+                    else if (!isAddressValid || !isZipValid) address.focus();
+                    return;
+                }
+
+                setLoadingState();
+
+                const formData = {
+                    firstName: firstName.value.trim(),
+                    lastName: lastName.value.trim(),
+                    email: email.value.trim(),
+                    address: address.value.trim(),
+                    type: 'signup'
+                };
+
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(() => {
+                    setSuccessState();
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    setErrorState(error.message);
+                });
+            });
+
+        })();
+    </script>
+
+</body>
+</html>
