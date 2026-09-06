@@ -28,6 +28,7 @@
             font-weight: 600;
             color: #000000;
             text-transform: lowercase;
+            white-space: nowrap;
         }
         .form-header { text-align: center; margin-bottom: 2rem; }
         .form-header .text-block {
@@ -194,6 +195,28 @@
             margin-bottom: 0.25rem;
         }
         .page-footer .divider { color: #999999; }
+
+        /* Mobile fixes ONLY */
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 1.8rem;
+                white-space: nowrap;
+            }
+            .form-header .text-block br {
+                display: none;
+            }
+            .page-footer {
+                position: relative;
+                margin-top: 2rem;
+                padding: 1rem 1.5rem;
+            }
+            body {
+                padding-bottom: 1.5rem;
+            }
+            .container {
+                min-height: auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -237,14 +260,14 @@
                 <div class="star-burst-container" id="starBurstContainer"></div>
             </div>
         </form>
-    </div>
-    <div class="page-footer">
-        <div class="footer-links">
-            <a href="mailto:unsubscribe@friendswithbears.com?subject=Unsubscribe&body=I%20wish%20to%20unsubscribe.">Unsubscribe</a>
-            <span class="divider">|</span>
-            <a href="update/">Update Address</a>
+        <div class="page-footer">
+            <div class="footer-links">
+                <a href="mailto:unsubscribe@friendswithbears.com?subject=Unsubscribe&body=I%20wish%20to%20unsubscribe.">Unsubscribe</a>
+                <span class="divider">|</span>
+                <a href="update/">Update Address</a>
+            </div>
+            <div>©2026 <a href="https://friendswithbears.com">Friends With Bears Records</a></div>
         </div>
-        <div>©2026 <a href="https://friendswithbears.com">Friends With Bears Records</a></div>
     </div>
 
     <script>
@@ -462,7 +485,7 @@
             email.addEventListener('blur', validateEmail);
 
             address.addEventListener('input', function() {
-                capitalizeWords(this, true);
+                capitalizeWords(this);
                 if (this.value.trim().length > 5) {
                     this.classList.remove('error');
                     addressError.classList.remove('show');
