@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Mailing List – Friends With Bears Records</title>
+    <meta name="description" content="Join the Friends With Bears Records mailing list to receive free stickers, zines, and exclusive merch by mail. Stay connected with creaturethief, April Fridae, eliesriot, and Zayok." />
+    <meta name="keywords" content="Friends With Bears Records mailing list, free stickers, zines, mail, indie music, creaturethief, April Fridae, eliesriot, Zayok, electronic, hyperpop" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://friendswithbears.com/mailing-list" />
+    <meta property="og:title" content="Join the Mailing List – Friends With Bears Records" />
+    <meta property="og:description" content="Join the Friends With Bears Records mailing list to receive free stickers, zines, and exclusive merch by mail." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://friendswithbears.com/mailing-list" />
+    <meta property="og:image" content="https://friendswithbears.com/assets/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Join the Mailing List – Friends With Bears Records" />
+    <meta name="twitter:description" content="Join the Friends With Bears Records mailing list to receive free stickers, zines, and exclusive merch by mail." />
+    <meta name="twitter:image" content="https://friendswithbears.com/assets/cover.jpg" />
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Friends With Bears Records Mailing List",
+            "description": "Join the Friends With Bears Records mailing list to receive free stickers, zines, and exclusive merch by mail.",
+            "url": "https://friendswithbears.com/mailing-list",
+            "publisher": {
+                "@type": "MusicGroup",
+                "name": "Friends With Bears Records"
+            }
+        }
+    </script>
+
+    <style>
+        @font-face {
+            font-family: 'CustomTitle';
+            src: url('edrfghu34567/tcfygvuhbjn23456.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100vh;
+            background: #ffffff;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            padding-bottom: 8rem;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .container {
+            width: 94%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            margin: auto 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .page-header {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-family: 'CustomTitle', system-ui, -apple-system, sans-serif;
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #000000;
+            text-transform: lowercase;
+            margin: 0;
+            text-align: center;
+        }
+
+        .form-card {
+            width: 100%;
+            padding: 0;
+            text-align: left;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header .text-block {
+            display: inline-block;
+            text-align: left;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            font-family: system-ui, -apple-system, sans-serif;
+            color: #000000;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #000000;
+            margin-bottom: 0.3rem;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        label .required-star {
+            color: #000000;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 0.7rem 0.9rem;
+            font-size: 0.95rem;
+            font-family: system-ui, -apple-system, sans-serif;
+            border: 1.5px solid #cccccc;
+            border-radius: 6px;
+            outline: none;
+            background: #ffffff;
+            color: #000000;
+            resize: none;
+            transition: border-color 0.2s ease, opacity 0.3s ease;
+        }
+
+        textarea#address {
+            resize: none;
+            min-height: 80px;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #888888;
+        }
+
+        input:disabled,
+        textarea:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .error {
+            border-color: #cc0000 !important;
+        }
+
+        .field-error {
+            display: none;
+            font-size: 0.8rem;
+            color: #cc0000;
+            margin-top: 0.25rem;
+            font-weight: 500;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        .field-error.show {
+            display: block;
+        }
+
+        .button-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            padding: 4px;
+            position: relative;
+        }
+
+        .btn-border {
+            display: inline-block;
+            padding: 5px;
+            border: 3px dotted #000000;
+            border-radius: 10px;
+            background: transparent;
+            transition: border-color 0.3s ease;
+            position: relative;
+        }
+
+        button[type="submit"] {
+            display: inline-block;
+            width: auto;
+            min-width: 140px;
+            padding: 0.4rem 2rem;
+            font-size: 2rem;
+            font-family: 'CustomTitle', system-ui, -apple-system, sans-serif;
+            font-weight: 600;
+            color: #000000;
+            background: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.2s ease;
+            text-align: center;
+            text-transform: lowercase;
+            letter-spacing: 0.03em;
+            line-height: 1.2;
+            position: relative;
+        }
+
+        button[type="submit"]:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        .dots {
+            display: none;
+            min-width: 30px;
+            text-align: left;
+        }
+
+        .dots.active {
+            display: inline-block;
+        }
+
+        .dots span {
+            display: inline-block;
+            animation: dotPulse 1.4s infinite;
+            opacity: 0;
+        }
+
+        .dots span:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes dotPulse {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            20% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            80% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+        }
+
+        .btn-text {
+            display: inline-block;
+            transition: opacity 0.2s ease;
+            min-width: 100px;
+        }
+
+        .btn-text.hidden {
+            display: none;
+        }
+
+        .btn-border:not(.disabled):not(.success):hover,
+        .btn-border:not(.disabled):not(.success):hover button[type="submit"] {
+            animation: rainbow 2s linear infinite;
+        }
+
+        .btn-border:not(.disabled):not(.success):hover button[type="submit"] {
+            animation: rainbow 2s linear infinite;
+        }
+
+        button[type="submit"]:disabled {
+            cursor: not-allowed;
+            animation: rainbowLoading 2s linear infinite;
+        }
+
+        .btn-border.disabled {
+            animation: rainbowLoading 2s linear infinite;
+        }
+
+        .btn-border.disabled:hover,
+        .btn-border.disabled:hover button[type="submit"] {
+            animation: rainbowLoading 2s linear infinite;
+        }
+
+        button[type="submit"]:disabled:hover {
+            animation: rainbowLoading 2s linear infinite;
+        }
+
+        .btn-border.success {
+            border-color: #00ff44;
+            animation: none;
+        }
+
+        .btn-border.success button[type="submit"] {
+            color: #00ff44;
+            animation: none;
+            cursor: default;
+        }
+
+        .btn-border.success:hover,
+        .btn-border.success:hover button[type="submit"] {
+            animation: none;
+        }
+
+        @keyframes rainbow {
+            0% { border-color: #ff0040; color: #ff0040; }
+            16% { border-color: #ff4400; color: #ff4400; }
+            33% { border-color: #ffdd00; color: #ffdd00; }
+            50% { border-color: #00ff44; color: #00ff44; }
+            66% { border-color: #00ddff; color: #00ddff; }
+            83% { border-color: #cc00ff; color: #cc00ff; }
+            100% { border-color: #ff0040; color: #ff0040; }
+        }
+
+        @keyframes rainbowLoading {
+            0% { border-color: rgba(255, 0, 64, 0.5); color: rgba(255, 0, 64, 0.5); }
+            16% { border-color: rgba(255, 68, 0, 0.5); color: rgba(255, 68, 0, 0.5); }
+            33% { border-color: rgba(255, 221, 0, 0.5); color: rgba(255, 221, 0, 0.5); }
+            50% { border-color: rgba(0, 255, 68, 0.5); color: rgba(0, 255, 68, 0.5); }
+            66% { border-color: rgba(0, 221, 255, 0.5); color: rgba(0, 221, 255, 0.5); }
+            83% { border-color: rgba(204, 0, 255, 0.5); color: rgba(204, 0, 255, 0.5); }
+            100% { border-color: rgba(255, 0, 64, 0.5); color: rgba(255, 0, 64, 0.5); }
+        }
+
+        .star-burst-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10;
+            overflow: visible;
+        }
+
+        .star {
+            position: absolute;
+            font-size: 10px;
+            font-weight: bold;
+            animation: starExplode 1.2s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes starExplode {
+            0% {
+                transform: translate(0, 0) scale(0.3) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .page-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 0.75rem 1.5rem 1rem 1.5rem;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 0.75rem;
+            color: #999999;
+            text-align: center;
+            background: #ffffff;
+            z-index: 1000;
+            line-height: 1.8;
+        }
+
+        .page-footer a {
+            color: #999999;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .page-footer a:hover {
+            color: #444444;
+            text-decoration: underline;
+        }
+
+        .page-footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .page-footer .divider {
+            color: #999999;
+        }
+
+        @media (max-width: 640px) {
+            .page-footer {
+                font-size: 0.65rem;
+                padding: 0.5rem 1.5rem 0.75rem 1.5rem;
+            }
+            .page-footer .footer-links {
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="page-header">
+            <h1>join our mailing list</h1>
+        </div>
+
+        <div class="form-card">
+            <div class="form-header">
+                <div class="text-block">
+                    Stay in the loop via snail mail. Get stickers, zines, post cards,<br>and more. All for free!
+                </div>
+            </div>
+
+            <form id="signup-form" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First name <span class="required-star">*</span></label>
+                        <input type="text" id="first-name" required autocomplete="given-name" />
+                        <div class="field-error" id="first-name-error">Please enter your first name.</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Last name <span class="required-star">*</span></label>
+                        <input type="text" id="last-name" required autocomplete="family-name" />
+                        <div class="field-error" id="last-name-error">Please enter your last name.</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email address <span class="required-star">*</span></label>
+                    <input type="email" id="email" placeholder="you@example.com" required autocomplete="email" />
+                    <div class="field-error" id="email-error">Please enter a valid email address.</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Mailing address <span class="required-star">*</span></label>
+                    <textarea id="address" rows="3" placeholder="Enter your full US mailing address" required autocomplete="street-address"></textarea>
+                    <div class="field-error" id="address-error">Please enter your mailing address.</div>
+                    <div class="field-error" id="zip-error" style="display:none;">Please enter a valid 5-digit ZIP code.</div>
+                </div>
+
+                <div class="button-wrapper">
+                    <div class="btn-border" id="btnBorder">
+                        <button type="submit" id="submit-btn">
+                            <span class="btn-text" id="btnText">
+                                sign up
+                                <span class="dots" id="dots">
+                                    <span>.</span><span>.</span><span>.</span>
+                                </span>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="star-burst-container" id="starBurstContainer"></div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="page-footer">
+        <div class="footer-links">
+            <a href="mailto:unsubscribe@friendswithbears.com?subject=Unsubscribe&body=I%20wish%20to%20unsubscribe.">Unsubscribe</a>
+            <span class="divider">|</span>
+            <a href="mailto:unsubscribe@friendswithbears.com?subject=Update%20My%20Address&body=Please%20update%20my%20mailing%20address%20to%3A%0A%0AName%3A%0AEmail%3A%0ANew%20Address%3A%0A">Update Address</a>
+        </div>
+        <div>©2026 <a href="https://friendswithbears.com">Friends With Bears Records</a></div>
+    </div>
+
+    <script>
+        (function() {
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzWP3NdC564QNPSExjJGC423QS-tQ23xjzCfLeFKYURX0IEkJQuuS2QZNELxrHPEc4oow/exec';
+            const MAX_LOADING_TIME = 4000;
+
+            const form = document.getElementById('signup-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btnText');
+            const btnBorder = document.getElementById('btnBorder');
+            const firstName = document.getElementById('first-name');
+            const lastName = document.getElementById('last-name');
+            const email = document.getElementById('email');
+            const address = document.getElementById('address');
+            const starContainer = document.getElementById('starBurstContainer');
+
+            const firstNameError = document.getElementById('first-name-error');
+            const lastNameError = document.getElementById('last-name-error');
+            const emailError = document.getElementById('email-error');
+            const addressError = document.getElementById('address-error');
+            const zipError = document.getElementById('zip-error');
+
+            const neonColors = ['#ff0040', '#ff4400', '#ffdd00', '#00ff44', '#00ddff', '#cc00ff'];
+            const starChars = ['★', '✦', '✧'];
+
+            const stateAbbreviations = {
+                'al': 'AL', 'ak': 'AK', 'az': 'AZ', 'ar': 'AR', 'ca': 'CA',
+                'co': 'CO', 'ct': 'CT', 'de': 'DE', 'fl': 'FL', 'ga': 'GA',
+                'hi': 'HI', 'id': 'ID', 'il': 'IL', 'in': 'IN', 'ia': 'IA',
+                'ks': 'KS', 'ky': 'KY', 'la': 'LA', 'me': 'ME', 'md': 'MD',
+                'ma': 'MA', 'mi': 'MI', 'mn': 'MN', 'ms': 'MS', 'mo': 'MO',
+                'mt': 'MT', 'ne': 'NE', 'nv': 'NV', 'nh': 'NH', 'nj': 'NJ',
+                'nm': 'NM', 'ny': 'NY', 'nc': 'NC', 'nd': 'ND', 'oh': 'OH',
+                'ok': 'OK', 'or': 'OR', 'pa': 'PA', 'ri': 'RI', 'sc': 'SC',
+                'sd': 'SD', 'tn': 'TN', 'tx': 'TX', 'ut': 'UT', 'vt': 'VT',
+                'va': 'VA', 'wa': 'WA', 'wv': 'WV', 'wi': 'WI', 'wy': 'WY'
+            };
+
+            let loadingTimer = null;
+            let isSubmitting = false;
+
+            function setLoadingState() {
+                isSubmitting = true;
+                submitBtn.disabled = true;
+                btnBorder.classList.add('disabled');
+                btnText.innerHTML = 'sending<span class="dots active"><span>.</span><span>.</span><span>.</span></span>';
+                form.querySelectorAll('input, textarea').forEach(el => el.disabled = true);
+
+                loadingTimer = setTimeout(function() {
+                    if (isSubmitting) {
+                        createStarBurst();
+                        setSuccessState();
+                    }
+                }, MAX_LOADING_TIME);
+            }
+
+            function setSuccessState() {
+                isSubmitting = false;
+                if (loadingTimer) {
+                    clearTimeout(loadingTimer);
+                    loadingTimer = null;
+                }
+                btnBorder.classList.remove('disabled');
+                btnBorder.classList.add('success');
+                btnText.innerHTML = 'success!';
+                submitBtn.disabled = true;
+                form.reset();
+                form.querySelectorAll('input, textarea').forEach(el => el.disabled = false);
+                document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+                document.querySelectorAll('.field-error.show').forEach(el => el.classList.remove('show'));
+            }
+
+            function setErrorState() {
+                isSubmitting = false;
+                if (loadingTimer) {
+                    clearTimeout(loadingTimer);
+                    loadingTimer = null;
+                }
+                submitBtn.disabled = false;
+                btnBorder.classList.remove('disabled');
+                btnText.innerHTML = 'sign up';
+                form.querySelectorAll('input, textarea').forEach(el => el.disabled = false);
+            }
+
+            function capitalizeWords(input, preserveStates = false) {
+                let value = input.value;
+                if (!value) return;
+                let words = value.split(' ');
+                let capitalizedWords = words.map(word => {
+                    if (word.length === 0) return word;
+                    if (preserveStates && word.length === 2) {
+                        let lowerWord = word.toLowerCase();
+                        if (stateAbbreviations[lowerWord]) {
+                            return stateAbbreviations[lowerWord];
+                        }
+                    }
+                    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+                });
+                let newValue = capitalizedWords.join(' ');
+                if (newValue !== value) {
+                    const cursorPos = input.selectionStart;
+                    input.value = newValue;
+                    const newCursorPos = Math.min(cursorPos, newValue.length);
+                    input.setSelectionRange(newCursorPos, newCursorPos);
+                }
+            }
+
+            function lowercaseEmail(input) {
+                let value = input.value;
+                if (!value) return;
+                let newValue = value.toLowerCase();
+                if (newValue !== value) {
+                    const cursorPos = input.selectionStart;
+                    input.value = newValue;
+                    const newCursorPos = Math.min(cursorPos, newValue.length);
+                    input.setSelectionRange(newCursorPos, newCursorPos);
+                }
+            }
+
+            function validateZipCode() {
+                const val = address.value.trim();
+                const zipMatch = val.match(/\b\d{5}\b/);
+                if (!zipMatch) {
+                    address.classList.add('error');
+                    zipError.style.display = 'block';
+                    return false;
+                }
+                address.classList.remove('error');
+                zipError.style.display = 'none';
+                return true;
+            }
+
+            function createStarBurst() {
+                const numStars = 50;
+                const containerRect = starContainer.getBoundingClientRect();
+                const centerX = containerRect.width / 2;
+                const centerY = containerRect.height / 2;
+
+                for (let i = 0; i < numStars; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    const angle = Math.random() * Math.PI * 2;
+                    const distance = 40 + Math.random() * 160;
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+                    star.style.setProperty('--tx', tx + 'px');
+                    star.style.setProperty('--ty', ty + 'px');
+                    star.textContent = starChars[Math.floor(Math.random() * starChars.length)];
+                    star.style.color = neonColors[Math.floor(Math.random() * neonColors.length)];
+                    star.style.fontSize = '10px';
+                    star.style.left = centerX + 'px';
+                    star.style.top = centerY + 'px';
+                    star.style.animationDuration = (1 + Math.random() * 0.6) + 's';
+                    star.style.animationDelay = (Math.random() * 0.2) + 's';
+                    starContainer.appendChild(star);
+                }
+
+                setTimeout(() => {
+                    starContainer.innerHTML = '';
+                }, 2500);
+            }
+
+            const streetSuffixMap = {
+                'street': 'St.', 'avenue': 'Ave.', 'boulevard': 'Blvd.', 'road': 'Rd.',
+                'drive': 'Dr.', 'lane': 'Ln.', 'court': 'Ct.', 'circle': 'Cir.',
+                'place': 'Pl.', 'way': 'Wy.', 'parkway': 'Pkwy.', 'terrace': 'Ter.',
+                'trail': 'Trl.', 'highway': 'Hwy.', 'square': 'Sq.', 'alley': 'Aly.',
+                'crescent': 'Cres.', 'grove': 'Grv.', 'heights': 'Hts.', 'hills': 'Hls.',
+                'meadows': 'Mdws.', 'park': 'Park', 'ridge': 'Rdg.', 'view': 'Vw.',
+                'village': 'Vlg.'
+            };
+
+            const stateMap = {
+                'alabama': 'AL', 'alaska': 'AK', 'arizona': 'AZ', 'arkansas': 'AR',
+                'california': 'CA', 'colorado': 'CO', 'connecticut': 'CT', 'delaware': 'DE',
+                'florida': 'FL', 'georgia': 'GA', 'hawaii': 'HI', 'idaho': 'ID',
+                'illinois': 'IL', 'indiana': 'IN', 'iowa': 'IA', 'kansas': 'KS',
+                'kentucky': 'KY', 'louisiana': 'LA', 'maine': 'ME', 'maryland': 'MD',
+                'massachusetts': 'MA', 'michigan': 'MI', 'minnesota': 'MN', 'mississippi': 'MS',
+                'missouri': 'MO', 'montana': 'MT', 'nebraska': 'NE', 'nevada': 'NV',
+                'new hampshire': 'NH', 'new jersey': 'NJ', 'new mexico': 'NM', 'new york': 'NY',
+                'north carolina': 'NC', 'north dakota': 'ND', 'ohio': 'OH', 'oklahoma': 'OK',
+                'oregon': 'OR', 'pennsylvania': 'PA', 'rhode island': 'RI', 'south carolina': 'SC',
+                'south dakota': 'SD', 'tennessee': 'TN', 'texas': 'TX', 'utah': 'UT',
+                'vermont': 'VT', 'virginia': 'VA', 'washington': 'WA', 'west virginia': 'WV',
+                'wisconsin': 'WI', 'wyoming': 'WY'
+            };
+
+            function formatAddress(raw) {
+                if (!raw || raw.trim().length < 3) return raw;
+                let cleaned = raw.trim().replace(/\s+/g, ' ');
+                let words = cleaned.split(/\s+/);
+                let result = [];
+
+                for (let i = 0; i < words.length; i++) {
+                    let word = words[i];
+                    let clean = word.replace(/[.,;:!?]$/, '');
+                    let lower = clean.toLowerCase();
+
+                    if (i < words.length - 1) {
+                        let nextClean = words[i + 1].replace(/[.,;:!?]$/, '');
+                        let twoWord = lower + ' ' + nextClean.toLowerCase();
+                        if (stateMap[twoWord]) {
+                            result.push(stateMap[twoWord]);
+                            i++;
+                            continue;
+                        }
+                    }
+
+                    if (stateMap[lower]) {
+                        result.push(stateMap[lower]);
+                        continue;
+                    }
+
+                    if (streetSuffixMap[lower]) {
+                        result.push(streetSuffixMap[lower]);
+                        continue;
+                    }
+
+                    if (/^\d+$/.test(word)) {
+                        result.push(word);
+                        continue;
+                    }
+
+                    if (word === word.toUpperCase() && word.length > 1 && word.length <= 2) {
+                        result.push(word);
+                        continue;
+                    }
+
+                    let capitalized = word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+                    result.push(capitalized);
+                }
+
+                return result.join(' ').replace(/\s+/g, ' ').trim();
+            }
+
+            function validateName(input, errorEl) {
+                const val = input.value.trim();
+                if (val.length === 0) {
+                    input.classList.add('error');
+                    errorEl.classList.add('show');
+                    return false;
+                }
+                input.classList.remove('error');
+                errorEl.classList.remove('show');
+                return true;
+            }
+
+            function validateEmail() {
+                const val = email.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(val)) {
+                    email.classList.add('error');
+                    emailError.classList.add('show');
+                    return false;
+                }
+                email.classList.remove('error');
+                emailError.classList.remove('show');
+                return true;
+            }
+
+            function validateAddress() {
+                const val = address.value.trim();
+                if (val.length < 5) {
+                    address.classList.add('error');
+                    addressError.classList.add('show');
+                    return false;
+                }
+                address.classList.remove('error');
+                addressError.classList.remove('show');
+                return true;
+            }
+
+            firstName.addEventListener('input', function() {
+                capitalizeWords(this, false);
+                if (this.value.trim().length > 0) {
+                    this.classList.remove('error');
+                    firstNameError.classList.remove('show');
+                }
+            });
+
+            firstName.addEventListener('blur', function() {
+                validateName(this, firstNameError);
+            });
+
+            lastName.addEventListener('input', function() {
+                capitalizeWords(this, false);
+                if (this.value.trim().length > 0) {
+                    this.classList.remove('error');
+                    lastNameError.classList.remove('show');
+                }
+            });
+
+            lastName.addEventListener('blur', function() {
+                validateName(this, lastNameError);
+            });
+
+            email.addEventListener('input', function() {
+                lowercaseEmail(this);
+                const val = this.value.trim();
+                if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
+                    this.classList.remove('error');
+                    emailError.classList.remove('show');
+                }
+            });
+
+            email.addEventListener('blur', validateEmail);
+
+            address.addEventListener('input', function() {
+                capitalizeWords(this, true);
+                if (this.value.trim().length > 5) {
+                    this.classList.remove('error');
+                    addressError.classList.remove('show');
+                    zipError.style.display = 'none';
+                }
+            });
+
+            address.addEventListener('blur', function() {
+                if (this.value.trim().length > 0) {
+                    let words = this.value.split(' ');
+                    let capitalizedWords = words.map(word => {
+                        if (word.length === 0) return word;
+                        if (word.length === 2) {
+                            let lowerWord = word.toLowerCase();
+                            if (stateAbbreviations[lowerWord]) {
+                                return stateAbbreviations[lowerWord];
+                            }
+                        }
+                        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+                    });
+                    this.value = capitalizedWords.join(' ');
+                }
+                validateAddress();
+                validateZipCode();
+            });
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                if (isSubmitting) return;
+
+                if (firstName.value.trim().length > 0) {
+                    firstName.value = firstName.value.split(' ').map(word =>
+                        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                    ).join(' ');
+                }
+                if (lastName.value.trim().length > 0) {
+                    lastName.value = lastName.value.split(' ').map(word =>
+                        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                    ).join(' ');
+                }
+                if (email.value.trim().length > 0) {
+                    email.value = email.value.toLowerCase();
+                }
+                if (address.value.trim().length > 0) {
+                    let words = address.value.split(' ');
+                    let capitalizedWords = words.map(word => {
+                        if (word.length === 0) return word;
+                        if (word.length === 2) {
+                            let lowerWord = word.toLowerCase();
+                            if (stateAbbreviations[lowerWord]) {
+                                return stateAbbreviations[lowerWord];
+                            }
+                        }
+                        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+                    });
+                    address.value = capitalizedWords.join(' ');
+                }
+
+                const isFirstValid = validateName(firstName, firstNameError);
+                const isLastValid = validateName(lastName, lastNameError);
+                const isEmailValid = validateEmail();
+                const isAddressValid = validateAddress();
+                const isZipValid = validateZipCode();
+
+                if (!isFirstValid || !isLastValid || !isEmailValid || !isAddressValid || !isZipValid) {
+                    if (!isFirstValid) firstName.focus();
+                    else if (!isLastValid) lastName.focus();
+                    else if (!isEmailValid) email.focus();
+                    else if (!isAddressValid || !isZipValid) address.focus();
+                    return;
+                }
+
+                const rawAddress = address.value.trim();
+                const formattedAddress = formatAddress(rawAddress);
+                address.value = formattedAddress;
+
+                setLoadingState();
+
+                const formData = {
+                    firstName: firstName.value.trim(),
+                    lastName: lastName.value.trim(),
+                    email: email.value.trim(),
+                    address: formattedAddress
+                };
+
+                fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(() => {
+                    createStarBurst();
+                    setSuccessState();
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    setErrorState();
+                    const errorMsg = document.createElement('div');
+                    errorMsg.style.cssText = 'text-align:center;padding:0.75rem;margin-top:1rem;background:#fef0f0;border-radius:6px;border:1px solid #cc0000;color:#cc0000;font-size:0.9rem;font-family:system-ui,-apple-system,sans-serif;';
+                    errorMsg.textContent = 'Something went wrong. Please try again.';
+                    const existingError = document.querySelector('.fetch-error');
+                    if (existingError) existingError.remove();
+                    errorMsg.className = 'fetch-error';
+                    form.appendChild(errorMsg);
+                    setTimeout(() => {
+                        if (errorMsg.parentNode) errorMsg.remove();
+                    }, 5000);
+                });
+            });
+
+        })();
+    </script>
+
+</body>
+</html>
