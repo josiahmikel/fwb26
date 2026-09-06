@@ -4,6 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Update Address – Friends With Bears Records</title>
+    <meta name="description" content="Update your mailing address for Friends With Bears Records. Change your address to continue receiving stickers, zines, and exclusive merch by mail." />
+    <meta name="keywords" content="Friends With Bears Records update address, change mailing address, stickers, zines, indie music" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://friendswithbears.com/update-address" />
+    <meta property="og:title" content="Update Address – Friends With Bears Records" />
+    <meta property="og:description" content="Update your mailing address for Friends With Bears Records. Change your address to continue receiving stickers, zines, and exclusive merch by mail." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://friendswithbears.com/update-address" />
+    <meta property="og:image" content="https://friendswithbears.com/assets/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Update Address – Friends With Bears Records" />
+    <meta name="twitter:description" content="Update your mailing address for Friends With Bears Records." />
+    <meta name="twitter:image" content="https://friendswithbears.com/assets/cover.jpg" />
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Friends With Bears Records Update Address",
+            "description": "Update your mailing address for Friends With Bears Records.",
+            "url": "https://friendswithbears.com/update-address",
+            "publisher": {
+                "@type": "MusicGroup",
+                "name": "Friends With Bears Records"
+            }
+        }
+    </script>
+
     <style>
         @font-face {
             font-family: 'CustomTitle';
@@ -178,7 +205,10 @@
             z-index: 1000;
             line-height: 1.8;
         }
-        .page-footer a { color: #999999; text-decoration: none; }
+        .page-footer a {
+            color: #999999;
+            text-decoration: none;
+        }
         .page-footer a:hover { color: #444444; text-decoration: underline; }
         .page-footer .footer-links {
             display: flex;
@@ -188,32 +218,13 @@
         }
         .page-footer .divider { color: #999999; }
 
-        /* Mobile fixes ONLY */
         @media (max-width: 480px) {
-            .page-header h1 {
-                font-size: 1.8rem;
-                white-space: nowrap;
-            }
-            .page-footer {
-                position: relative;
-                margin-top: 2rem;
-                padding: 1rem 1.5rem;
-            }
-            body {
-                padding-bottom: 1.5rem;
-            }
-            .container {
-                min-height: auto;
-            }
-            button[type="submit"] {
-                min-width: 100px;
-                padding: 0.3rem 1.2rem;
-                font-size: 1.4rem;
-            }
-            .btn-border {
-                padding: 3px;
-                border-width: 2px;
-            }
+            .page-header h1 { font-size: 1.8rem; white-space: nowrap; }
+            .page-footer { position: relative; margin-top: 2rem; padding: 1rem 1.5rem; }
+            body { padding-bottom: 1.5rem; }
+            .container { min-height: auto; }
+            button[type="submit"] { min-width: 100px; padding: 0.3rem 1.2rem; font-size: 1.4rem; }
+            .btn-border { padding: 3px; border-width: 2px; }
         }
     </style>
 </head>
@@ -255,9 +266,9 @@
         </form>
         <div class="page-footer">
             <div class="footer-links">
-                <a href="mailto:unsubscribe@friendswithbears.com?subject=Unsubscribe&body=I%20wish%20to%20unsubscribe.">Unsubscribe</a>
-                <span class="divider">|</span>
                 <a href="../index.html">Join Mailing List</a>
+                <span class="divider">|</span>
+                <a id="unsubscribe-link" href="mailto:unsubscribe@friendswithbears.com?subject=Unsubscribe&body=I%20wish%20to%20unsubscribe.">Unsubscribe</a>
             </div>
             <div>©2026 <a href="https://friendswithbears.com">Friends With Bears Records</a></div>
         </div>
@@ -265,7 +276,7 @@
 
     <script>
         (function() {
-            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxGVdoAhVYjvz4nDWgRNjgF3v95s0_wM3S97b0wm2HfSM99w60VYI9vYjfgmIgOJyCfFg/exec';
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
 
             const form = document.getElementById('update-form');
             const submitBtn = document.getElementById('submit-btn');
@@ -560,19 +571,17 @@
                     type: 'update'
                 };
 
+                console.log('Update data:', JSON.stringify(formData));
+
                 fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(formData)
                 })
-                .then(() => {
-                    setSuccessState();
-                })
+                .then(() => { setSuccessState(); })
                 .catch((error) => {
-                    console.error('Error:', error);
+                    console.error('Update error:', error);
                     setErrorState(error.message);
                 });
             });
