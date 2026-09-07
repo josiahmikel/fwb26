@@ -1,0 +1,331 @@
+/* ============================================================
+   FORMS.CSS - All form and button styles (FIXED - rainbow hover)
+   ============================================================ */
+
+/* ----- FORM ELEMENTS ----- */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 480px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #000000;
+    margin-bottom: 0.3rem;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.95rem;
+    border: 1.5px solid #cccccc;
+    border-radius: 6px;
+    outline: none;
+    background: #ffffff;
+    color: #000000;
+    resize: none;
+    transition: border-color 0.2s ease, opacity 0.3s ease;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+textarea {
+    min-height: 80px;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #888888;
+}
+
+input:disabled,
+textarea:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ----- ERROR STATES ----- */
+input.error,
+textarea.error {
+    border-color: #cc0000 !important;
+}
+
+.field-error {
+    display: none;
+    font-size: 0.8rem;
+    color: #cc0000;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}
+
+.field-error.show {
+    display: block;
+}
+
+/* ----- BUTTON WRAPPER ----- */
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 4px;
+    position: relative;
+}
+
+.btn-border {
+    display: inline-block;
+    padding: 5px;
+    border: 3px dotted #000000;
+    border-radius: 10px;
+    transition: border-color 0.3s ease;
+}
+
+/* ----- RAINBOW HOVER - BORDER (with !important) ----- */
+.btn-border:not(.disabled):not(.success):hover {
+    animation: rainbow 2s linear infinite !important;
+}
+
+/* ----- RAINBOW HOVER - TEXT (with !important) ----- */
+.btn-border:not(.disabled):not(.success):hover button[type="submit"] {
+    animation: rainbowText 2s linear infinite !important;
+}
+
+/* ----- DISABLED/LOADING STATE ----- */
+.btn-border.disabled {
+    animation: rainbowLoading 2s linear infinite !important;
+}
+
+.btn-border.disabled button[type="submit"] {
+    animation: rainbowTextLoading 2s linear infinite !important;
+}
+
+/* ----- SUCCESS STATE ----- */
+.btn-border.success {
+    border-color: #00ff44 !important;
+    animation: none !important;
+}
+
+.btn-border.success button[type="submit"] {
+    color: #00ff44 !important;
+    animation: none !important;
+}
+
+button[type="submit"] {
+    display: inline-block;
+    min-width: 140px;
+    padding: 0.4rem 2rem;
+    font-size: 2rem;
+    font-family: 'CustomTitle', system-ui, -apple-system, sans-serif;
+    font-weight: 600;
+    color: #000000;
+    background: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: lowercase;
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+    transition: color 0.3s ease;
+}
+
+button[type="submit"]:disabled {
+    cursor: not-allowed;
+}
+
+/* ----- STAR BURST CONTAINER ----- */
+.star-burst-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 10;
+    overflow: visible;
+}
+
+.star {
+    position: absolute;
+    font-size: 10px;
+    font-weight: bold;
+    animation: starExplode 1.2s ease-out forwards;
+    pointer-events: none;
+}
+
+/* ----- POPUP OVERLAY ----- */
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-overlay.active {
+    display: flex;
+}
+
+.popup {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 420px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.popup-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #999999;
+    background: none;
+    border: none;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.popup-close:hover {
+    color: #000000;
+}
+
+.popup h2 {
+    font-family: 'CustomTitle', system-ui, -apple-system, sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #000000;
+    text-transform: lowercase;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.popup p {
+    color: #666666;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.popup .form-group {
+    margin-bottom: 1rem;
+}
+
+.popup label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #000000;
+}
+
+.popup input {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.popup .btn-border {
+    border-color: #cc0000;
+    margin-top: 0.5rem;
+}
+
+/* ----- POPUP RAINBOW HOVER (with !important) ----- */
+.popup .btn-border:not(.disabled):not(.success):hover {
+    animation: rainbow 2s linear infinite !important;
+}
+
+.popup .btn-border:not(.disabled):not(.success):hover button {
+    animation: rainbowText 2s linear infinite !important;
+}
+
+.popup .btn-border button {
+    min-width: 120px;
+    padding: 0.3rem 1.5rem;
+    font-size: 1.6rem;
+    color: #cc0000;
+    font-family: 'CustomTitle', system-ui, -apple-system, sans-serif;
+    background: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: lowercase;
+    letter-spacing: 0.03em;
+    transition: color 0.3s ease;
+}
+
+.popup .btn-border.disabled {
+    animation: rainbowLoading 2s linear infinite !important;
+}
+
+.popup .btn-border.disabled button {
+    animation: rainbowTextLoading 2s linear infinite !important;
+}
+
+.popup .btn-border.success {
+    border-color: #00ff44 !important;
+    animation: none !important;
+}
+
+.popup .btn-border.success button {
+    color: #00ff44 !important;
+    animation: none !important;
+}
+
+.popup .popup-error {
+    display: none;
+    color: #cc0000;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+.popup .popup-error.show {
+    display: block;
+}
+
+.popup .popup-success {
+    display: none;
+    color: #00cc44;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 1rem;
+}
+
+.popup .popup-success.show {
+    display: block;
+}
+
+/* ----- RESPONSIVE FORM ----- */
+@media (max-width: 480px) {
+    button[type="submit"] {
+        min-width: 100px;
+        padding: 0.3rem 1.2rem;
+        font-size: 1.4rem;
+    }
+    .btn-border {
+        padding: 3px;
+        border-width: 2px;
+    }
+    .popup .btn-border button {
+        min-width: 100px;
+        font-size: 1.2rem;
+    }
+    .popup h2 {
+        font-size: 1.4rem;
+    }
+}

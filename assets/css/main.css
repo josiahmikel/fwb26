@@ -1,0 +1,81 @@
+/* ============================================================
+   MAIN.CSS - Shared base styles for all pages (FIXED)
+   ============================================================ */
+
+/* ----- CUSTOM FONTS ----- */
+@font-face {
+    font-family: 'CustomHeader';
+    src: url('/assets/fonts/custom-header.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'CustomTitle';
+    src: url('/assets/fonts/custom-header.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ----- RESET ----- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    background: #ffffff;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #292929;
+}
+
+/* ----- TYPOGRAPHY ----- */
+.title-text {
+    font-family: 'CustomHeader', system-ui, -apple-system, sans-serif;
+    color: #292929;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    text-transform: lowercase;
+}
+
+.page-header h1 {
+    font-family: 'CustomTitle', system-ui, -apple-system, sans-serif;
+    font-weight: 600;
+    color: #000000;
+    text-transform: lowercase;
+    letter-spacing: 0.02em;
+}
+
+/* ----- LINKS ----- */
+a {
+    color: #292929;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color 0.2s ease;
+}
+
+a:hover {
+    text-decoration-color: #000;
+}
+
+/* ----- CONTAINERS ----- */
+.container {
+    width: 94%;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+/* ----- RESPONSIVE (global overrides) ----- */
+@media (max-width: 640px) {
+    .page-header h1 {
+        font-size: 1.8rem;
+        white-space: nowrap;
+    }
+}

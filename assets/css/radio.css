@@ -1,0 +1,553 @@
+/* ============================================================
+   RADIO.CSS - All radio player styles
+   ============================================================ */
+
+/* ----- PLAYER HEADER ----- */
+.player-header {
+    flex: 0 0 auto;
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 0.75rem;
+    padding: 0.75rem 0 0.5rem 0;
+    width: 94%;
+    max-width: 1800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+    color: #999;
+}
+
+.player-header .radio-group {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+}
+
+.player-header .radio-label {
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: color 0.2s ease;
+}
+
+.player-header .radio-label .dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #e74c3c;
+    border-radius: 50%;
+    animation: pulse-dot 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+.player-header .play-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.05rem 0.1rem;
+    font-size: 0.6rem;
+    display: flex;
+    align-items: center;
+    font-family: system-ui, -apple-system, sans-serif;
+    transition: color 0.2s ease;
+    color: inherit;
+}
+
+.player-header .play-btn .icon {
+    font-size: 0.7rem;
+    line-height: 1;
+}
+
+.player-header .line {
+    flex: 1 1 auto;
+    height: 1px;
+    min-width: 20px;
+    margin: 0 0.5rem;
+    background: #e0e0e0;
+    transition: background 0.2s ease;
+}
+
+.player-header .now-playing {
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+    min-width: 0;
+    text-align: right;
+    transition: color 0.2s ease;
+}
+
+.player-header .now-playing .song-title {
+    font-weight: 400;
+}
+
+.player-header .now-playing .artist-name {
+    font-weight: 700;
+}
+
+.player-header .now-playing .artist-name a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.player-header .now-playing .artist-name a:hover {
+    text-decoration: underline;
+}
+
+.player-header .now-playing .separator {
+    font-weight: 300;
+    opacity: 0.4;
+    margin: 0 0.2rem;
+}
+
+.player-header .now-playing .status-msg {
+    font-style: italic;
+    opacity: 0.6;
+}
+
+.player-header .now-playing.loading {
+    opacity: 0.6;
+}
+
+.player-header .now-playing.offline {
+    opacity: 0.4;
+    font-style: italic;
+}
+
+.player-header:hover,
+.player-header:hover .radio-label,
+.player-header:hover .play-btn,
+.player-header:hover .now-playing,
+.player-header:hover .now-playing .song-title,
+.player-header:hover .now-playing .artist-name {
+    color: #292929;
+}
+
+.player-header:hover .line {
+    background: #292929;
+}
+
+.player-header.playing,
+.player-header.playing .radio-label,
+.player-header.playing .play-btn,
+.player-header.playing .now-playing,
+.player-header.playing .now-playing .song-title,
+.player-header.playing .now-playing .artist-name {
+    color: #292929;
+}
+
+.player-header.playing .line {
+    background: #292929;
+}
+
+.player-header .radio-label .dot,
+.player-header:hover .radio-label .dot,
+.player-header.playing .radio-label .dot {
+    background: #e74c3c;
+}
+
+/* ----- RESPONSIVE PLAYER HEADER ----- */
+@media (max-width: 640px) {
+    .player-header {
+        font-size: 0.6rem;
+        padding: 0.5rem 0 0.35rem 0;
+        width: 92%;
+        gap: 0.3rem;
+    }
+
+    .player-header .radio-label .dot {
+        width: 5px;
+        height: 5px;
+    }
+
+    .player-header .play-btn {
+        font-size: 0.5rem;
+    }
+
+    .player-header .play-btn .icon {
+        font-size: 0.6rem;
+    }
+
+    .player-header .line {
+        margin: 0 0.3rem;
+    }
+}
+
+/* ============================================================
+   MAIN PAGE RADIO PLAYER STYLES
+   ============================================================ */
+
+.wheel-container {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    overflow: hidden;
+    position: relative;
+}
+
+.accordion-wrapper {
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.5rem;
+    min-height: 0;
+}
+
+.accordion-group {
+    width: 94%;
+    max-width: 1800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.header-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.5rem 0.2rem;
+    flex-shrink: 0;
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+}
+
+.header-text {
+    font-family: 'CustomHeader', system-ui, -apple-system, sans-serif;
+    color: #292929;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+    text-transform: lowercase;
+}
+
+.arrow-image {
+    font-family: 'CustomHeader', system-ui, -apple-system, sans-serif;
+    color: #292929;
+    display: inline-block;
+    line-height: 1;
+    transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1), opacity 0.2s ease;
+    transform: rotate(0deg);
+    pointer-events: none;
+}
+
+.arrow-image.rotated {
+    transform: rotate(90deg);
+}
+
+/* ----- RELEASES CONTENT ----- */
+.releases-content {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 1rem;
+    color: #292929;
+    padding: 0.75rem 0.2rem;
+    width: 100%;
+    text-align: left;
+}
+
+.releases-content a {
+    color: #292929;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color 0.2s ease;
+}
+
+.releases-content a:hover {
+    text-decoration-color: #000;
+}
+
+/* ----- WHEEL WRAPPER ----- */
+.wheel-wrapper {
+    width: 100%;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.15s cubic-bezier(0.2, 0.9, 0.4, 1),
+        opacity 0.12s ease,
+        margin 0.12s ease;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.wheel-wrapper.expanded {
+    max-height: 2000px;
+    opacity: 1;
+    margin: 0.25rem 0;
+}
+
+/* ----- MAILING WRAPPER ----- */
+.mailing-wrapper {
+    width: 100%;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.15s cubic-bezier(0.2, 0.9, 0.4, 1),
+        opacity 0.12s ease,
+        margin 0.12s ease;
+    margin: 0;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 0.2rem;
+}
+
+.mailing-wrapper.expanded {
+    max-height: 2000px;
+    opacity: 1;
+    margin: 0.25rem 0 0 0;
+}
+
+.mailing-content {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 1rem;
+    color: #292929;
+    padding: 0.75rem 0.2rem 0 0.2rem;
+    width: 100%;
+    text-align: left;
+}
+
+.mailing-content a {
+    color: #292929;
+    text-decoration: underline;
+    text-underline-offset: 0.1em;
+    text-decoration-thickness: 1px;
+    text-decoration-color: #292929;
+    transition: text-decoration-color 0.2s ease;
+}
+
+.mailing-content a:hover {
+    text-decoration-color: #000;
+}
+
+.mailing-image-container {
+    width: 100%;
+    padding: 0 0.2rem 0 0.2rem;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    touch-action: pan-x;
+}
+
+.mailing-image-container::-webkit-scrollbar {
+    display: none;
+}
+
+.mailing-cover {
+    flex: 0 0 auto;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: #fff;
+}
+
+/* ----- CONTACT WRAPPER ----- */
+.contact-wrapper {
+    width: 100%;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.15s cubic-bezier(0.2, 0.9, 0.4, 1),
+        opacity 0.12s ease,
+        margin 0.12s ease;
+    margin: 0;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 0.2rem;
+}
+
+.contact-wrapper.expanded {
+    max-height: 300px;
+    opacity: 1;
+    margin: 0.25rem 0;
+}
+
+.contact-text {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 1rem;
+    color: #292929;
+    padding: 0.75rem 0.2rem;
+    width: 100%;
+    line-height: 1.5;
+}
+
+.contact-text a {
+    color: #292929;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+    transition: text-decoration-color 0.2s ease;
+}
+
+.contact-text a:hover {
+    text-decoration-color: #000;
+}
+
+/* ----- SCROLL WHEEL ----- */
+.scroll-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 1rem 0.2rem;
+    display: flex;
+    align-items: center;
+    touch-action: pan-x;
+}
+
+.scroll-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.wheel-track {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0;
+    padding: 0;
+    width: fit-content;
+    height: 100%;
+    align-items: center;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* ----- ALBUM SQUARES ----- */
+.album-square {
+    flex: 0 0 auto;
+    position: relative;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    will-change: transform;
+    transform: scale(1);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.album-square:hover {
+    transform: scale(1.03);
+}
+
+.album-square:not(:last-child) {
+    margin-right: 32px;
+}
+
+.album-square .cover-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* ----- MAIN PAGE FOOTER ----- */
+.wheel-container .footer {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 0.75rem;
+    color: #999;
+    text-align: left;
+    padding: 0.5rem 0 0.75rem 0;
+    width: 94%;
+    max-width: 1800px;
+    margin: 0 auto;
+    flex-shrink: 0;
+}
+
+/* ----- RESPONSIVE MAIN PAGE ----- */
+@media (max-width: 900px) {
+    .album-square:not(:last-child) {
+        margin-right: 26px;
+    }
+}
+
+@media (max-width: 700px) {
+    .album-square:not(:last-child) {
+        margin-right: 22px;
+    }
+}
+
+@media (max-width: 640px) {
+    .wheel-container {
+        padding: 0;
+    }
+
+    .scroll-wrapper {
+        padding: 0.5rem 0.1rem;
+    }
+
+    .album-square:not(:last-child) {
+        margin-right: 14px;
+    }
+
+    .releases-content,
+    .mailing-content,
+    .contact-text {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.1rem;
+    }
+
+    .mailing-image-container {
+        gap: 12px;
+        padding: 0 0.1rem 0 0.1rem;
+    }
+
+    .wheel-container .footer {
+        font-size: 0.65rem;
+        padding: 0.25rem 0 0.75rem 0;
+        width: 92%;
+    }
+
+    .releases-content a,
+    .mailing-content a,
+    .contact-text a {
+        text-underline-offset: 0.15em;
+    }
+}
+
+@media (max-width: 480px) {
+    .album-square:not(:last-child) {
+        margin-right: 10px;
+    }
+
+    .mailing-image-container {
+        gap: 8px;
+    }
+}

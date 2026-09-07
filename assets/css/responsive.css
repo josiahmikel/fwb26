@@ -1,0 +1,138 @@
+/* ============================================================
+   RESPONSIVE.CSS - All responsive breakpoints
+   ============================================================ */
+
+/* ----- MAIN PAGE RESPONSIVE ----- */
+@media (max-width: 900px) {
+    .album-square:not(:last-child) {
+        margin-right: 26px;
+    }
+}
+
+@media (max-width: 700px) {
+    .album-square:not(:last-child) {
+        margin-right: 22px;
+    }
+}
+
+@media (max-width: 640px) {
+    .wheel-container {
+        padding: 0;
+    }
+
+    .player-header {
+        font-size: 0.6rem;
+        padding: 0.5rem 0 0.35rem 0;
+        width: 92%;
+        gap: 0.3rem;
+    }
+
+    .player-header .radio-label .dot {
+        width: 5px;
+        height: 5px;
+    }
+
+    .player-header .play-btn {
+        font-size: 0.5rem;
+    }
+
+    .player-header .play-btn .icon {
+        font-size: 0.6rem;
+    }
+
+    .player-header .line {
+        margin: 0 0.3rem;
+    }
+
+    .scroll-wrapper {
+        padding: 0.5rem 0.1rem;
+    }
+
+    .album-square:not(:last-child) {
+        margin-right: 14px;
+    }
+
+    .releases-content,
+    .mailing-content,
+    .contact-text {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.1rem;
+    }
+
+    .mailing-image-container {
+        gap: 12px;
+        padding: 0 0.1rem 0 0.1rem;
+    }
+
+    .wheel-container .footer {
+        font-size: 0.65rem;
+        padding: 0.25rem 0 0.75rem 0;
+        width: 92%;
+    }
+
+    .releases-content a,
+    .mailing-content a,
+    .contact-text a {
+        text-underline-offset: 0.15em;
+    }
+}
+
+@media (max-width: 480px) {
+    .album-square:not(:last-child) {
+        margin-right: 10px;
+    }
+
+    .mailing-image-container {
+        gap: 8px;
+    }
+}
+
+/* ----- RELEASE PAGE RESPONSIVE ----- */
+@media (max-width: 640px) {
+    body.release-page {
+        padding: 50px 15px 30px 15px;
+    }
+
+    .release-page .video-container {
+        border-radius: 8px;
+    }
+
+    .release-page .title-text {
+        font-size: 2.6rem;
+        margin: 0 auto 40px auto;
+    }
+
+    .release-page .listen-link,
+    .release-page .zine-link {
+        font-size: .65rem;
+    }
+
+    .release-page .listen-link {
+        margin: 16px 0 40px 0;
+    }
+
+    .release-page .zine-link {
+        margin-bottom: 1.5rem;
+    }
+
+    .release-page .zine {
+        margin-bottom: 30px;
+    }
+}
+
+/* ----- FORM PAGE RESPONSIVE ----- */
+@media (max-width: 480px) {
+    body.form-page {
+        padding-bottom: 1.5rem;
+    }
+
+    .form-page .container {
+        min-height: auto;
+    }
+
+    .form-page .page-footer {
+        position: relative;
+        margin-top: 2rem;
+        padding: 1rem 1.5rem;
+    }
+}
