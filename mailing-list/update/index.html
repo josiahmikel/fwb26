@@ -496,13 +496,22 @@
             .page-header h1 {
                 text-align: center;
             }
+            /* Center the button wrapper on mobile */
             .button-wrapper {
-                justify-content: flex-start;
+                justify-content: center;
             }
+            /* Center the footer and stack items */
             .page-footer {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
+                text-align: center;
+                justify-content: center;
                 gap: 0.25rem;
+            }
+            .page-footer .footer-left,
+            .page-footer .footer-right {
+                flex: 0 0 auto;
+                text-align: center;
             }
             .radio-overlay .overlay-footer {
                 left: 50%;
@@ -643,8 +652,7 @@
                     </div>
                 </form>
 
-                <!-- ===== SIMULATE SUCCESS BUTTON (for demonstration) ===== -->
-           
+            
             </div>
         </div>
 
@@ -700,7 +708,6 @@
         console.log('Starting radio on update address page...');
         initRadio();
 
-        // Initialize the update form – ensure success adds the 'success' class to '#btnBorder'
         initSignupForm('update-form', { formType: 'update' });
         initUnsubscribePopup();
 
@@ -787,7 +794,6 @@
             const btnText = document.getElementById('btnText');
             const submitBtn = document.getElementById('submit-btn');
 
-            // Add success class to turn neon green dotted
             btnBorder.classList.add('success');
             btnText.textContent = 'updated!';
             submitBtn.disabled = true;
