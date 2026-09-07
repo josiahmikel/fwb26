@@ -48,6 +48,7 @@
             width: 100%;
         }
 
+        /* Radio header with fold button */
         .player-header-wrapper {
             display: flex;
             flex-direction: column;
@@ -69,6 +70,7 @@
             flex-shrink: 0;
         }
 
+        /* Full-screen radio overlay */
         .radio-overlay {
             position: fixed;
             top: 0;
@@ -157,12 +159,14 @@
             text-decoration: underline;
         }
 
+        /* Hide main fold button when overlay is active */
         .main-fold-btn.hidden {
             opacity: 0 !important;
             pointer-events: none;
             transition: opacity 0.3s ease;
         }
 
+        /* Fold button - hidden by default, show on hover */
         .fold-btn {
             cursor: pointer;
             background: none;
@@ -235,7 +239,7 @@
             flex-direction: column;
             align-items: flex-start;
             justify-content: center;
-            padding: 0;
+            padding: 0 0 0 0;
             width: 94%;
             max-width: 1800px;
             margin: 0 auto;
@@ -419,7 +423,7 @@
         .btn-border.success:hover,
         #popupBtnBorder.success:hover {
             animation: none !important;
-            border-color: #00ff66 !important;   /* neon green */
+            border-color: #00ff66 !important;
             border-style: dotted !important;
             border-width: 2px !important;
             cursor: default;
@@ -498,13 +502,22 @@
             .form-header .text-block {
                 text-align: center;
             }
+            /* Center the button wrapper on mobile */
             .button-wrapper {
-                justify-content: flex-start;
+                justify-content: center;
             }
+            /* Center the footer and stack items */
             .page-footer {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: center;
+                text-align: center;
+                justify-content: center;
                 gap: 0.25rem;
+            }
+            .page-footer .footer-left,
+            .page-footer .footer-right {
+                flex: 0 0 auto;
+                text-align: center;
             }
             .radio-overlay .overlay-footer {
                 left: 50%;
@@ -613,7 +626,7 @@
 
                 <div class="form-header">
                     <div class="text-block">
-                        Stay in the loop via snail mail. Get stickers, zines, post cards,<br>and more. All for free!
+                        Stay in the loop via snail mail. Get stickers, zines, post cards, and more. All for free!
                     </div>
                 </div>
 
@@ -654,8 +667,6 @@
                     </div>
                 </form>
 
-                <!-- ===== SIMULATE SUCCESS BUTTON (for demonstration) ===== -->
- 
             </div>
         </div>
 
@@ -797,10 +808,9 @@
             const btnText = document.getElementById('btnText');
             const submitBtn = document.getElementById('submit-btn');
 
-            // Add success class to turn neon green dotted
             btnBorder.classList.add('success');
             btnText.textContent = 'signed up!';
-            submitBtn.disabled = true; // also disable to avoid further clicks
+            submitBtn.disabled = true;
         });
     </script>
 </body>
