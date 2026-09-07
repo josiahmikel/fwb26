@@ -1,0 +1,31 @@
+<!-- ============================================================
+   UNSUBSCRIBE POPUP PARTIAL - Shared popup
+   ============================================================ -->
+<div class="popup-overlay" id="popupOverlay">
+    <div class="popup">
+        <button class="popup-close" id="popupClose">✕</button>
+        <h2>unsubscribe</h2>
+        <p>We're sorry to see you go. Enter your details and we'll remove you from the list.</p>
+        <form id="unsubscribe-form" novalidate>
+            <div class="form-group">
+                <label>First name <span class="required-star">*</span></label>
+                <input type="text" id="popup-first-name" required />
+            </div>
+            <div class="form-group">
+                <label>Last name <span class="required-star">*</span></label>
+                <input type="text" id="popup-last-name" required />
+            </div>
+            <div class="form-group">
+                <label>Mailing address <span class="required-star">*</span></label>
+                <input type="text" id="popup-address" placeholder="Enter your full mailing address" required />
+            </div>
+            <div class="button-wrapper">
+                <div class="btn-border" id="popupBtnBorder">
+                    <button type="submit" id="popup-submit-btn">unsubscribe</button>
+                </div>
+            </div>
+            <div class="popup-error" id="popupError">Please fill in all fields.</div>
+            <div class="popup-success" id="popupSuccess">You've been unsubscribed.</div>
+        </form>
+    </div>
+</div>
