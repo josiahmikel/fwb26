@@ -1,5 +1,5 @@
 /* ============================================================
-   RADIO.CSS - All radio player styles
+   RADIO.CSS - Complete radio player styles
    ============================================================ */
 
 /* ----- PLAYER HEADER ----- */
@@ -95,10 +95,12 @@
 .player-header .now-playing .artist-name a {
     color: inherit;
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .player-header .now-playing .artist-name a:hover {
-    text-decoration: underline;
+    animation: rainbowLink 1.5s linear infinite;
+    text-decoration: none;
 }
 
 .player-header .now-playing .separator {
@@ -121,17 +123,18 @@
     font-style: italic;
 }
 
+/* Keep text grey always */
 .player-header:hover,
 .player-header:hover .radio-label,
 .player-header:hover .play-btn,
 .player-header:hover .now-playing,
 .player-header:hover .now-playing .song-title,
 .player-header:hover .now-playing .artist-name {
-    color: #292929;
+    color: #999;
 }
 
 .player-header:hover .line {
-    background: #292929;
+    background: #e0e0e0;
 }
 
 .player-header.playing,
@@ -140,11 +143,7 @@
 .player-header.playing .now-playing,
 .player-header.playing .now-playing .song-title,
 .player-header.playing .now-playing .artist-name {
-    color: #292929;
-}
-
-.player-header.playing .line {
-    background: #292929;
+    color: #999;
 }
 
 .player-header .radio-label .dot,
@@ -153,7 +152,69 @@
     background: #e74c3c;
 }
 
-/* ----- RESPONSIVE PLAYER HEADER ----- */
+/* ----- RAINBOW ANIMATIONS ----- */
+@keyframes rainbowLink {
+    0% { color: #ff0040; }
+    16% { color: #ff4400; }
+    33% { color: #ffdd00; }
+    50% { color: #00ff44; }
+    66% { color: #00ddff; }
+    83% { color: #cc00ff; }
+    100% { color: #ff0040; }
+}
+
+@keyframes rainbowLine {
+    0% { background: #ff0040; }
+    16% { background: #ff4400; }
+    33% { background: #ffdd00; }
+    50% { background: #00ff44; }
+    66% { background: #00ddff; }
+    83% { background: #cc00ff; }
+    100% { background: #ff0040; }
+}
+
+/* ----- RAINBOW LINE - ONLY WHEN PLAYING ----- */
+.player-header.playing .line {
+    animation: rainbowLine 1.5s linear infinite !important;
+}
+
+.player-header:not(.playing) .line {
+    animation: none !important;
+    background: #e0e0e0 !important;
+}
+
+.radio-overlay .player-header.playing .line {
+    animation: rainbowLine 1.5s linear infinite !important;
+}
+
+.radio-overlay .player-header:not(.playing) .line {
+    animation: none !important;
+    background: #e0e0e0 !important;
+}
+
+/* ----- PLAY/PAUSE BUTTON - NO RAINBOW ----- */
+.player-header .play-btn .icon {
+    color: inherit;
+}
+
+.player-header.playing .play-btn .icon {
+    color: #999;
+    animation: none !important;
+}
+
+.radio-overlay .player-header.playing .play-btn .icon {
+    color: #999;
+    animation: none !important;
+}
+
+/* ----- PULSE DOT ----- */
+@keyframes pulse-dot {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* ----- RESPONSIVE ----- */
 @media (max-width: 640px) {
     .player-header {
         font-size: 0.6rem;
@@ -161,20 +222,16 @@
         width: 92%;
         gap: 0.3rem;
     }
-
     .player-header .radio-label .dot {
         width: 5px;
         height: 5px;
     }
-
     .player-header .play-btn {
         font-size: 0.5rem;
     }
-
     .player-header .play-btn .icon {
         font-size: 0.6rem;
     }
-
     .player-header .line {
         margin: 0 0.3rem;
     }
@@ -250,7 +307,6 @@
     transform: rotate(90deg);
 }
 
-/* ----- RELEASES CONTENT ----- */
 .releases-content {
     font-family: system-ui, -apple-system, sans-serif;
     font-size: 1rem;
@@ -272,7 +328,6 @@
     text-decoration-color: #000;
 }
 
-/* ----- WHEEL WRAPPER ----- */
 .wheel-wrapper {
     width: 100%;
     overflow: hidden;
@@ -291,7 +346,6 @@
     margin: 0.25rem 0;
 }
 
-/* ----- MAILING WRAPPER ----- */
 .mailing-wrapper {
     width: 100%;
     overflow: hidden;
@@ -366,7 +420,6 @@
     background-color: #fff;
 }
 
-/* ----- CONTACT WRAPPER ----- */
 .contact-wrapper {
     width: 100%;
     overflow: hidden;
@@ -410,7 +463,6 @@
     text-decoration-color: #000;
 }
 
-/* ----- SCROLL WHEEL ----- */
 .scroll-wrapper {
     width: 100%;
     overflow-x: auto;
@@ -443,7 +495,6 @@
     -webkit-backface-visibility: hidden;
 }
 
-/* ----- ALBUM SQUARES ----- */
 .album-square {
     flex: 0 0 auto;
     position: relative;
@@ -463,6 +514,15 @@
     transform: scale(1.03);
 }
 
+.album-square.spin-on-hover:hover .cover-layer {
+    animation: slowSpin 15s linear infinite;
+}
+
+@keyframes slowSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 .album-square:not(:last-child) {
     margin-right: 32px;
 }
@@ -476,9 +536,9 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    transition: transform 0.3s ease;
 }
 
-/* ----- MAIN PAGE FOOTER ----- */
 .wheel-container .footer {
     font-family: system-ui, -apple-system, sans-serif;
     font-size: 0.75rem;
@@ -491,7 +551,16 @@
     flex-shrink: 0;
 }
 
-/* ----- RESPONSIVE MAIN PAGE ----- */
+.wheel-container .footer a {
+    color: #999;
+    text-decoration: none;
+}
+
+.wheel-container .footer a:hover {
+    color: #444;
+    text-decoration: underline;
+}
+
 @media (max-width: 900px) {
     .album-square:not(:last-child) {
         margin-right: 26px;
@@ -508,37 +577,26 @@
     .wheel-container {
         padding: 0;
     }
-
     .scroll-wrapper {
         padding: 0.5rem 0.1rem;
     }
-
     .album-square:not(:last-child) {
         margin-right: 14px;
     }
-
     .releases-content,
     .mailing-content,
     .contact-text {
         font-size: 0.9rem;
         padding: 0.5rem 0.1rem;
     }
-
     .mailing-image-container {
         gap: 12px;
         padding: 0 0.1rem 0 0.1rem;
     }
-
     .wheel-container .footer {
         font-size: 0.65rem;
         padding: 0.25rem 0 0.75rem 0;
         width: 92%;
-    }
-
-    .releases-content a,
-    .mailing-content a,
-    .contact-text a {
-        text-underline-offset: 0.15em;
     }
 }
 
@@ -546,7 +604,6 @@
     .album-square:not(:last-child) {
         margin-right: 10px;
     }
-
     .mailing-image-container {
         gap: 8px;
     }
