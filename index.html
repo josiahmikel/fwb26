@@ -6,15 +6,18 @@
     <title>Friends With Bears Records</title>
     <meta name="description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok. Explore new releases, join our mailing list for free zines and stickers, and get in touch for press, marketing, or music submissions.">
     <meta name="keywords" content="Friends With Bears Records, creaturethief, April Fridae, eliesriot, Zayok, indie music, electronic, hyperpop, record label, music submissions, free zines, stickers, mailing list">
+    <meta name="robots" content="index, follow, noimageindex">
     <link rel="canonical" href="https://friendswithbears.com">
     <meta property="og:title" content="Friends With Bears Records">
     <meta property="og:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok. Explore new releases, join our mailing list, and get in touch.">
+    <meta property="og:type" content="website">
     <meta property="og:url" content="https://friendswithbears.com">
     <meta property="og:image" content="https://friendswithbears.com/assets/cover.jpg">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Friends With Bears Records">
     <meta name="twitter:description" content="Friends With Bears Records – home to creaturethief, April Fridae, eliesriot, and Zayok.">
     <meta name="twitter:image" content="https://friendswithbears.com/assets/cover.jpg">
-    
+
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -33,42 +36,247 @@
         }
     </script>
 
-    <!-- ===== SHARED STYLES ===== -->
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/animations.css">
     <link rel="stylesheet" href="/assets/css/radio.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
 
-    <!-- Page-specific styles -->
     <style>
-        /* Additional page-specific styles if any */
+        /* Full-screen radio overlay - smooth slide */
+        .radio-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 9998;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .radio-overlay.active {
+            pointer-events: all;
+            opacity: 1;
+        }
+
+        .radio-overlay-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 94%;
+            max-width: 1800px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .radio-overlay.active .radio-overlay-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .radio-overlay .player-header {
+            width: 100%;
+            padding: 0.75rem 0 0.5rem 0;
+            font-size: 0.75rem;
+        }
+
+        .radio-overlay .player-header .play-btn .icon {
+            font-size: 0.7rem;
+        }
+
+        .radio-overlay .player-header .radio-label {
+            font-size: 0.75rem;
+        }
+
+        .radio-overlay .player-header .radio-label .dot {
+            width: 6px;
+            height: 6px;
+        }
+
+        .radio-overlay .player-header .now-playing {
+            font-size: 0.75rem;
+        }
+
+        .radio-overlay .overlay-footer {
+            position: absolute;
+            bottom: 0.75rem;
+            left: 3%;
+            font-size: 0.75rem;
+            color: #999;
+            font-family: system-ui, -apple-system, sans-serif;
+            opacity: 0;
+            transition: opacity 0.6s ease 0.4s;
+        }
+
+        .radio-overlay.active .overlay-footer {
+            opacity: 1;
+        }
+
+        .radio-overlay .overlay-footer a {
+            color: #999;
+            text-decoration: none;
+        }
+
+        .radio-overlay .overlay-footer a:hover {
+            color: #444;
+            text-decoration: underline;
+        }
+
+        .main-fold-btn.hidden {
+            opacity: 0 !important;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .fold-btn {
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: 'CustomHeader', system-ui, -apple-system, sans-serif;
+            color: #999;
+            transition: color 0.2s ease, opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.2rem 0.5rem;
+            margin-top: 0.1rem;
+            z-index: 10;
+            opacity: 0;
+        }
+
+        .fold-btn:hover {
+            color: #292929;
+            opacity: 1;
+        }
+
+        .player-header-wrapper:hover .fold-btn {
+            opacity: 1;
+        }
+
+        .radio-overlay.active .fold-btn {
+            opacity: 1;
+        }
+
+        .fold-btn .fold-icon {
+            font-size: 1.4rem;
+            line-height: 1;
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
+            transform: rotate(90deg);
+        }
+
+        .fold-btn .fold-icon.rotated {
+            transform: rotate(270deg);
+        }
+
+        .radio-overlay .fold-btn {
+            margin-top: 2rem;
+            color: #999;
+            opacity: 1;
+        }
+
+        .radio-overlay .fold-btn:hover {
+            color: #292929;
+        }
+
+        .radio-overlay .fold-btn .fold-icon {
+            font-size: 1.4rem;
+            transform: rotate(90deg);
+            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
+        }
+
+        .radio-overlay.active .fold-btn .fold-icon {
+            transform: rotate(270deg);
+        }
+
+        .player-header-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 94%;
+            max-width: 1800px;
+            margin: 0 auto;
+            transition: opacity 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .player-header-wrapper.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .player-header {
+            width: 100%;
+        }
+
+        .wheel-container .footer {
+            position: relative;
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
     <div class="wheel-container" id="container">
 
-        <!-- PLAYER HEADER -->
-        <div class="player-header" id="playerHeader">
-            <div class="radio-group">
-                <span class="radio-label">
-                    <span class="dot"></span>
-                    RADIO
+        <!-- PLAYER HEADER WITH FOLD BUTTON -->
+        <div class="player-header-wrapper" id="mainHeaderWrapper">
+            <div class="player-header" id="playerHeader">
+                <div class="radio-group">
+                    <span class="radio-label">
+                        <span class="dot"></span>
+                        RADIO
+                    </span>
+                    <button class="play-btn" id="playBtn" aria-label="Play / Pause">
+                        <span class="icon" id="playIcon">▶</span>
+                    </button>
+                </div>
+                <div class="line"></div>
+                <span class="now-playing" id="nowPlaying">
+                    <span class="status-msg">Loading radio...</span>
                 </span>
-                <button class="play-btn" id="playBtn" aria-label="Play / Pause">
-                    <span class="icon" id="playIcon">▶</span>
-                </button>
             </div>
-            <div class="line"></div>
-            <span class="now-playing" id="nowPlaying">
-                <span class="status-msg">Loading radio...</span>
-            </span>
+            <button class="fold-btn main-fold-btn" id="foldDownBtn" aria-label="Expand radio">
+                <span class="fold-icon" id="foldIcon">&gt;</span>
+            </button>
         </div>
 
-        <!-- ACCORDION WRAPPER -->
+        <!-- FULL-SCREEN RADIO OVERLAY -->
+        <div class="radio-overlay" id="radioOverlay">
+            <div class="radio-overlay-content" id="overlayContent">
+                <div class="player-header" id="overlayPlayerHeader">
+                    <div class="radio-group">
+                        <span class="radio-label">
+                            <span class="dot"></span>
+                            RADIO
+                        </span>
+                        <button class="play-btn" id="overlayPlayBtn" aria-label="Play / Pause">
+                            <span class="icon" id="overlayPlayIcon">▶</span>
+                        </button>
+                    </div>
+                    <div class="line"></div>
+                    <span class="now-playing" id="overlayNowPlaying">
+                        <span class="status-msg">Loading radio...</span>
+                    </span>
+                </div>
+                <button class="fold-btn" id="foldUpBtn" aria-label="Collapse radio">
+                    <span class="fold-icon">&gt;</span>
+                </button>
+            </div>
+            <div class="overlay-footer">©2026 <a href="/">Friends With Bears Records</a></div>
+        </div>
+
+        <!-- ACCORDION -->
         <div class="accordion-wrapper">
             <div class="accordion-group">
-
-                <!-- RELEASES ITEM -->
                 <div class="header-item" id="releasesHeader">
                     <span class="header-text" id="releasesTitle">releases</span>
                     <span class="arrow-image" id="releasesArrow">&gt;</span>
@@ -82,7 +290,6 @@
                     </div>
                 </div>
 
-                <!-- MAILING LIST ITEM -->
                 <div class="header-item" id="mailingHeader">
                     <span class="header-text" id="mailingTitle">mailing list</span>
                     <span class="arrow-image" id="mailingArrow">&gt;</span>
@@ -94,7 +301,6 @@
                     <div class="mailing-image-container" id="mailingImageContainer"></div>
                 </div>
 
-                <!-- CONTACT ITEM -->
                 <div class="header-item" id="contactHeader">
                     <span class="header-text" id="contactTitle">contact</span>
                     <span class="arrow-image" id="contactArrow">&gt;</span>
@@ -104,7 +310,6 @@
                         For press, marketing, creative, or general inquiries, reach us at <a href="mailto:hi@friendswithbears.com">hi@friendswithbears.com</a>.<br><br>Interested in working with us? <a href="https://forms.gle/y2yPsPzmVBv1Kojx8" target="_blank">Submit your music here</a> for consideration.
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -112,36 +317,109 @@
         <div class="footer">©2026 Friends With Bears Records</div>
     </div>
 
-    <!-- ===== SCRIPTS ===== -->
     <script type="module">
         import { initRadio } from '/assets/js/radio.js';
         import { initAccordion } from '/assets/js/accordion.js';
-        
-        // Initialize radio player
+
         initRadio();
-        
-        // Initialize accordion
         initAccordion();
-        
-        // Releases wheel data
+
+        // ===== FULL-SCREEN RADIO TOGGLE =====
+        const overlay = document.getElementById('radioOverlay');
+        const mainHeaderWrapper = document.getElementById('mainHeaderWrapper');
+        const foldDownBtn = document.getElementById('foldDownBtn');
+        const foldUpBtn = document.getElementById('foldUpBtn');
+        const foldIcon = document.getElementById('foldIcon');
+
+        function syncOverlayPlayer() {
+            const mainPlayIcon = document.getElementById('playIcon');
+            const mainNowPlaying = document.getElementById('nowPlaying');
+            const mainPlayerHeader = document.getElementById('playerHeader');
+            const overlayPlayIcon = document.getElementById('overlayPlayIcon');
+            const overlayNowPlaying = document.getElementById('overlayNowPlaying');
+            const overlayPlayerHeader = document.getElementById('overlayPlayerHeader');
+
+            if (mainPlayIcon && overlayPlayIcon) {
+                overlayPlayIcon.textContent = mainPlayIcon.textContent;
+            }
+            if (mainNowPlaying && overlayNowPlaying) {
+                overlayNowPlaying.innerHTML = mainNowPlaying.innerHTML;
+            }
+            if (mainPlayerHeader && overlayPlayerHeader) {
+                if (mainPlayerHeader.classList.contains('playing')) {
+                    overlayPlayerHeader.classList.add('playing');
+                } else {
+                    overlayPlayerHeader.classList.remove('playing');
+                }
+            }
+        }
+
+        function openOverlay() {
+            overlay.classList.add('active');
+            mainHeaderWrapper.classList.add('hidden');
+            foldIcon.classList.add('rotated');
+            document.body.style.overflow = 'hidden';
+            setTimeout(syncOverlayPlayer, 100);
+        }
+
+        function closeOverlay() {
+            overlay.classList.remove('active');
+            mainHeaderWrapper.classList.remove('hidden');
+            foldIcon.classList.remove('rotated');
+            document.body.style.overflow = '';
+        }
+
+        foldDownBtn.addEventListener('click', openOverlay);
+        foldUpBtn.addEventListener('click', closeOverlay);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && overlay.classList.contains('active')) closeOverlay();
+        });
+
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeOverlay();
+        });
+
+        document.getElementById('overlayPlayBtn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('playBtn').click();
+        });
+
+        document.getElementById('playBtn').addEventListener('click', () => {
+            if (overlay.classList.contains('active')) setTimeout(syncOverlayPlayer, 50);
+        });
+
+        const nowPlayingEl = document.getElementById('nowPlaying');
+        const observer = new MutationObserver(() => {
+            if (overlay.classList.contains('active')) syncOverlayPlayer();
+        });
+        observer.observe(nowPlayingEl, { childList: true, subtree: true, characterData: true });
+
+        const mainHeader = document.getElementById('playerHeader');
+        const classObserver = new MutationObserver(() => {
+            if (overlay.classList.contains('active')) syncOverlayPlayer();
+        });
+        classObserver.observe(mainHeader, { attributes: true, attributeFilter: ['class'] });
+
+        // Releases wheel
         const RELEASES_DATA = [
-            { src: 'assets/covers/fridae-cover.jpg', artist: 'April Fridae', title: 'right now', url: 'https://now.aprilfridae.com' },
-            { src: 'assets/covers/eliesriot_dying_to_live.jpg', artist: 'eliesriot', title: 'DYING TO LIVE', url: 'https://songport.link/t/eliesriot-dying-to-live-bm32qdtx' },
-            { src: 'assets/covers/creaturethief_ct-24.jpg', artist: 'creaturethief', title: 'CT-24', url: 'https://songport.link/t/creaturethief-ct-24-ep-d3egznh0' },
-            { src: 'assets/covers/zayok_in_elsewhere.jpg', artist: 'zayok', title: 'In, elsewhere', url: 'https://songport.link/t/zayok-in-elsewhere-00w4ekwj' },
-            { src: 'assets/covers/fridae-cover.jpg', artist: 'April Fridae', title: 'getting by', url: 'https://songport.link/t/april-fridae-getting-by-2zqbyyiq' },
-            { src: 'assets/covers/Then_you_lay_waste_to_the_world.jpg', artist: 'zayok', title: '....Then you lay waste to the world', url: 'https://songport.link/t/zayok-then-you-lay-waste-to-the-world-e832kcnk' },
-            { src: 'assets/covers/fridae-cover.jpg', artist: 'April Fridae', title: 'hatchback', url: 'https://songport.link/t/april-fridae-hatchback-pn9fldvu' },
-            { src: 'assets/covers/All_eyes_on_me_EP.jpg', artist: 'zayok', title: 'All eyes on me EP', url: 'https://music.apple.com/us/album/all-eyes-on-me-ep/1846372035' },
-            { src: 'assets/covers/fzwl_moreheart_.jpg', artist: 'fzwl', title: 'moreheart*', url: 'https://music.apple.com/us/album/fzwl-moreheart-ep/1862235718' }
+            { src: 'assets/covers/fridae-cover.jpg', artist: 'April Fridae', title: 'right now', url: 'https://now.aprilfridae.com', spin: true },
+            { src: 'assets/covers/eliesriot_dying_to_live.jpg', artist: 'eliesriot', title: 'DYING TO LIVE', url: 'https://songport.link/t/eliesriot-dying-to-live-bm32qdtx', spin: false },
+            { src: 'assets/covers/creaturethief_ct-24.jpg', artist: 'creaturethief', title: 'CT-24', url: 'https://songport.link/t/creaturethief-ct-24-ep-d3egznh0', spin: false },
+            { src: 'assets/covers/zayok_in_elsewhere.jpg', artist: 'zayok', title: 'In, elsewhere', url: 'https://songport.link/t/zayok-in-elsewhere-00w4ekwj', spin: false },
+            { src: 'assets/covers/fridae-cover.jpg', artist: 'April Fridae', title: 'getting by', url: 'https://songport.link/t/april-fridae-getting-by-2zqbyyiq', spin: true },
+            { src: 'assets/covers/Then_you_lay_waste_to_the_world.jpg', artist: 'zayok', title: '....Then you lay waste to the world', url: 'https://songport.link/t/zayok-then-you-lay-waste-to-the-world-e832kcnk', spin: false },
+            { src: 'assets/covers/fridae-cover.jpg', artist: 'April Fridae', title: 'hatchback', url: 'https://songport.link/t/april-fridae-hatchback-pn9fldvu', spin: true },
+            { src: 'assets/covers/All_eyes_on_me_EP.jpg', artist: 'zayok', title: 'All eyes on me EP', url: 'https://music.apple.com/us/album/all-eyes-on-me-ep/1846372035', spin: false },
+            { src: 'assets/covers/fzwl_moreheart_.jpg', artist: 'fzwl', title: 'moreheart*', url: 'https://music.apple.com/us/album/fzwl-moreheart-ep/1862235718', spin: false }
         ];
-        
+
         const FALLBACKS = ['#b5838d', '#6d597a', '#2a9d8f', '#e76f51', '#264653', '#8a5a44', '#5e548e', '#9a8c98', '#c9ada7'];
         const COPIES = 5;
         const wrapper = document.getElementById('scrollWheel');
         const track = document.getElementById('wheelTrack');
         const mailingImageContainer = document.getElementById('mailingImageContainer');
-        
+
         if (wrapper && track) {
             function getSize() {
                 const vw = window.innerWidth;
@@ -155,7 +433,7 @@
                 s = Math.max(s, 80);
                 return s;
             }
-            
+
             function getSpacing() {
                 const w = window.innerWidth;
                 if (w < 480) return 12;
@@ -163,7 +441,7 @@
                 if (w < 900) return 24;
                 return 32;
             }
-            
+
             function updateTitleSize(currentSize) {
                 const titleHeight = Math.min(currentSize * 0.14, 56);
                 const releasesTitle = document.getElementById('releasesTitle');
@@ -172,7 +450,7 @@
                 if (releasesTitle) releasesTitle.style.fontSize = titleHeight + 'px';
                 if (contactTitle) contactTitle.style.fontSize = titleHeight + 'px';
                 if (mailingTitle) mailingTitle.style.fontSize = titleHeight + 'px';
-                
+
                 const rA = document.getElementById('releasesArrow');
                 const cA = document.getElementById('contactArrow');
                 const mA = document.getElementById('mailingArrow');
@@ -180,12 +458,12 @@
                 if (cA) cA.style.fontSize = titleHeight + 'px';
                 if (mA) mA.style.fontSize = titleHeight + 'px';
             }
-            
+
             let currentSize = getSize();
             let itemWidth = 0;
             let oneSetWidth = 0;
             let loopScheduled = false;
-            
+
             function buildTrack() {
                 const size = getSize();
                 const gap = getSpacing();
@@ -196,6 +474,9 @@
                     const release = RELEASES_DATA[idx];
                     const container = document.createElement('div');
                     container.className = 'album-square';
+                    if (release.spin) {
+                        container.classList.add('spin-on-hover');
+                    }
                     container.style.width = size + 'px';
                     container.style.height = size + 'px';
                     container.dataset.src = release.src;
@@ -225,7 +506,7 @@
                 wrapper.scrollLeft = midCopy * RELEASES_DATA.length * itemWidthVal;
                 return { size, gap, itemWidth: itemWidthVal };
             }
-            
+
             function buildMailingGrid() {
                 const size = getSize();
                 if (mailingImageContainer) {
@@ -244,7 +525,7 @@
                     });
                 }
             }
-            
+
             const performLoopJump = function() {
                 if (loopScheduled) return;
                 loopScheduled = true;
@@ -263,7 +544,7 @@
                     }
                 });
             };
-            
+
             function setupWheelScrolling(wheelElement, loopCallback) {
                 if (!wheelElement) return;
                 let wheelTimeout = null;
@@ -292,7 +573,7 @@
                     });
                 }
             }
-            
+
             function initWheel() {
                 const result = buildTrack();
                 itemWidth = result.itemWidth;
@@ -300,12 +581,12 @@
                 const gap = result.gap;
                 oneSetWidth = RELEASES_DATA.length * itemWidth;
                 buildMailingGrid();
-                
+
                 setupWheelScrolling(wrapper, performLoopJump);
                 if (mailingImageContainer) {
                     setupWheelScrolling(mailingImageContainer, null);
                 }
-                
+
                 document.addEventListener('keydown', function(e) {
                     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
                         if (wheelWrapper && wheelWrapper.classList.contains('expanded')) {
@@ -316,7 +597,7 @@
                         }
                     }
                 });
-                
+
                 let resizeTimer = null;
                 window.addEventListener('resize', function() {
                     if (resizeTimer) cancelAnimationFrame(resizeTimer);
@@ -334,10 +615,10 @@
                         setTimeout(performLoopJump, 100);
                     });
                 });
-                
+
                 setTimeout(performLoopJump, 200);
             }
-            
+
             initWheel();
         }
     </script>
