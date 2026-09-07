@@ -221,6 +221,25 @@
         .wheel-container .footer {
             position: relative;
             z-index: 1;
+            padding: 0.5rem 0;
+        }
+
+        /* ===== MOBILE: FOLD BUTTON ALWAYS VISIBLE ===== */
+        @media (max-width: 768px) {
+            .player-header-wrapper .fold-btn {
+                opacity: 1 !important;
+                pointer-events: auto !important;
+            }
+            .player-header-wrapper .fold-btn:hover {
+                opacity: 1 !important;
+            }
+            /* Footer remains left-aligned (original style) – no centering */
+            .radio-overlay .overlay-footer {
+                left: 3%;
+                transform: none;
+                text-align: left;
+                width: auto;
+            }
         }
     </style>
 </head>
@@ -313,7 +332,7 @@
             </div>
         </div>
 
-        <!-- FOOTER -->
+        <!-- FOOTER (kept left-aligned, as original) -->
         <div class="footer">©2026 Friends With Bears Records</div>
     </div>
 
