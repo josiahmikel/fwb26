@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Update Address – Friends With Bears Records</title>
+    <meta name="description" content="Update your mailing address for Friends With Bears Records. Change your address to continue receiving stickers, zines, and exclusive merch by mail." />
+    <meta name="keywords" content="Friends With Bears Records update address, change mailing address, stickers, zines, indie music" />
+    <link rel="canonical" href="https://friendswithbears.com/update-address" />
+    <meta property="og:title" content="Update Address – Friends With Bears Records" />
+    <meta property="og:description" content="Update your mailing address for Friends With Bears Records." />
+    <meta property="og:url" content="https://friendswithbears.com/update-address" />
+    <meta property="og:image" content="https://friendswithbears.com/assets/cover.jpg" />
+    <meta name="twitter:title" content="Update Address – Friends With Bears Records" />
+    <meta name="twitter:description" content="Update your mailing address for Friends With Bears Records." />
+    <meta name="twitter:image" content="https://friendswithbears.com/assets/cover.jpg" />
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Friends With Bears Records Update Address",
+            "description": "Update your mailing address for Friends With Bears Records.",
+            "url": "https://friendswithbears.com/update-address",
+            "publisher": {
+                "@type": "MusicGroup",
+                "name": "Friends With Bears Records"
+            }
+        }
+    </script>
+
+    <!-- ===== SHARED STYLES ===== -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/css/forms.css">
+    <link rel="stylesheet" href="/assets/css/radio.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+
+    <!-- Page-specific styles -->
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 100vh;
+            max-width: 1800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Radio header - exact same as homepage */
+        .player-header {
+            padding: 0.75rem 0 0.5rem 0;
+            width: 94%;
+            max-width: 1800px;
+            margin: 0 auto;
+            flex-shrink: 0;
+        }
+
+        /* Spacer between radio and content */
+        .header-spacer {
+            height: 2rem;
+            flex-shrink: 0;
+        }
+
+        .content-wrapper {
+            flex: 1 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 0 0 0 0;
+            width: 94%;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0;
+        }
+
+        .page-header {
+            text-align: left;
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+
+        .page-header h1 {
+            font-family: 'CustomTitle', system-ui, -apple-system, sans-serif;
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #000000;
+            text-transform: lowercase;
+            text-align: left;
+            letter-spacing: 0.02em;
+        }
+
+        .required-star {
+            color: #cc0000;
+        }
+
+        .fetch-error {
+            text-align: center;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            background: #fef0f0;
+            border-radius: 6px;
+            border: 1px solid #cc0000;
+            color: #cc0000;
+            font-size: 0.9rem;
+        }
+
+        /* ===== SMALLER INPUT FIELDS ===== */
+        input,
+        textarea {
+            padding: 0.5rem 0.7rem !important;
+            font-size: 0.85rem !important;
+        }
+
+        textarea {
+            min-height: 60px !important;
+        }
+
+        /* ===== SMALLER BUTTON ===== */
+        button[type="submit"] {
+            min-width: 100px !important;
+            padding: 0.25rem 1.2rem !important;
+            font-size: 1.4rem !important;
+        }
+
+        .btn-border {
+            padding: 3px !important;
+            border-width: 2px !important;
+        }
+
+        /* Button wrapper - float left */
+        .button-wrapper {
+            display: flex;
+            justify-content: flex-start;
+            padding: 4px 0;
+            position: relative;
+        }
+
+        /* Footer - matches homepage exactly */
+        .page-footer {
+            flex-shrink: 0;
+            width: 94%;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0.5rem 0 0.75rem 0;
+            font-size: 0.75rem;
+            color: #999999;
+            text-align: left;
+            background: #ffffff;
+            line-height: 1.8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .page-footer .footer-left {
+            flex: 0 0 auto;
+        }
+
+        .page-footer .footer-left a {
+            color: #999999;
+            text-decoration: none;
+        }
+
+        .page-footer .footer-left a:hover {
+            color: #444444;
+            text-decoration: underline;
+        }
+
+        .page-footer .footer-right {
+            flex: 0 0 auto;
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .page-footer .footer-right a {
+            color: #999999;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .page-footer .footer-right a:hover {
+            color: #444444;
+            text-decoration: underline;
+        }
+
+        .page-footer .divider {
+            color: #999999;
+        }
+
+        /* ============================================================
+           ALL ANIMATIONS - DIRECTLY IN PAGE
+           ============================================================ */
+
+        /* ----- RAINBOW BORDER ----- */
+        @keyframes rainbowBorder {
+            0% { border-color: #ff0040; }
+            16% { border-color: #ff4400; }
+            33% { border-color: #ffdd00; }
+            50% { border-color: #00ff44; }
+            66% { border-color: #00ddff; }
+            83% { border-color: #cc00ff; }
+            100% { border-color: #ff0040; }
+        }
+
+        /* ----- RAINBOW TEXT ----- */
+        @keyframes rainbowTextColor {
+            0% { color: #ff0040; }
+            16% { color: #ff4400; }
+            33% { color: #ffdd00; }
+            50% { color: #00ff44; }
+            66% { color: #00ddff; }
+            83% { color: #cc00ff; }
+            100% { color: #ff0040; }
+        }
+
+        /* ----- RAINBOW LOADING (border) ----- */
+        @keyframes rainbowLoadingBorder {
+            0% { border-color: rgba(255, 0, 64, 0.5); }
+            16% { border-color: rgba(255, 68, 0, 0.5); }
+            33% { border-color: rgba(255, 221, 0, 0.5); }
+            50% { border-color: rgba(0, 255, 68, 0.5); }
+            66% { border-color: rgba(0, 221, 255, 0.5); }
+            83% { border-color: rgba(204, 0, 255, 0.5); }
+            100% { border-color: rgba(255, 0, 64, 0.5); }
+        }
+
+        /* ----- RAINBOW LOADING (text) ----- */
+        @keyframes rainbowTextLoadingColor {
+            0% { color: rgba(255, 0, 64, 0.5); }
+            16% { color: rgba(255, 68, 0, 0.5); }
+            33% { color: rgba(255, 221, 0, 0.5); }
+            50% { color: rgba(0, 255, 68, 0.5); }
+            66% { color: rgba(0, 221, 255, 0.5); }
+            83% { color: rgba(204, 0, 255, 0.5); }
+            100% { color: rgba(255, 0, 64, 0.5); }
+        }
+
+        /* ----- STAR BURST ----- */
+        @keyframes starExplode {
+            0% {
+                transform: translate(0, 0) scale(0.3) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(1) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ============================================================
+           BUTTON STATES
+           ============================================================ */
+
+        /* HOVER - border stays dotted */
+        .btn-border:not(.disabled):not(.success):hover {
+            animation: rainbowBorder 1.5s linear infinite !important;
+        }
+
+        .btn-border:not(.disabled):not(.success):hover button[type="submit"] {
+            animation: rainbowTextColor 1.5s linear infinite !important;
+        }
+
+        /* Popup hover */
+        .popup .btn-border:not(.disabled):not(.success):hover {
+            animation: rainbowBorder 1.5s linear infinite !important;
+        }
+
+        .popup .btn-border:not(.disabled):not(.success):hover button {
+            animation: rainbowTextColor 1.5s linear infinite !important;
+        }
+
+        /* LOADING - faded rainbow */
+        .btn-border.disabled {
+            animation: rainbowLoadingBorder 2s linear infinite !important;
+        }
+
+        .btn-border.disabled button[type="submit"] {
+            animation: rainbowTextLoadingColor 2s linear infinite !important;
+        }
+
+        .popup .btn-border.disabled {
+            animation: rainbowLoadingBorder 2s linear infinite !important;
+        }
+
+        .popup .btn-border.disabled button {
+            animation: rainbowTextLoadingColor 2s linear infinite !important;
+        }
+
+        /* SUCCESS - solid green */
+        .btn-border.success {
+            border-color: #00ff44 !important;
+            animation: none !important;
+        }
+
+        .btn-border.success button[type="submit"] {
+            color: #00ff44 !important;
+            animation: none !important;
+        }
+
+        .popup .btn-border.success {
+            border-color: #00ff44 !important;
+            animation: none !important;
+        }
+
+        .popup .btn-border.success button {
+            color: #00ff44 !important;
+            animation: none !important;
+        }
+
+        /* ----- STAR BURST CONTAINER ----- */
+        .star-burst-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 10;
+            overflow: visible;
+        }
+
+        .star {
+            position: absolute;
+            font-size: 10px;
+            font-weight: bold;
+            animation: starExplode 1.2s ease-out forwards;
+            pointer-events: none;
+        }
+
+        /* ----- PULSE DOT ----- */
+        @keyframes pulse-dot {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Popup button - smaller */
+        .popup .btn-border button {
+            min-width: 100px !important;
+            padding: 0.2rem 1rem !important;
+            font-size: 1.2rem !important;
+        }
+
+        .popup .btn-border {
+            padding: 3px !important;
+            border-width: 2px !important;
+        }
+
+        @media (max-width: 640px) {
+            .player-header {
+                font-size: 0.6rem;
+                padding: 0.5rem 0 0.35rem 0;
+                width: 92%;
+                gap: 0.3rem;
+            }
+            .content-wrapper {
+                width: 92%;
+            }
+            .page-footer {
+                width: 92%;
+            }
+            .header-spacer {
+                height: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 1.8rem;
+                white-space: nowrap;
+            }
+            .page-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.25rem;
+            }
+            .header-spacer {
+                height: 1rem;
+            }
+            .button-wrapper {
+                justify-content: flex-start;
+            }
+            input,
+            textarea {
+                padding: 0.4rem 0.6rem !important;
+                font-size: 0.8rem !important;
+            }
+            textarea {
+                min-height: 50px !important;
+            }
+            button[type="submit"] {
+                min-width: 80px !important;
+                padding: 0.2rem 1rem !important;
+                font-size: 1.2rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+
+        <!-- ===== RADIO PLAYER HEADER ===== -->
+        <div class="player-header" id="playerHeader">
+            <div class="radio-group">
+                <span class="radio-label">
+                    <span class="dot"></span>
+                    RADIO
+                </span>
+                <button class="play-btn" id="playBtn" aria-label="Play / Pause">
+                    <span class="icon" id="playIcon">▶</span>
+                </button>
+            </div>
+            <div class="line"></div>
+            <span class="now-playing" id="nowPlaying">
+                <span class="status-msg">Loading radio...</span>
+            </span>
+        </div>
+
+        <!-- ===== BREATHING ROOM SPACER ===== -->
+        <div class="header-spacer"></div>
+
+        <!-- ===== CONTENT (vertically centered) ===== -->
+        <div class="content-wrapper">
+            <div class="container">
+                <div class="page-header">
+                    <h1>update address</h1>
+                </div>
+
+                <form id="update-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>First name <span class="required-star">*</span></label>
+                            <input type="text" id="first-name" required autocomplete="given-name" />
+                            <div class="field-error" id="first-name-error">Please enter your first name.</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Last name <span class="required-star">*</span></label>
+                            <input type="text" id="last-name" required autocomplete="family-name" />
+                            <div class="field-error" id="last-name-error">Please enter your last name.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Email address <span class="required-star">*</span></label>
+                        <input type="email" id="email" placeholder="you@example.com" required autocomplete="email" />
+                        <div class="field-error" id="email-error">Please enter a valid email address.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>New mailing address <span class="required-star">*</span></label>
+                        <textarea id="address" rows="3" placeholder="Enter your new full US mailing address" required autocomplete="street-address"></textarea>
+                        <div class="field-error" id="address-error">Please enter your mailing address.</div>
+                        <div class="field-error" id="zip-error" style="display:none;">Please enter a valid 5-digit ZIP code.</div>
+                    </div>
+
+                    <div class="button-wrapper">
+                        <div class="btn-border" id="btnBorder">
+                            <button type="submit" id="submit-btn">
+                                <span class="btn-text" id="btnText">update</span>
+                            </button>
+                        </div>
+                        <div class="star-burst-container" id="starBurstContainer"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ===== FOOTER (bottom left + bottom right) ===== -->
+        <div class="page-footer">
+            <div class="footer-left">
+                ©2026 <a href="/">Friends With Bears Records</a>
+            </div>
+            <div class="footer-right">
+                <a href="../index.html">Join Mailing List</a>
+                <span class="divider">|</span>
+                <a id="unsubscribe-link">Unsubscribe</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- UNSUBSCRIBE POPUP -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup">
+            <button class="popup-close" id="popupClose">✕</button>
+            <h2>unsubscribe</h2>
+            <p>We're sorry to see you go. Enter your details and we'll remove you from the list.</p>
+            <form id="unsubscribe-form" novalidate>
+                <div class="form-group">
+                    <label>First name <span class="required-star">*</span></label>
+                    <input type="text" id="popup-first-name" required />
+                </div>
+                <div class="form-group">
+                    <label>Last name <span class="required-star">*</span></label>
+                    <input type="text" id="popup-last-name" required />
+                </div>
+                <div class="form-group">
+                    <label>Mailing address <span class="required-star">*</span></label>
+                    <input type="text" id="popup-address" placeholder="Enter your full mailing address" required />
+                </div>
+                <div class="button-wrapper">
+                    <div class="btn-border" id="popupBtnBorder">
+                        <button type="submit" id="popup-submit-btn">unsubscribe</button>
+                    </div>
+                </div>
+                <div class="popup-error" id="popupError">Please fill in all fields.</div>
+                <div class="popup-success" id="popupSuccess">You've been unsubscribed.</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script type="module">
+        import { initRadio } from '/assets/js/radio.js';
+        import { initSignupForm } from '/assets/js/forms.js';
+        import { initUnsubscribePopup } from '/assets/js/unsubscribe.js';
+
+        // Initialize radio player
+        console.log('Starting radio on update address page...');
+        initRadio();
+
+        // Initialize update form (reuses signup form logic with different type)
+        initSignupForm('update-form', { formType: 'update' });
+
+        // Initialize unsubscribe popup
+        initUnsubscribePopup();
+    </script>
+</body>
+</html>
