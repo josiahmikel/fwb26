@@ -1,5 +1,5 @@
 /* ============================================================
-   RADIO.JS - Main radio player logic (FIXED)
+   RADIO.JS - Main radio player logic
    ============================================================ */
 
 export function initRadio() {
@@ -11,15 +11,15 @@ export function initRadio() {
         '/assets/h3g45d5f4g/DAMN-april_fridae.mp3',
         '/assets/h3g45d5f4g/GNL-patricio_portales.mp3',
         '/assets/h3g45d5f4g/always-quas.mp3',
-        '/assets/h3g45d5f4g/b_side-fridae:thief.mp3',
-        '/assets/h3g45d5f4g/backtrack-fridae:thief.mp3',
-        '/assets/h3g45d5f4g/bizzare-fridae:thief.mp3',
+        '/assets/h3g45d5f4g/b_side-fridae_thief.mp3',
+        '/assets/h3g45d5f4g/backtrack-fridae_thief.mp3',
+        '/assets/h3g45d5f4g/bizzare-fridae_thief.mp3',
         '/assets/h3g45d5f4g/braziw-april_fridae.mp3',
         '/assets/h3g45d5f4g/clocks_cut_out_or_switch-luvly.mp3',
         '/assets/h3g45d5f4g/down_and_loading-luvly.mp3',
         '/assets/h3g45d5f4g/eurovision-creaturethief.mp3',
         '/assets/h3g45d5f4g/follow-creaturethief.mp3',
-        '/assets/h3g45d5f4g/fortune_cookie-fridae:thief.mp3',
+        '/assets/h3g45d5f4g/fortune_cookie-fridae_thief.mp3',
         '/assets/h3g45d5f4g/gfdgdfgdfgfdfgd-april_fridae.mp3',
         '/assets/h3g45d5f4g/good4-luvly.mp3',
         '/assets/h3g45d5f4g/inagaki-milk.mp3',
@@ -29,7 +29,7 @@ export function initRadio() {
         '/assets/h3g45d5f4g/reef-milk.mp3',
         '/assets/h3g45d5f4g/sep4-creaturethief.mp3',
         '/assets/h3g45d5f4g/tube-creaturethief.mp3',
-        '/assets/h3g45d5f4g/walle-fridae:thief.mp3'
+        '/assets/h3g45d5f4g/walle-fridae_thief.mp3'
     ];
 
     // ----- TRACK DURATIONS -----
@@ -79,8 +79,6 @@ export function initRadio() {
         console.warn('Radio elements not found on this page');
         return;
     }
-
-    console.log('Radio elements found, initializing...');
 
     // ----- STATE -----
     let isPlaying = false;
@@ -151,6 +149,28 @@ export function initRadio() {
         const el = document.getElementById('nowPlaying');
         el.innerHTML = `<span class="status-msg" style="${isError ? 'color:#cc3333;' : ''}">${msg}</span>`;
         el.classList.add('loading');
+    }
+
+    // ----- UPDATE PLAYING CLASS -----
+    function updatePlayingState(playing) {
+        const mainHeader = document.getElementById('playerHeader');
+        const overlayHeader = document.getElementById('overlayPlayerHeader');
+
+        if (mainHeader) {
+            if (playing) {
+                mainHeader.classList.add('playing');
+            } else {
+                mainHeader.classList.remove('playing');
+            }
+        }
+
+        if (overlayHeader) {
+            if (playing) {
+                overlayHeader.classList.add('playing');
+            } else {
+                overlayHeader.classList.remove('playing');
+            }
+        }
     }
 
     // ----- DAILY SHUFFLE -----
@@ -227,10 +247,13 @@ export function initRadio() {
             try {
                 await audioContext.resume();
                 console.log('🔊 AudioContext resumed');
+                return true;
             } catch (e) {
                 console.warn('Could not resume AudioContext', e);
+                return false;
             }
         }
+        return true;
     }
 
     // ----- CROSSFADE -----
@@ -381,13 +404,15 @@ export function initRadio() {
             }
         }, 250);
 
-        players[0].addEventListener('error', function() {
+        players[0].addEventListener('error', function(e) {
+            console.warn('Player 0 error:', e);
             if (!isInitialized) return;
             if (!crossfadePrepared && radioStarted) {
                 prepareCrossfade();
             }
         });
-        players[1].addEventListener('error', function() {
+        players[1].addEventListener('error', function(e) {
+            console.warn('Player 1 error:', e);
             if (!isInitialized) return;
             if (!crossfadePrepared && radioStarted) {
                 prepareCrossfade();
@@ -396,8 +421,10 @@ export function initRadio() {
 
         isPlaying = false;
         playIcon.textContent = '▶';
-        playerHeader.classList.remove('playing');
+        updatePlayingState(false);
         nowPlayingEl.classList.remove('loading');
+
+        console.log('🎵 Radio ready, click play to start');
     }
 
     // ----- TOGGLE PLAY -----
@@ -412,8 +439,6 @@ export function initRadio() {
             setupAudio();
             await resumeAudioContext();
             startSyncedPlayback();
-            // Small delay to ensure everything is set up
-            await new Promise(resolve => setTimeout(resolve, 100));
         }
 
         if (!audioProcessingSetup) {
@@ -422,31 +447,35 @@ export function initRadio() {
         await resumeAudioContext();
 
         if (isPlaying) {
+            // PAUSE
             if (masterGainNode) {
                 masterGainNode.gain.setValueAtTime(0, audioContext.currentTime);
             }
             isPlaying = false;
             playIcon.textContent = '▶';
-            playerHeader.classList.remove('playing');
+            updatePlayingState(false);
             console.log('🔊 Radio paused');
         } else {
+            // PLAY
             if (!radioStarted) {
                 try {
+                    console.log('🔊 Attempting to start playback...');
                     await players[activePlayerIndex].play();
                     radioStarted = true;
-                    console.log('🔊 Radio playback started');
+                    console.log('🔊 Radio playback started successfully');
                 } catch (err) {
                     console.error('Playback failed:', err);
-                    showStatus('Playback error – check console', true);
+                    showStatus('Playback error – click again', true);
                     return;
                 }
             }
+
             if (masterGainNode) {
                 masterGainNode.gain.setValueAtTime(1, audioContext.currentTime);
             }
             isPlaying = true;
             playIcon.textContent = '❚❚';
-            playerHeader.classList.add('playing');
+            updatePlayingState(true);
             updateNowPlaying();
             console.log('🔊 Radio playing');
         }
@@ -455,7 +484,7 @@ export function initRadio() {
     // ----- EVENT LISTENERS -----
     playBtn.addEventListener('click', function(e) {
         e.stopPropagation();
-        console.log('🔊 Play button clicked');
+        console.log('👆 Play button clicked');
         togglePlay();
     });
 
@@ -464,7 +493,7 @@ export function initRadio() {
         if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
         if (e.key === ' ' || e.key === 'Space') {
             e.preventDefault();
-            console.log('🔊 Spacebar pressed');
+            console.log('⌨️ Spacebar pressed');
             togglePlay();
         }
     });
@@ -477,5 +506,13 @@ export function initRadio() {
         setupAudio();
         startSyncedPlayback();
         console.log('🎵 Radio initialized successfully');
+
+        document.addEventListener('click', function() {
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume().then(() => {
+                    console.log('🔊 AudioContext resumed via user interaction');
+                });
+            }
+        }, { once: false });
     }
 }
