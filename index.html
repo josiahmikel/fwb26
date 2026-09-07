@@ -224,7 +224,7 @@
             padding: 0.5rem 0;
         }
 
-        /* ===== MOBILE: FOLD BUTTON ALWAYS VISIBLE ===== */
+        /* ===== MOBILE: Fold button always visible, overlay footer hidden when expanded ===== */
         @media (max-width: 768px) {
             .player-header-wrapper .fold-btn {
                 opacity: 1 !important;
@@ -233,12 +233,15 @@
             .player-header-wrapper .fold-btn:hover {
                 opacity: 1 !important;
             }
-            /* Footer remains left-aligned (original style) – no centering */
-            .radio-overlay .overlay-footer {
-                left: 3%;
-                transform: none;
-                text-align: left;
-                width: auto;
+
+            /* Hide overlay footer ONLY when radio is expanded (active) */
+            .radio-overlay.active .overlay-footer {
+                display: none !important;
+            }
+            
+            /* Ensure main footer is NEVER hidden */
+            .wheel-container .footer {
+                display: block !important;
             }
         }
     </style>
@@ -332,7 +335,7 @@
             </div>
         </div>
 
-        <!-- FOOTER (kept left-aligned, as original) -->
+        <!-- FOOTER (always visible) -->
         <div class="footer">©2026 Friends With Bears Records</div>
     </div>
 
