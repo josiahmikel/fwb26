@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DYING TO LIVE - eliesriot - Friends With Bears Records</title>
     <meta name="description" content="eliesriot's new album 'DYING TO LIVE' - Listen everywhere" />
-    <link rel="canonical" href="https://friendswithbears.com/eliesriot/DTL/" />
+    <link rel="canonical" href="https://friendswithbears.com/eliesriot/dying-to-live/" />
     <meta property="og:title" content="DYING TO LIVE - eliesriot" />
     <meta property="og:description" content="Listen to eliesriot's new album 'DYING TO LIVE'" />
-    <meta property="og:url" content="https://friendswithbears.com/eliesriot/DTL/" />
+    <meta property="og:url" content="https://friendswithbears.com/eliesriot/dying-to-live/" />
     <meta property="og:image" content="https://friendswithbears.com/assets/covers/eliesriot_dying_to_live.jpg" />
     <meta name="twitter:title" content="DYING TO LIVE - eliesriot" />
     <meta name="twitter:description" content="Listen to eliesriot's new album 'DYING TO LIVE'" />
@@ -66,6 +66,14 @@
             width: 100%;
             text-align: center;
             word-break: break-word;
+            text-decoration: none !important;
+            cursor: pointer;
+        }
+
+        .title-text:hover {
+            color: #292929 !important;
+            text-decoration: none !important;
+            animation: none !important;
         }
 
         /* --- Static cover image (no rotation) --- */
@@ -201,17 +209,11 @@
             100% { color: #ff0040; text-decoration-color: #ff0040; }
         }
 
-        a {
-            color: #292929;
-            text-decoration: underline;
-            text-underline-offset: 0.2em;
-            text-decoration-thickness: 1px;
-            text-decoration-color: #292929;
-            transition: color 0.3s ease, text-decoration-color 0.3s ease;
-        }
-
-        a:hover {
-            animation: rainbowLink 1.5s linear infinite;
+        /* Override rainbow for title */
+        .title-text:hover {
+            animation: none !important;
+            color: #292929 !important;
+            text-decoration: none !important;
         }
 
         .page-footer {
@@ -298,7 +300,7 @@
 <body>
     <div class="page-wrapper">
         <div class="container">
-            <span class="title-text">dying to live</span>
+            <a href="/" class="title-text" style="text-decoration: none !important;">dying to live</a>
 
             <!-- Static cover image (no rotation) -->
             <div class="cover-container">
