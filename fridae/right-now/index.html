@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>April Fridae - right now</title>
+    <title>right now - April Fridae - Friends With Bears Records</title>
     <meta name="description" content="April Fridae's new single 'right now' - Listen everywhere">
     <link rel="canonical" href="https://friendswithbears.com/fridae/right-now/">
     <meta property="og:title" content="April Fridae - right now">
@@ -83,21 +83,63 @@
             display: block;
         }
 
-        .listen-link {
-            display: inline-block;
-            font-size: 0.9rem;
-            color: #292929;
-            text-decoration: underline;
-            text-underline-offset: 0.2em;
-            text-decoration-thickness: 1px;
-            text-decoration-color: #292929;
-            transition: color 0.3s ease, text-decoration-color 0.3s ease;
-            cursor: pointer;
-            margin: 20px 0 50px 0;
+        /* --- Streaming platforms - 3 per row --- */
+        .platforms-heading {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #666;
+            text-align: center;
+            margin: 20px 0 20px 0;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
         }
 
-        .listen-link:hover {
-            animation: rainbowLink 1.5s linear infinite;
+        .platforms {
+            width: 100%;
+            margin: 0 0 40px 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem 0.75rem;
+            justify-items: center;
+            align-items: center;
+        }
+
+        .platforms li {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .platforms a {
+            display: block;
+            text-decoration: none;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            opacity: 0.85;
+            width: 100%;
+            max-width: 80px;
+        }
+
+        .platforms a:hover {
+            transform: scale(1.08);
+            opacity: 1;
+        }
+
+        .platforms .logo {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .platforms .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
         }
 
         .lyrics-image {
@@ -197,9 +239,16 @@
             .video-container {
                 border-radius: 8px;
             }
-            .listen-link {
-                font-size: 0.85rem;
-                margin: 16px 0 40px 0;
+            .platforms-heading {
+                font-size: 0.75rem;
+                margin: 16px 0 16px 0;
+            }
+            .platforms {
+                gap: 0.75rem 0.5rem;
+                margin-bottom: 30px;
+            }
+            .platforms a {
+                max-width: 65px;
             }
             .zine-link {
                 font-size: 0.85rem;
@@ -207,6 +256,15 @@
             }
             .zine {
                 margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .platforms a {
+                max-width: 55px;
+            }
+            .platforms {
+                gap: 0.5rem 0.4rem;
             }
         }
     </style>
@@ -226,7 +284,48 @@
                 </iframe>
             </div>
 
-            <a class="listen-link" href="https://too.fm/eo9oxo0" target="_blank" rel="noopener noreferrer">Listen everywhere</a>
+           <ul class="platforms">
+                <li>
+                    <a href="https://open.spotify.com/track/4HyBSOrJ12F3bfC9owGAiu?si=ef1cf4a07c9b4690" target="_blank" rel="noopener noreferrer">
+                        <span class="logo"><img src="/assets/streaming/spotify.png" alt="Spotify" /></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://music.apple.com/us/album/right-now/6801142455?i=6801142459" target="_blank" rel="noopener noreferrer">
+                        <span class="logo"><img src="/assets/streaming/apple-music.png" alt="Apple Music" /></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://music.amazon.com/albums/B0HFDJF738?marketplaceId=ATVPDKIKX0DER&musicTerritory=US&ref=dm_sh_DWoAz4RVFerjOp687KMxpMWYX" target="_blank" rel="noopener noreferrer">
+                        <span class="logo"><img src="/assets/streaming/amazon-music.png" alt="Amazon Music" /></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://link.deezer.com/s/34lsrW2VTm3MdGgyMipE5" target="_blank" rel="noopener noreferrer">
+                        <span class="logo"><img src="/assets/streaming/deezer.png" alt="Deezer" /></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://tidal.com/album/552564464/u" target="_blank" rel="noopener noreferrer">
+                        <span class="logo"><img src="/assets/streaming/tidal.png" alt="Tidal" /></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://music.youtube.com/watch?v=yfKQWQa0tkQ&si=R8SuH1LmSNt32gwN" target="_blank" rel="noopener noreferrer">
+                        <span class="logo"><img src="/assets/streaming/youtube-music.png" alt="YouTube Music" /></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://youtu.be/x0PycFYuwkk?si=7Bjr9TgmQ7euv5QW" target="_blank" rel="noopener noreferrer">
+                        <span class="logo"><img src="/assets/streaming/youtube.png" alt="YouTube" /></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://audiomack.com/april-fridae/song/right-now" target="_blank" rel="noopener noreferrer">
+                        <span class="logo"><img src="/assets/streaming/audiomack.png" alt="Audiomack" /></span>
+                    </a>
+                </li>
+            </ul>
 
             <img src="/assets/img/april-fridae_right-now_lyrics.jpg" alt="Lyrics" class="lyrics-image" />
 
