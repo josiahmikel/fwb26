@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DYING TO LIVE - eliesriot - Friends With Bears Records</title>
     <meta name="description" content="eliesriot's new album 'DYING TO LIVE' - Listen everywhere" />
-    <link rel="canonical" href="https://friendswithbears.com/eliesriot/dying-to-live/" />
+    <link rel="canonical" href="https://friendswithbears.com/eliesriot/DTL/" />
     <meta property="og:title" content="DYING TO LIVE - eliesriot" />
     <meta property="og:description" content="Listen to eliesriot's new album 'DYING TO LIVE'" />
-    <meta property="og:url" content="https://friendswithbears.com/eliesriot/dying-to-live/" />
+    <meta property="og:url" content="https://friendswithbears.com/eliesriot/DTL/" />
     <meta property="og:image" content="https://friendswithbears.com/assets/covers/eliesriot_dying_to_live.jpg" />
     <meta name="twitter:title" content="DYING TO LIVE - eliesriot" />
     <meta name="twitter:description" content="Listen to eliesriot's new album 'DYING TO LIVE'" />
@@ -57,7 +57,7 @@
 
         .title-text {
             font-family: 'CustomHeader', 'Helvetica', 'Arial', sans-serif;
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             color: #292929;
             line-height: 1.2;
             letter-spacing: 0.02em;
@@ -65,6 +65,7 @@
             margin: 0 0 30px 0;
             width: 100%;
             text-align: center;
+            word-break: break-word;
         }
 
         /* --- Static cover image (no rotation) --- */
@@ -86,7 +87,7 @@
 
         /* --- Streaming platforms - 3 per row --- */
         .platforms-heading {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 400;
             color: #666;
             text-align: center;
@@ -102,7 +103,7 @@
             list-style: none;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1rem 0.75rem;
+            gap: 0.75rem 0.5rem;
             justify-items: center;
             align-items: center;
         }
@@ -120,7 +121,7 @@
             transition: transform 0.2s ease, opacity 0.2s ease;
             opacity: 0.85;
             width: 100%;
-            max-width: 80px;
+            max-width: 70px;
         }
 
         .platforms a:hover {
@@ -168,7 +169,7 @@
 
         .zine-link {
             display: inline-block;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #292929;
             text-decoration: underline;
             text-underline-offset: 0.2em;
@@ -176,7 +177,7 @@
             text-decoration-color: #292929;
             transition: color 0.3s ease, text-decoration-color 0.3s ease;
             cursor: pointer;
-            margin-bottom: 1.8rem;
+            margin-bottom: 1.5rem;
         }
 
         .zine-link:hover {
@@ -219,7 +220,7 @@
             max-width: 1800px;
             margin: 0 auto;
             padding: 0.5rem 0 0.75rem 0;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #999999;
             text-align: center;
             background: transparent;
@@ -239,31 +240,57 @@
 
         @media (max-width: 640px) {
             .page-wrapper {
-                padding: 50px 15px 0 15px;
+                padding: 40px 12px 0 12px;
+            }
+            .container {
+                max-width: 320px;
+            }
+            .title-text {
+                font-size: 2.2rem;
+                margin: 0 0 20px 0;
             }
             .cover-container {
                 border-radius: 8px;
             }
             .video-container {
                 border-radius: 8px;
+                margin-bottom: 30px;
+            }
+            .platforms-heading {
+                font-size: 0.65rem;
+                margin: 20px 0 15px 0;
             }
             .platforms {
-                gap: 0.75rem 0.5rem;
+                gap: 0.5rem 0.35rem;
+                margin-bottom: 30px;
             }
             .platforms a {
-                max-width: 65px;
+                max-width: 55px;
+            }
+            .zine-link {
+                font-size: 0.75rem;
+                margin-bottom: 1.2rem;
             }
             .zine {
                 margin-bottom: 30px;
             }
+            .page-footer {
+                font-size: 0.6rem;
+            }
         }
 
         @media (max-width: 400px) {
+            .container {
+                max-width: 280px;
+            }
+            .title-text {
+                font-size: 1.8rem;
+            }
             .platforms a {
-                max-width: 55px;
+                max-width: 45px;
             }
             .platforms {
-                gap: 0.5rem 0.4rem;
+                gap: 0.4rem 0.25rem;
             }
         }
     </style>
