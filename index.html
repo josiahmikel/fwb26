@@ -244,6 +244,25 @@
                 display: none !important;
             }
         }
+
+        /* ===== ADDED: Rounded corners for album covers ===== */
+        .album-square {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .album-square .cover-layer {
+            border-radius: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .album-square {
+                border-radius: 8px;
+            }
+            .album-square .cover-layer {
+                border-radius: 8px;
+            }
+        }
     </style>
 </head>
 <body>
