@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>wassup - April Fridae - Friends With Bears Records</title>
+    <meta name="description" content="April Fridae's new single 'wassup' - Pre-save now" />
+    <link rel="canonical" href="https://friendswithbears.com/fridae/wassup/" />
+    <meta property="og:title" content="wassup - April Fridae" />
+    <meta property="og:description" content="Pre-save April Fridae's new single 'wassup'" />
+    <meta property="og:url" content="https://friendswithbears.com/fridae/wassup/" />
+    <meta property="og:image" content="https://friendswithbears.com/assets/covers/fridae-cover.jpg" />
+    <meta name="twitter:title" content="wassup - April Fridae" />
+    <meta name="twitter:description" content="Pre-save April Fridae's new single 'wassup'" />
+    <meta name="twitter:image" content="https://friendswithbears.com/assets/covers/fridae-cover.jpg" />
+
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" href="/assets/css/forms.css" />
+    <link rel="stylesheet" href="/assets/css/responsive.css" />
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 100vh;
+            max-width: 1800px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 80px 20px 0 20px;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 360px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+
+        .title-text {
+            font-family: 'CustomHeader', 'Helvetica', 'Arial', sans-serif;
+            font-size: 2.8rem;
+            color: #292929;
+            line-height: 1.2;
+            letter-spacing: 0.02em;
+            margin: 0 0 30px 0;
+            width: 100%;
+            text-align: center;
+            word-break: break-word;
+            text-decoration: none !important;
+            cursor: pointer;
+        }
+
+        .title-text:hover {
+            color: #292929 !important;
+            text-decoration: none !important;
+            animation: none !important;
+        }
+
+        .cover-container {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            display: block;
+            text-decoration: none;
+        }
+
+        .cover-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            animation: spin 20s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .presave-container {
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0 0 60px 0;
+            position: relative;
+            width: 100%;
+        }
+
+        .presave-container button {
+            display: inline-block;
+            min-width: 100px;
+            padding: 0.25rem 1.2rem;
+            font-size: 1.4rem;
+            font-family: 'CustomTitle', system-ui, -apple-system, sans-serif;
+            font-weight: 600;
+            color: #000000;
+            background: transparent;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-transform: none;
+            letter-spacing: 0.03em;
+            line-height: 1.2;
+            transition: color 0.3s ease;
+        }
+
+        .presave-container .btn-border {
+            padding: 3px;
+            border: 2px dotted #000000;
+            border-radius: 10px;
+        }
+
+        @keyframes rainbowLink {
+            0% { color: #ff0040; text-decoration-color: #ff0040; }
+            16% { color: #ff4400; text-decoration-color: #ff4400; }
+            33% { color: #ffdd00; text-decoration-color: #ffdd00; }
+            50% { color: #00ff44; text-decoration-color: #00ff44; }
+            66% { color: #00ddff; text-decoration-color: #00ddff; }
+            83% { color: #cc00ff; text-decoration-color: #cc00ff; }
+            100% { color: #ff0040; text-decoration-color: #ff0040; }
+        }
+
+        @keyframes btnRainbowBorder {
+            0% { border-color: #ff0040; }
+            16% { border-color: #ff4400; }
+            33% { border-color: #ffdd00; }
+            50% { border-color: #00ff44; }
+            66% { border-color: #00ddff; }
+            83% { border-color: #cc00ff; }
+            100% { border-color: #ff0040; }
+        }
+
+        @keyframes btnRainbowText {
+            0% { color: #ff0040; }
+            16% { color: #ff4400; }
+            33% { color: #ffdd00; }
+            50% { color: #00ff44; }
+            66% { color: #00ddff; }
+            83% { color: #cc00ff; }
+            100% { color: #ff0040; }
+        }
+
+        .presave-container .btn-border:hover {
+            animation: btnRainbowBorder 1.5s linear infinite;
+        }
+
+        .presave-container .btn-border:hover button {
+            animation: btnRainbowText 1.5s linear infinite;
+        }
+
+        .headshot-container {
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        .headshot-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+        }
+
+        .title-text:hover {
+            animation: none !important;
+            color: #292929 !important;
+            text-decoration: none !important;
+        }
+
+        a {
+            color: #292929;
+            text-decoration: underline;
+            text-underline-offset: 0.2em;
+            text-decoration-thickness: 1px;
+            text-decoration-color: #292929;
+            transition: color 0.3s ease, text-decoration-color 0.3s ease;
+        }
+
+        a:hover {
+            animation: rainbowLink 1.5s linear infinite;
+        }
+
+        .page-footer {
+            flex-shrink: 0;
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0.5rem 0 0.75rem 0;
+            font-size: 0.7rem;
+            color: #999999;
+            text-align: center;
+            background: transparent;
+            line-height: 1.8;
+        }
+
+        .page-footer a {
+            color: #999999;
+            text-decoration: none;
+            text-decoration-color: #999999;
+        }
+
+        .page-footer a:hover {
+            animation: rainbowLink 1.5s linear infinite;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 640px) {
+            .page-wrapper {
+                padding: 40px 12px 0 12px;
+            }
+            .container {
+                max-width: 320px;
+            }
+            .title-text {
+                font-size: 2.2rem;
+                margin: 0 0 20px 0;
+            }
+            .cover-container {
+                border-radius: 8px;
+            }
+            .headshot-container img {
+                border-radius: 8px;
+            }
+            .presave-container {
+                margin: 0 0 40px 0;
+            }
+            .presave-container .btn-border {
+                padding: 2px;
+            }
+            .presave-container button {
+                min-width: 80px;
+                padding: 0.2rem 1rem;
+                font-size: 1.2rem;
+            }
+            .page-footer {
+                font-size: 0.6rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                max-width: 280px;
+            }
+            .title-text {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="container">
+            <a href="/" class="title-text" style="text-decoration: none !important;">wassup</a>
+
+            <a href="https://too.fm/zxjjmvx" target="_blank" rel="noopener noreferrer" class="cover-container">
+                <img src="/assets/covers/fridae-cover.jpg" alt="April Fridae - wassup" />
+            </a>
+
+            <div class="presave-container">
+                <div class="btn-border">
+                    <button type="button" onclick="window.open('https://too.fm/zxjjmvx', '_blank')">
+                        Pre-save
+                    </button>
+                </div>
+            </div>
+
+            <div class="headshot-container">
+                <img src="/assets/img/april-fridae_headshot.jpg" alt="April Fridae" loading="lazy" />
+            </div>
+        </div>
+
+        <div class="page-footer">
+            &copy;2026 <a href="/">Friends With Bears Records</a>
+        </div>
+    </div>
+</body>
+</html>
